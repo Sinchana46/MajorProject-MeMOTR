@@ -1,0 +1,99 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+Subject: [PATCH] Fix deprecated numpy aliases for NumPy >= 1.24 compatibility
+
+np.float, np.int, and np.bool were removed in NumPy 1.24 (deprecated since 1.20).
+Replace all occurrences with the Python builtin equivalents: float, int, bool.
+
+Affected files:
+  - trackeval/datasets/mot_challenge_2d_box.py  (np.float x1, np.int x3)
+  - trackeval/metrics/hota.py                   (np.float x5)
+  - trackeval/metrics/identity.py               (np.int x3)
+
+Verified working against:
+  NumPy 1.24+, Python 3.10, MOT17-02-FRCNN val, DanceTrack val (2 seqs)
+---
+diff --git a/trackeval/datasets/mot_challenge_2d_box.py b/trackeval/datasets/mot_challenge_2d_box.py
+index 68aac51..562a824 100644
+--- a/trackeval/datasets/mot_challenge_2d_box.py
++++ b/trackeval/datasets/mot_challenge_2d_box.py
+@@ -225,7 +225,7 @@ class MotChallenge2DBox(_BaseDataset):
+             time_key = str(t+1)
+             if time_key in read_data.keys():
+                 try:
+-                    time_data = np.asarray(read_data[time_key], dtype=np.float)
++                    time_data = np.asarray(read_data[time_key], dtype=float)
+                 except ValueError:
+                     if is_gt:
+                         raise TrackEvalException(
+@@ -356,7 +356,7 @@ class MotChallenge2DBox(_BaseDataset):
+ 
+             # Match tracker and gt dets (with hungarian algorithm) and remove tracker dets which match with gt dets
+             # which are labeled as belonging to a distractor class.
+-            to_remove_tracker = np.array([], np.int)
++            to_remove_tracker = np.array([], int)
+             if self.do_preproc and self.benchmark != 'MOT15' and gt_ids.shape[0] > 0 and tracker_ids.shape[0] > 0:
+ 
+                 # Check all classes are valid:
+@@ -410,14 +410,14 @@ class MotChallenge2DBox(_BaseDataset):
+             gt_id_map[unique_gt_ids] = np.arange(len(unique_gt_ids))
+             for t in range(raw_data['num_timesteps']):
+                 if len(data['gt_ids'][t]) > 0:
+-                    data['gt_ids'][t] = gt_id_map[data['gt_ids'][t]].astype(np.int)
++                    data['gt_ids'][t] = gt_id_map[data['gt_ids'][t]].astype(int)
+         if len(unique_tracker_ids) > 0:
+             unique_tracker_ids = np.unique(unique_tracker_ids)
+             tracker_id_map = np.nan * np.ones((np.max(unique_tracker_ids) + 1))
+             tracker_id_map[unique_tracker_ids] = np.arange(len(unique_tracker_ids))
+             for t in range(raw_data['num_timesteps']):
+                 if len(data['tracker_ids'][t]) > 0:
+-                    data['tracker_ids'][t] = tracker_id_map[data['tracker_ids'][t]].astype(np.int)
++                    data['tracker_ids'][t] = tracker_id_map[data['tracker_ids'][t]].astype(int)
+ 
+         # Record overview statistics.
+         data['num_tracker_dets'] = num_tracker_dets
+diff --git a/trackeval/metrics/hota.py b/trackeval/metrics/hota.py
+index f551b76..d399273 100644
+--- a/trackeval/metrics/hota.py
++++ b/trackeval/metrics/hota.py
+@@ -28,19 +28,19 @@ class HOTA(_BaseMetric):
+         # Initialise results
+         res = {}
+         for field in self.float_array_fields + self.integer_array_fields:
+-            res[field] = np.zeros((len(self.array_labels)), dtype=np.float)
++            res[field] = np.zeros((len(self.array_labels)), dtype=float)
+         for field in self.float_fields:
+             res[field] = 0
+ 
+         # Return result quickly if tracker or gt sequence is empty
+         if data['num_tracker_dets'] == 0:
+-            res['HOTA_FN'] = data['num_gt_dets'] * np.ones((len(self.array_labels)), dtype=np.float)
+-            res['LocA'] = np.ones((len(self.array_labels)), dtype=np.float)
++            res['HOTA_FN'] = data['num_gt_dets'] * np.ones((len(self.array_labels)), dtype=float)
++            res['LocA'] = np.ones((len(self.array_labels)), dtype=float)
+             res['LocA(0)'] = 1.0
+             return res
+         if data['num_gt_dets'] == 0:
+-            res['HOTA_FP'] = data['num_tracker_dets'] * np.ones((len(self.array_labels)), dtype=np.float)
+-            res['LocA'] = np.ones((len(self.array_labels)), dtype=np.float)
++            res['HOTA_FP'] = data['num_tracker_dets'] * np.ones((len(self.array_labels)), dtype=float)
++            res['LocA'] = np.ones((len(self.array_labels)), dtype=float)
+             res['LocA(0)'] = 1.0
+             return res
+ 
+diff --git a/trackeval/metrics/identity.py b/trackeval/metrics/identity.py
+index c8c6c80..7fc23cf 100644
+--- a/trackeval/metrics/identity.py
++++ b/trackeval/metrics/identity.py
+@@ -80,9 +80,9 @@ class Identity(_BaseMetric):
+         match_rows, match_cols = linear_sum_assignment(fn_mat + fp_mat)
+ 
+         # Accumulate basic statistics
+-        res['IDFN'] = fn_mat[match_rows, match_cols].sum().astype(np.int)
+-        res['IDFP'] = fp_mat[match_rows, match_cols].sum().astype(np.int)
+-        res['IDTP'] = (gt_id_count.sum() - res['IDFN']).astype(np.int)
++        res['IDFN'] = fn_mat[match_rows, match_cols].sum().astype(int)
++        res['IDFP'] = fp_mat[match_rows, match_cols].sum().astype(int)
++        res['IDTP'] = (gt_id_count.sum() - res['IDFN']).astype(int)
+ 
+         # Calculate final ID scores
+         res = self._compute_final_fields(res)

@@ -1,0 +1,6 @@
+[submodule "MeMOTR"]
+	path = MeMOTR
+	url = https://github.com/MCG-NJU/MeMOTR.git
+[submodule "TrackEval"]
+	path = TrackEval
+	url = https://github.com/JonathonLuiten/TrackEval.git

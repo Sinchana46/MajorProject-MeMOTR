@@ -1,0 +1,103 @@
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+var/
+sdist/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+.installed.cfg
+MANIFEST
+
+# ── Jupyter ───────────────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# ── Virtual environments / Conda ──────────────────────────────────────────────
+venv/
+env/
+ENV/
+.venv/
+.conda/
+
+# ── CUDA / C extensions (compiled ops) ───────────────────────────────────────
+MeMOTR/models/ops/build/
+MeMOTR/models/ops/__pycache__/
+MeMOTR/models/ops/*.so
+MeMOTR/models/ops/*.pyd
+MeMOTR/models/ops/MultiScaleDeformableAttention.egg-info/
+*.so
+*.pyd
+
+# ── Model checkpoints & weights ───────────────────────────────────────────────
+checkpoints/
+*.pth
+*.pt
+*.ckpt
+*.pkl
+# Exception: keep small config/pretrained-path placeholder files if any
+!checkpoints/.gitkeep
+
+# ── Large data directories ────────────────────────────────────────────────────
+data/MOT17/train/*/img1/
+data/DanceTrack/train/*/img1/
+data/DanceTrack/val/*/img1/
+data/DanceTrack/test/*/img1/
+data/IOTD/raw_unannotated/
+data/UA_DETRAC/
+data/VisDrone_Vehicles/
+# Keep GT annotation files and seqinfo — they are small and useful in version control
+!data/**/*.txt
+!data/**/seqinfo.ini
+!data/**/.gitkeep
+
+# ── Results & outputs ─────────────────────────────────────────────────────────
+results/
+outputs/
+MeMOTR/outputs/
+
+# ── Video files ───────────────────────────────────────────────────────────────
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.wmv
+
+# ── TensorBoard / training logs ───────────────────────────────────────────────
+runs/
+logs/
+*.log
+MeMOTR/logs/
+wandb/
+
+# ── Miscellaneous OS / editor files ──────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+*.code-workspace
+
+# ── Pytest / coverage ─────────────────────────────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# ── MyPy ──────────────────────────────────────────────────────────────────────
+.mypy_cache/
+.dmypy.json
+dmypy.json
