@@ -71,19 +71,48 @@ class SceneAnalyzer(nn.Module):
 
     def forward(self, frame: torch.Tensor, active_track_count: int) -> torch.Tensor:
         """
+        Compute the 3-dim scene vector [brightness, contrast, density].
+
         Parameters
         ----------
         frame : torch.Tensor
-            Shape (3, H, W) or (H, W, 3) or (1, H, W), values in [0, 1].
-            If not already float, it will be cast automatically.
+            Shape (3, H, W) or (1, H, W) or (H, W, 3), values in [0, 1].
+            Integer frames are automatically cast to float and scaled.
         active_track_count : int
             Number of tracks currently maintained by the tracker at this frame.
 
         Returns
         -------
         scene_vec : torch.Tensor  shape (3,)
+            All values in [0, 1].
         """
-        raise NotImplementedError(
-            "SceneAnalyzer.forward() is not yet implemented. "
-            "Implement in Phase 3 (Task 3.1) of the project execution plan."
-        )
+        # ── Normalise frame to float in [0, 1] ──────────────────────────────
+        x = frame.float()
+        if x.max() > 1.0:
+            # Assume uint8 [0, 255] input; rescale
+            x = x / 255.0
+
+        # ── Bring to (C, H, W) layout ───────────────────────────────────────
+        if x.ndim == 3 and x.shape[-1] in (1, 3):
+            # (H, W, C) → (C, H, W)
+            x = x.permute(2, 0, 1)
+
+        # Flatten to a single vector of all pixel values for statistics
+        pixels = x.reshape(-1)
+
+        # ── Scalar 1: brightness — mean pixel intensity ─────────────────────
+        brightness = pixels.mean()                     # in [0, 1]
+
+        # ── Scalar 2: contrast — pixel standard deviation ───────────────────
+        # std is bounded: max possible std of uniform [0,1] is 0.5 (Bernoulli
+        # split), so clamping to [0, 1] is always safe.
+        contrast = pixels.std().clamp(0.0, 1.0)       # in [0, 1]
+
+        # ── Scalar 3: density — normalised track count ───────────────────────
+        density = torch.tensor(
+            active_track_count / max(self.max_tracks, 1),
+            dtype=torch.float32,
+            device=frame.device,
+        ).clamp(0.0, 1.0)                              # in [0, 1]
+
+        return torch.stack([brightness, contrast, density])

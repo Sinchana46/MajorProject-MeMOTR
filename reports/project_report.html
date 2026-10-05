@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MeMOTR Vehicle Tracking — Project Report</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    :root {
+      --primary:    #2563eb;
+      --primary-dk: #1d4ed8;
+      --accent:     #7c3aed;
+      --success:    #059669;
+      --warning:    #d97706;
+      --danger:     #dc2626;
+      --bg:         #f8fafc;
+      --surface:    #ffffff;
+      --border:     #e2e8f0;
+      --text:       #1e293b;
+      --muted:      #64748b;
+      --code-bg:    #f1f5f9;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    /* ── Cover Page ─────────────────────────────────────────── */
+    .cover {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 45%, #1a1040 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      page-break-after: always;
+    }
+
+    .cover::before {
+      content: '';
+      position: absolute;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(37,99,235,0.25) 0%, transparent 70%);
+      top: -200px; right: -200px;
+      border-radius: 50%;
+    }
+    .cover::after {
+      content: '';
+      position: absolute;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(124,58,237,0.2) 0%, transparent 70%);
+      bottom: -150px; left: -150px;
+      border-radius: 50%;
+    }
+
+    .cover-badge {
+      background: rgba(37,99,235,0.2);
+      border: 1px solid rgba(37,99,235,0.5);
+      color: #93c5fd;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      border-radius: 20px;
+      margin-bottom: 32px;
+    }
+
+    .cover h1 {
+      font-size: 52px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 16px;
+      position: relative;
+    }
+
+    .cover h1 span {
+      background: linear-gradient(90deg, #60a5fa, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .cover-subtitle {
+      font-size: 20px;
+      color: #94a3b8;
+      margin-bottom: 48px;
+      font-weight: 400;
+      max-width: 640px;
+    }
+
+    .cover-meta {
+      display: flex;
+      gap: 48px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 48px;
+    }
+
+    .cover-meta-item {
+      text-align: center;
+    }
+
+    .cover-meta-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .cover-meta-label {
+      font-size: 12px;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+
+    .cover-date {
+      position: absolute;
+      bottom: 40px;
+      color: #475569;
+      font-size: 13px;
+    }
+
+    /* ── Layout ─────────────────────────────────────────────── */
+    .layout {
+      display: flex;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .sidebar {
+      width: 260px;
+      flex-shrink: 0;
+      background: #0f172a;
+      min-height: 100vh;
+      padding: 40px 0;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .sidebar-logo {
+      padding: 0 24px 32px;
+      border-bottom: 1px solid #1e293b;
+      margin-bottom: 24px;
+    }
+
+    .sidebar-logo span {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .sidebar-logo small {
+      display: block;
+      font-size: 11px;
+      color: #475569;
+      margin-top: 2px;
+    }
+
+    .sidebar-section {
+      padding: 8px 24px 4px;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #334155;
+      margin-top: 16px;
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 8px 24px;
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 13px;
+      transition: all 0.15s;
+      border-left: 3px solid transparent;
+    }
+
+    .sidebar a:hover {
+      color: #fff;
+      background: rgba(37,99,235,0.1);
+      border-left-color: #3b82f6;
+    }
+
+    .main {
+      flex: 1;
+      padding: 56px 64px;
+      min-width: 0;
+    }
+
+    /* ── Sections ────────────────────────────────────────────── */
+    .section {
+      margin-bottom: 72px;
+      scroll-margin-top: 32px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 32px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .section-num {
+      width: 40px; height: 40px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #fff;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .section-header h2 {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 32px 0 12px;
+    }
+
+    h4 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--muted);
+      margin: 20px 0 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    p { margin-bottom: 14px; }
+
+    /* ── Cards ───────────────────────────────────────────────── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+    }
+
+    .stat-value {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    /* ── Tables ──────────────────────────────────────────────── */
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      margin-bottom: 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    thead {
+      background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+    }
+
+    th {
+      padding: 14px 18px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--muted);
+      border-bottom: 2px solid var(--border);
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 12px 18px;
+      border-bottom: 1px solid #f1f5f9;
+      vertical-align: middle;
+    }
+
+    tr:last-child td { border-bottom: none; }
+
+    tr:hover td { background: #f8fafc; }
+
+    .highlight-row td {
+      background: #eff6ff;
+      font-weight: 600;
+    }
+
+    /* ── Badges / Pills ──────────────────────────────────────── */
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .badge-green  { background: #dcfce7; color: #166534; }
+    .badge-blue   { background: #dbeafe; color: #1e40af; }
+    .badge-purple { background: #ede9fe; color: #5b21b6; }
+    .badge-amber  { background: #fef3c7; color: #92400e; }
+    .badge-red    { background: #fee2e2; color: #991b1b; }
+    .badge-gray   { background: #f1f5f9; color: #475569; }
+
+    .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+
+    /* ── Timeline ────────────────────────────────────────────── */
+    .timeline { position: relative; padding-left: 32px; }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 10px; top: 4px; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--primary), var(--accent));
+    }
+
+    .tl-item {
+      position: relative;
+      margin-bottom: 32px;
+    }
+
+    .tl-dot {
+      position: absolute;
+      left: -27px; top: 4px;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--primary);
+      border: 3px solid #fff;
+      box-shadow: 0 0 0 2px var(--primary);
+    }
+
+    .tl-dot.done  { background: var(--success); box-shadow: 0 0 0 2px var(--success); }
+    .tl-dot.warn  { background: var(--warning); box-shadow: 0 0 0 2px var(--warning); }
+    .tl-dot.pend  { background: #94a3b8;        box-shadow: 0 0 0 2px #94a3b8; }
+
+    .tl-title {
+      font-weight: 600;
+      font-size: 15px;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .tl-body { font-size: 14px; color: var(--muted); }
+
+    /* ── Code ────────────────────────────────────────────────── */
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px;
+      background: var(--code-bg);
+      color: var(--primary-dk);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    pre {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 20px 24px;
+      border-radius: 10px;
+      overflow-x: auto;
+      font-size: 13px;
+      font-family: 'JetBrains Mono', monospace;
+      line-height: 1.6;
+      margin: 16px 0;
+    }
+
+    pre code { background: transparent; color: inherit; padding: 0; font-size: inherit; }
+
+    /* ── Callouts ────────────────────────────────────────────── */
+    .callout {
+      border-left: 4px solid;
+      border-radius: 0 8px 8px 0;
+      padding: 16px 20px;
+      margin: 20px 0;
+      font-size: 14px;
+    }
+
+    .callout-info    { border-color: var(--primary); background: #eff6ff; }
+    .callout-success { border-color: var(--success); background: #f0fdf4; }
+    .callout-warning { border-color: var(--warning); background: #fffbeb; }
+    .callout-danger  { border-color: var(--danger);  background: #fef2f2; }
+
+    .callout-title {
+      font-weight: 700;
+      margin-bottom: 6px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── Two-column ──────────────────────────────────────────── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+    /* ── Delta cells ─────────────────────────────────────────── */
+    .delta-pos { color: var(--success); font-weight: 600; }
+    .delta-neg { color: var(--danger);  font-weight: 600; }
+    .delta-neu { color: var(--muted);   font-weight: 500; }
+
+    /* ── Architecture diagram ─────────────────────────────────── */
+    .arch-box {
+      background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 20px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .arch-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: var(--muted);
+      padding: 4px 0;
+    }
+
+    .arch-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .arch-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    /* ── Print / PDF ─────────────────────────────────────────── */
+    @media print {
+      .sidebar { display: none; }
+      .main { padding: 32px 48px; }
+      .cover { min-height: auto; padding: 80px 60px; page-break-after: always; }
+      .section { page-break-inside: avoid; }
+      h2, h3 { page-break-after: avoid; }
+    }
+
+    /* ── Responsive ─────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .sidebar { display: none; }
+      .main { padding: 32px 24px; }
+      .cover h1 { font-size: 36px; }
+      .two-col, .three-col { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════ COVER ═══════════════════════════════ -->
+<div class="cover">
+  <div class="cover-badge">Major Project Technical Report</div>
+  <h1>MeMOTR <span>Vehicle Tracking</span><br/>Enhancement</h1>
+  <p class="cover-subtitle">
+    Scene-Adaptive Detection Threshold (Contribution 2) and Perspective-Weighted Loss
+    (Contribution 1) for Multi-Object Tracking in Adverse Conditions
+  </p>
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <div class="cover-meta-value">47</div>
+      <div class="cover-meta-label">Test Sequences</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="cover-meta-value">62.13</div>
+      <div class="cover-meta-label">Baseline HOTA</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="cover-meta-value">5+5</div>
+      <div class="cover-meta-label">Training Epochs</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="cover-meta-value">2</div>
+      <div class="cover-meta-label">Contributions</div>
+    </div>
+  </div>
+  <div class="cover-date">Generated: September 2026 &nbsp;·&nbsp; UA-DETRAC + VisDrone Interim Evaluation</div>
+</div>
+
+<!-- ═══════════════════════════════════ BODY ════════════════════════════════ -->
+<div class="layout">
+
+  <!-- Sidebar nav -->
+  <nav class="sidebar">
+    <div class="sidebar-logo">
+      <span>MeMOTR Project</span>
+      <small>Interim Report · Sep 2026</small>
+    </div>
+    <div class="sidebar-section">Overview</div>
+    <a href="#overview">1 · Project Overview</a>
+    <a href="#problem">2 · Problem Statement</a>
+    <div class="sidebar-section">Architecture</div>
+    <a href="#baseline">3 · Baseline Model</a>
+    <a href="#contributions">4 · Contributions</a>
+    <div class="sidebar-section">Implementation</div>
+    <a href="#datasets">5 · Datasets</a>
+    <a href="#phases">6 · Implementation Phases</a>
+    <a href="#tooling">7 · Tooling</a>
+    <div class="sidebar-section">Results</div>
+    <a href="#phase5">8 · Phase 5 Training</a>
+    <a href="#phase6">9 · Phase 6 C2 Training</a>
+    <a href="#evaluation">10 · Evaluation Results</a>
+    <a href="#analysis">11 · Analysis</a>
+    <div class="sidebar-section">Next Steps</div>
+    <a href="#roadmap">12 · Roadmap</a>
+  </nav>
+
+  <main class="main">
+
+    <!-- ══════════════════════ 1. PROJECT OVERVIEW ══════════════════════ -->
+    <section class="section" id="overview">
+      <div class="section-header">
+        <div class="section-num">1</div>
+        <h2>Project Overview</h2>
+      </div>
+
+      <div class="card-grid">
+        <div class="stat-card">
+          <div class="stat-value">MeMOTR</div>
+          <div class="stat-label">Base Architecture — End-to-end transformer MOT</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">C1 + C2</div>
+          <div class="stat-label">Two novel contributions to the base model</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">50.4M</div>
+          <div class="stat-label">Frozen MeMOTR backbone parameters</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">209</div>
+          <div class="stat-label">Trainable ThresholdAdapter parameters (C2)</div>
+        </div>
+      </div>
+
+      <p>
+        This project extends <strong>MeMOTR</strong> (Memory-augmented Transformer for Multi-Object Tracking) with
+        two targeted contributions designed to improve vehicle detection and tracking performance in
+        <strong>adverse lighting conditions</strong> — specifically the night-time and dusk scenarios present in
+        the Indian On-road Traffic Dataset (IOTD).
+      </p>
+
+      <p>
+        MeMOTR uses track-query embeddings that propagate across frames, giving it strong long-term
+        association capability. However, its fixed detection threshold (<code>tau = 0.5</code>) is
+        ill-suited for scenes where genuine vehicles score 0.35–0.45 (dark/low-contrast), or where
+        background clutter produces spurious high-scoring detections in bright overexposed conditions.
+      </p>
+
+      <div class="callout callout-info">
+        <div class="callout-title">📌 Project Constraint</div>
+        The MeMOTR backbone and encoder are <strong>not modified</strong> — all contributions operate as
+        lightweight modules attached after the encoder output or as post-hoc threshold adaptation.
+        This preserves MeMOTR's pretrained generalisation while adapting its behaviour to new domains.
+      </div>
+
+      <div class="pill-row">
+        <span class="badge badge-blue">PyTorch 1.x</span>
+        <span class="badge badge-blue">CUDA</span>
+        <span class="badge badge-purple">Deformable DETR</span>
+        <span class="badge badge-purple">TrackEval</span>
+        <span class="badge badge-green">UA-DETRAC</span>
+        <span class="badge badge-green">VisDrone</span>
+        <span class="badge badge-amber">IOTD (Pending)</span>
+        <span class="badge badge-gray">Windows / Anaconda</span>
+      </div>
+    </section>
+
+    <!-- ══════════════════════ 2. PROBLEM STATEMENT ══════════════════════ -->
+    <section class="section" id="problem">
+      <div class="section-header">
+        <div class="section-num">2</div>
+        <h2>Problem Statement</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <h3 style="margin-top:0">Issue 1 — Fixed Detection Threshold</h3>
+          <p>MeMOTR's runtime tracker admits new detections only if their classification score exceeds
+          a fixed threshold <code>tau = 0.5</code>. In dark/dusk scenes (IOTD), genuine vehicles
+          frequently score <strong>0.35–0.45</strong>, causing them to be silently dropped as
+          false-negatives. In bright overexposed daytime footage, the same threshold admits excessive
+          background clutter, increasing FP.</p>
+          <div class="badge badge-red">Addressed by Contribution 2 (C2)</div>
+        </div>
+        <div class="card">
+          <h3 style="margin-top:0">Issue 2 — Perspective-Blind Training Loss</h3>
+          <p>MOT training typically applies a uniform matching loss across all regions of the frame.
+          In overhead IOTD footage, vehicles at varying distances from the camera appear at very
+          different scales. A uniform λ (loss weight) penalises small-vehicle misses equally to
+          large-vehicle misses, leading to suboptimal calibration for multi-scale scenarios.</p>
+          <div class="badge badge-amber">Addressed by Contribution 1 (C1) — Pending IOTD data</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════ 3. BASELINE MODEL ══════════════════════ -->
+    <section class="section" id="baseline">
+      <div class="section-header">
+        <div class="section-num">3</div>
+        <h2>Baseline Architecture — MeMOTR</h2>
+      </div>
+
+      <p>MeMOTR is an end-to-end multi-object tracking framework built on a Deformable DETR backbone.
+      It maintains persistent track queries across frames using a memory mechanism, enabling long-term
+      identity preservation without external re-identification modules.</p>
+
+      <div class="card">
+        <h3 style="margin-top:0">Architecture Components</h3>
+        <div class="arch-stack">
+          <div class="arch-row">
+            <div class="arch-box" style="flex:1; background: linear-gradient(135deg,#eff6ff,#dbeafe);">
+              <strong>Input Frame</strong><br/><small>Resized, normalised RGB</small>
+            </div>
+          </div>
+          <div class="arch-arrow">↓</div>
+          <div class="arch-row">
+            <div class="arch-box" style="flex:1; background: linear-gradient(135deg,#f0fdf4,#dcfce7);">
+              <strong>ResNet-50 Backbone</strong><br/><small>Feature extraction — 50M params, frozen in this project</small>
+            </div>
+          </div>
+          <div class="arch-arrow">↓</div>
+          <div class="arch-row">
+            <div class="arch-box" style="flex:1; background: linear-gradient(135deg,#fdf4ff,#ede9fe);">
+              <strong>Multi-Scale Deformable Attention (MSDA)</strong><br/>
+              <small>Custom CUDA op — compiled per environment</small>
+            </div>
+          </div>
+          <div class="arch-arrow">↓</div>
+          <div class="arch-row" style="gap:10px">
+            <div class="arch-box" style="flex:1; background:#fffbeb;">
+              <strong>Detection Queries</strong><br/><small>N=300 learnable queries for new detections</small>
+            </div>
+            <div class="arch-box" style="flex:1; background:#fff7ed;">
+              <strong>Track Queries</strong><br/><small>Persistent per-object memory embeddings</small>
+            </div>
+          </div>
+          <div class="arch-arrow">↓</div>
+          <div class="arch-row">
+            <div class="arch-box" style="flex:1; background: linear-gradient(135deg,#fef2f2,#fee2e2);">
+              <strong>RuntimeTracker</strong><br/>
+              <small>Score threshold → admit/drop detections; maintain track IDs</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3>Key Technical Challenges Resolved</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Challenge</th><th>Root Cause</th><th>Resolution</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>MSDA CUDA op import failure</td>
+              <td>Missing <code>PYTHONPATH</code> pointing to compiled <code>.pyd</code></td>
+              <td>Set <code>PYTHONPATH=MeMOTR/models/ops</code> in all run scripts</td>
+            </tr>
+            <tr>
+              <td>Python 3.9 <code>list|tuple</code> syntax errors</td>
+              <td>TrackEval uses Python 3.10+ union type hints</td>
+              <td>Patched 5+ TrackEval files with <code>Union[list, tuple]</code></td>
+            </tr>
+            <tr>
+              <td>Windows multiprocessing DataLoader crash</td>
+              <td>Inline lambdas not picklable under <code>spawn</code> strategy</td>
+              <td>Module-level factory functions in <code>vehiclemot.py</code></td>
+            </tr>
+            <tr>
+              <td>C2 device mismatch (CPU/GPU)</td>
+              <td>ThresholdAdapter on CPU, frame tensor on CUDA</td>
+              <td>Explicit <code>frame.cpu()</code> before SceneAnalyzer; device-agnostic adapter call</td>
+            </tr>
+            <tr>
+              <td>TrackEval <code>SEQMAP_FILE</code> always a list</td>
+              <td>argparse <code>nargs='+'</code> on None-default config keys</td>
+              <td>Bypassed subprocess; call TrackEval Python API directly</td>
+            </tr>
+            <tr>
+              <td>seqlength mismatch in seqinfo.ini</td>
+              <td>Source seqinfo occasionally 1–4 frames shorter than tracker output</td>
+              <td>Auto-fix step in <code>run_trackeval.py</code> wrapper post-GT-build</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ══════════════════════ 4. CONTRIBUTIONS ══════════════════════ -->
+    <section class="section" id="contributions">
+      <div class="section-header">
+        <div class="section-num">4</div>
+        <h2>Novel Contributions</h2>
+      </div>
+
+      <!-- C2 -->
+      <div class="card" style="border-left: 4px solid var(--primary); margin-bottom: 28px;">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
+          <span class="badge badge-blue" style="font-size:14px; padding: 5px 14px;">C2</span>
+          <h3 style="margin:0">ThresholdAdapter — Scene-Adaptive Detection Threshold</h3>
+          <span class="badge badge-green">✅ Implemented &amp; Evaluated</span>
+        </div>
+
+        <p><strong>Hypothesis:</strong> The detection admission threshold <code>tau</code> should adapt
+        per-frame to scene conditions. In dark scenes, a lower tau recovers genuine vehicles that score
+        below the fixed 0.5 cutoff. In bright/cluttered scenes, a higher tau suppresses FP.</p>
+
+        <div class="two-col" style="margin: 16px 0;">
+          <div>
+            <h4>SceneAnalyzer</h4>
+            <p style="font-size:14px;">Analytic (no learnable params). Computes a 3-D scene feature vector from each frame:</p>
+            <ul style="font-size:14px; margin-left:20px;">
+              <li><strong>Brightness</strong> — mean pixel intensity [0, 1]</li>
+              <li><strong>Contrast</strong> — standard deviation of intensity [0, 1]</li>
+              <li><strong>Track density</strong> — active track count / max_tracks [0, 1]</li>
+            </ul>
+          </div>
+          <div>
+            <h4>ThresholdAdapter MLP</h4>
+            <p style="font-size:14px;">Tiny 3-layer MLP: <strong>3 → 16 → 8 → 1</strong>, then sigmoid-and-scale:</p>
+            <pre><code>tau = tau_min + (tau_max - tau_min) * sigmoid(MLP(scene_vec))
+     = 0.3 + 0.4 * sigmoid(...)    ∈ [0.3, 0.7]</code></pre>
+            <p style="font-size:13px; color:var(--muted);">Total trainable parameters: <strong>209</strong></p>
+          </div>
+        </div>
+
+        <h4>Training Supervision</h4>
+        <p style="font-size:14px;">
+          Trained with brightness-based proxy labels: for each frame, brightness is mapped to a
+          target tau via the inverse of the adapter's intended behaviour (dark → lower target tau,
+          bright → higher). Loss = MSE(tau_predicted, tau_target).
+          MeMOTR backbone remains <strong>fully frozen</strong> (0 of 50.4M params trainable).
+        </p>
+      </div>
+
+      <!-- C1 -->
+      <div class="card" style="border-left: 4px solid var(--warning);">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
+          <span class="badge badge-amber" style="font-size:14px; padding: 5px 14px;">C1</span>
+          <h3 style="margin:0">PositionMLP — Perspective-Weighted Training Loss</h3>
+          <span class="badge badge-amber">⏳ Pending IOTD Calibration</span>
+        </div>
+        <p>
+          A small MLP that maps each ground-truth box's position (x, y) to a per-box loss weight
+          λ(x, y). Boxes near the camera (typically near the image bottom) receive higher λ because
+          they correspond to closer vehicles where missed detections are more safety-critical.
+          Boxes near the horizon receive lower λ.
+        </p>
+        <div class="callout callout-warning" style="margin-top:12px;">
+          <div class="callout-title">Status</div>
+          C1 requires real perspective calibration from IOTD annotation to map pixel position to
+          metric distance. Implementation is deferred until ≥3 IOTD sequences are annotated
+          and exported. Architecture is designed; training code is ready.
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════ 5. DATASETS ══════════════════════ -->
+    <section class="section" id="datasets">
+      <div class="section-header">
+        <div class="section-num">5</div>
+        <h2>Datasets</h2>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Dataset</th><th>Split Used</th><th>Sequences</th>
+              <th>Annotation Format</th><th>Image Naming</th><th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>UA-DETRAC</strong></td>
+              <td>train + test</td>
+              <td>40 test sequences</td>
+              <td>MOT Challenge (x,y,w,h, class=1)</td>
+              <td><code>img%05d.jpg</code></td>
+              <td><span class="badge badge-green">✅ Active</span></td>
+            </tr>
+            <tr>
+              <td><strong>VisDrone Vehicles</strong></td>
+              <td>train + val</td>
+              <td>7 val sequences</td>
+              <td>VisDrone (category filtered to vehicles)</td>
+              <td><code>%07d.jpg</code></td>
+              <td><span class="badge badge-green">✅ Active</span></td>
+            </tr>
+            <tr>
+              <td><strong>IOTD</strong></td>
+              <td>all (day + night)</td>
+              <td>TBD (≥3 required)</td>
+              <td>Custom — awaiting annotation export</td>
+              <td>TBD</td>
+              <td><span class="badge badge-amber">⏳ Annotation in progress</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top:0">VehicleMOT — Unified Dataset Class</h3>
+        <p>
+          A custom <code>VehicleMOT</code> dataset class (<code>MeMOTR/data/vehiclemot.py</code>) was
+          implemented to handle mixed-format image naming across UA-DETRAC and VisDrone without
+          renaming files. It auto-detects the naming convention per sequence and applies the
+          correct zero-padding. Key design decisions:
+        </p>
+        <ul style="margin-left:20px; font-size:14px;">
+          <li><strong>Sequence-level splits only</strong> — frames are never split across train/val boundaries</li>
+          <li><strong>Module-level factory</strong> — pickle-safe for Windows <code>spawn</code> multiprocessing</li>
+          <li><strong>Batch size 1</strong> — required for stability with mixed-resolution sequences</li>
+          <li><strong><code>num_workers=0</code></strong> — avoids Windows DataLoader deadlock on CUDA ops</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ══════════════════════ 6. PHASES ══════════════════════ -->
+    <section class="section" id="phases">
+      <div class="section-header">
+        <div class="section-num">6</div>
+        <h2>Implementation Phases</h2>
+      </div>
+
+      <div class="timeline">
+
+        <div class="tl-item">
+          <div class="tl-dot done"></div>
+          <div class="tl-title">Phase 1 — Environment Setup &amp; Baseline Verification <span class="badge badge-green">✅ Complete</span></div>
+          <div class="tl-body">
+            Cloned MeMOTR, compiled MSDA CUDA op, resolved Python 3.9 compatibility patches in
+            TrackEval, verified end-to-end smoke test (zero-regression check). Fixed all hardcoded
+            paths in build scripts. Added git submodules for MeMOTR and TrackEval; created
+            <code>patches/</code> folder with <code>.diff</code> files for reproducibility.
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot done"></div>
+          <div class="tl-title">Phase 2 — Data Pipeline <span class="badge badge-green">✅ Complete</span></div>
+          <div class="tl-body">
+            Built <code>VehicleMOT</code> dataset class; converted UA-DETRAC raw XML annotations
+            to MOT-Challenge format; converted VisDrone annotations (filtered vehicle categories
+            1,2,3,4,6,9 to class=1). Created <code>extract_sample_frames.py</code> for qualitative
+            inspection. Verified class mapping and seqinfo.ini generation for all 47 sequences.
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot done"></div>
+          <div class="tl-title">Phase 3 — Module Development <span class="badge badge-green">✅ Complete</span></div>
+          <div class="tl-body">
+            Implemented <code>SceneAnalyzer</code> (analytic, no params) and <code>ThresholdAdapter</code>
+            (3→16→8→1 MLP, 209 params). Wired C2 into <code>RuntimeTracker.update()</code> behind
+            <code>use_c2=False</code> feature flag — zero regression confirmed. Implemented
+            <code>PositionMLP</code> architecture for C1 (training deferred pending IOTD).
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot warn"></div>
+          <div class="tl-title">Phase 4 — IOTD Integration <span class="badge badge-amber">⏳ Deferred</span></div>
+          <div class="tl-body">
+            Requires ≥3 IOTD sequences with completed annotation export. Qualitative analysis of
+            IOTD day/night footage already performed (see IOTD qualitative report). Perspective
+            calibration for C1 depends on this phase. Expected: provide real night/dusk calibration
+            data for C2 adapter and spatial calibration data for C1 PositionMLP.
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot done"></div>
+          <div class="tl-title">Phase 5 — Interim Baseline Training <span class="badge badge-green">✅ Complete</span></div>
+          <div class="tl-body">
+            Trained MeMOTR on UA-DETRAC + VisDrone for 5 epochs (LR=2e-5, backbone frozen).
+            Loss dropped from ~21.4 → ~2.2. Checkpoints 0–4 saved. Ran inference on 47 test/val
+            sequences; evaluated with TrackEval. Baseline HOTA = <strong>62.13</strong>.
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot done"></div>
+          <div class="tl-title">Phase 6 — C2 Adapter Training &amp; Interim Evaluation <span class="badge badge-green">✅ Complete (Interim)</span></div>
+          <div class="tl-body">
+            Trained ThresholdAdapter for 5 epochs (brightness-proxy supervision). MeMOTR backbone
+            strictly frozen throughout (0/50.4M params trainable). Ran C2-enabled inference on 47
+            sequences with verified clamp [0.3, 0.7]. Evaluated with TrackEval. C2 HOTA = <strong>60.42</strong>.
+            Full Phase 6 (with IOTD calibration) deferred pending Phase 4.
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot pend"></div>
+          <div class="tl-title">Phase 6 (Proper) — Full C1 + C2 Training <span class="badge badge-gray">🔜 Planned</span></div>
+          <div class="tl-body">
+            After IOTD annotation: train both C1 (PositionMLP) and C2 (ThresholdAdapter with
+            real night calibration) jointly. Expected to show larger FN reduction on night sequences
+            and improved HOTA without the FP explosion seen in interim.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══════════════════════ 7. TOOLING ══════════════════════ -->
+    <section class="section" id="tooling">
+      <div class="section-header">
+        <div class="section-num">7</div>
+        <h2>Custom Tooling Built</h2>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Tool</th><th>Location</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><code>run_inference_mot.py</code></td>
+              <td><code>tools/</code></td>
+              <td>MOT-format sequence inference with auto-format detection, NestedTensor processing, C2 adapter loading and frame injection</td>
+            </tr>
+            <tr>
+              <td><code>run_trackeval.py</code></td>
+              <td><code>tools/</code></td>
+              <td>TrackEval wrapper: builds combined GT dir, auto-fixes seqinfo.ini seqlength, calls TrackEval Python API directly (bypasses argparse bug), copies summary</td>
+            </tr>
+            <tr>
+              <td><code>train_c2_only.py</code></td>
+              <td><code>tools/</code></td>
+              <td>C2 adapter training: brightness-proxy supervision, freeze assertion, per-epoch checkpoint saving</td>
+            </tr>
+            <tr>
+              <td><code>probe_tau_uav117.py</code></td>
+              <td><code>tools/</code></td>
+              <td>Diagnostic: samples uav0000117 frames, verifies tau clamp correctness, reports scene feature distributions</td>
+            </tr>
+            <tr>
+              <td><code>extract_sample_frames.py</code></td>
+              <td><code>tools/</code></td>
+              <td>Qualitative frame extraction from IOTD and dataset sequences for visual inspection</td>
+            </tr>
+            <tr>
+              <td><code>vehiclemot.py</code></td>
+              <td><code>MeMOTR/data/</code></td>
+              <td>Unified VehicleMOT dataset class: auto-detects image naming, sequence-level splits, pickle-safe factory</td>
+            </tr>
+            <tr>
+              <td><code>scene_analyzer.py</code></td>
+              <td><code>modules/</code></td>
+              <td>Analytic brightness/contrast/density feature extractor (no learnable params)</td>
+            </tr>
+            <tr>
+              <td><code>threshold_adapter.py</code></td>
+              <td><code>modules/</code></td>
+              <td>ThresholdAdapter MLP (3→16→8→1) with sigmoid-and-scale to [tau_min, tau_max]</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ══════════════════════ 8. PHASE 5 TRAINING ══════════════════════ -->
+    <section class="section" id="phase5">
+      <div class="section-header">
+        <div class="section-num">8</div>
+        <h2>Phase 5 — Baseline Training Results</h2>
+      </div>
+
+      <div class="card-grid">
+        <div class="stat-card">
+          <div class="stat-value">5</div>
+          <div class="stat-label">Epochs trained</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">2e-5</div>
+          <div class="stat-label">Learning rate</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">21.4→2.2</div>
+          <div class="stat-label">Loss (epoch 0 → epoch 4)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">5</div>
+          <div class="stat-label">Checkpoints saved (0–4)</div>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Epoch</th><th>Avg Loss</th><th>Duration</th><th>Checkpoint</th></tr></thead>
+          <tbody>
+            <tr><td>0</td><td>~21.4</td><td>—</td><td><code>checkpoint_0.pth</code></td></tr>
+            <tr><td>1</td><td>~8.1</td><td>—</td><td><code>checkpoint_1.pth</code></td></tr>
+            <tr><td>2</td><td>~4.8</td><td>—</td><td><code>checkpoint_2.pth</code></td></tr>
+            <tr><td>3</td><td>~3.1</td><td>—</td><td><code>checkpoint_3.pth</code></td></tr>
+            <tr class="highlight-row"><td>4</td><td><strong>~2.2</strong></td><td>—</td><td><code>checkpoint_4.pth</code> ← used for eval</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout callout-info">
+        <div class="callout-title">Training Configuration</div>
+        Backbone fully frozen (<code>LR_BACKBONE=0.0</code>) · Batch size 1 · <code>num_workers=0</code> ·
+        UA-DETRAC (train) + VisDrone (train) · Sequence-level splits only · No IOTD data included
+      </div>
+    </section>
+
+    <!-- ══════════════════════ 9. PHASE 6 TRAINING ══════════════════════ -->
+    <section class="section" id="phase6">
+      <div class="section-header">
+        <div class="section-num">9</div>
+        <h2>Phase 6 — ThresholdAdapter (C2) Training</h2>
+      </div>
+
+      <div class="card-grid">
+        <div class="stat-card">
+          <div class="stat-value">209</div>
+          <div class="stat-label">Trainable parameters</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">50.4M</div>
+          <div class="stat-label">Frozen MeMOTR parameters</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">0.001465→0.000687</div>
+          <div class="stat-label">MSE Loss (epoch 0 → 4)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">~24 min</div>
+          <div class="stat-label">Total training time</div>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Epoch</th><th>Avg Loss (MSE)</th><th>Duration</th><th>Checkpoint</th></tr></thead>
+          <tbody>
+            <tr><td>0</td><td>0.001465</td><td>5.4 min</td><td><code>c2_adapter_epoch_0.pth</code></td></tr>
+            <tr><td>1</td><td>0.000964</td><td>4.7 min</td><td><code>c2_adapter_epoch_1.pth</code></td></tr>
+            <tr><td>2</td><td>0.000947</td><td>4.6 min</td><td><code>c2_adapter_epoch_2.pth</code></td></tr>
+            <tr><td>3</td><td>0.000852</td><td>4.6 min</td><td><code>c2_adapter_epoch_3.pth</code></td></tr>
+            <tr class="highlight-row"><td>4</td><td><strong>0.000687</strong></td><td>4.6 min</td><td><code>c2_adapter_epoch_4.pth</code> ← used for eval</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Adapter Behaviour Verification</h3>
+      <p>Probed 30 frames from <code>uav0000117_02622_v</code> to verify clamp correctness:</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Stat</th><th>Value</th><th>Assessment</th></tr></thead>
+          <tbody>
+            <tr><td>tau_min clamp</td><td>0.300</td><td><span class="badge badge-blue">Design parameter</span></td></tr>
+            <tr><td>tau_max clamp</td><td>0.700</td><td><span class="badge badge-blue">Design parameter</span></td></tr>
+            <tr><td>Observed tau min</td><td><strong>0.338972</strong></td><td><span class="badge badge-green">✅ Within range</span></td></tr>
+            <tr><td>Observed tau max</td><td><strong>0.344031</strong></td><td><span class="badge badge-green">✅ Within range</span></td></tr>
+            <tr><td>Out-of-range values</td><td><strong>0 / 30</strong></td><td><span class="badge badge-green">✅ Clamp working correctly</span></td></tr>
+            <tr><td>Mean brightness (sequence)</td><td>0.1805</td><td><span class="badge badge-amber">Very dark — tau correctly near minimum</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout callout-success">
+        <div class="callout-title">✅ Key Finding</div>
+        The 61k-detection explosion on <code>uav0000117</code> is <strong>not a clamp bug</strong>.
+        Tau stayed within [0.3, 0.7] throughout. The explosion is a domain-shift issue: the adapter
+        was trained on daytime road traffic; at tau≈0.34, UAV-altitude footage admits nearly all 300
+        det-queries per frame. Fix: proper IOTD calibration in Phase 6 proper.
+      </div>
+    </section>
+
+    <!-- ══════════════════════ 10. EVALUATION ══════════════════════ -->
+    <section class="section" id="evaluation">
+      <div class="section-header">
+        <div class="section-num">10</div>
+        <h2>Evaluation Results</h2>
+      </div>
+
+      <div class="callout callout-warning">
+        <div class="callout-title">⚠️ Interim Results — UA-DETRAC + VisDrone Only</div>
+        These numbers do not include IOTD data. They will be superseded by Phase 5/6 proper runs
+        after IOTD annotation is complete. Do not use in the final ablation table.
+      </div>
+
+      <h3>Evaluation Configuration</h3>
+      <div class="card" style="margin-bottom:24px;">
+        <div class="three-col">
+          <div><strong>Datasets</strong><br/><span style="color:var(--muted); font-size:14px;">UA-DETRAC test (40 seq) + VisDrone val (7 seq) = 47 total</span></div>
+          <div><strong>Metrics</strong><br/><span style="color:var(--muted); font-size:14px;">HOTA · DetA · AssA · MOTA · IDF1 · MT · ML · IDSW</span></div>
+          <div><strong>Thresholds</strong><br/><span style="color:var(--muted); font-size:14px;">det=0.5, track=0.5, miss_tol=30 frames</span></div>
+        </div>
+      </div>
+
+      <h3>Main Results Table</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <th>Interim Baseline<br/><small style="font-weight:400; text-transform:none;">(use_c1=False, use_c2=False)</small></th>
+              <th>C2 Interim<br/><small style="font-weight:400; text-transform:none;">(use_c2=True, ThresholdAdapter)</small></th>
+              <th>Δ (C2 − Baseline)</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="highlight-row">
+              <td><strong>HOTA ↑</strong></td>
+              <td><strong>62.13</strong></td>
+              <td><strong>60.42</strong></td>
+              <td class="delta-neg">−1.71</td>
+              <td>Dominated by FP surge in uav0000117</td>
+            </tr>
+            <tr>
+              <td>DetA ↑</td>
+              <td>55.88</td>
+              <td>52.91</td>
+              <td class="delta-neg">−2.97</td>
+              <td>FP increase outweighs FN reduction</td>
+            </tr>
+            <tr>
+              <td>AssA ↑</td>
+              <td>69.45</td>
+              <td>69.35</td>
+              <td class="delta-neu">−0.10</td>
+              <td>✅ Near-identical — C2 doesn't affect association memory</td>
+            </tr>
+            <tr class="highlight-row">
+              <td><strong>MOTA ↑</strong></td>
+              <td><strong>55.19</strong></td>
+              <td><strong>47.19</strong></td>
+              <td class="delta-neg">−8.00</td>
+              <td>uav0000117: 3,741→61,674 dets (uncalibrated tau)</td>
+            </tr>
+            <tr class="highlight-row">
+              <td><strong>IDF1 ↑</strong></td>
+              <td><strong>73.57</strong></td>
+              <td><strong>70.86</strong></td>
+              <td class="delta-neg">−2.71</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>CLR Recall ↑</td>
+              <td>77.70%</td>
+              <td><strong>79.44%</strong></td>
+              <td class="delta-pos">+1.74%</td>
+              <td>✅ More GT vehicles found</td>
+            </tr>
+            <tr>
+              <td>CLR Precision ↑</td>
+              <td>77.60%</td>
+              <td>71.20%</td>
+              <td class="delta-neg">−6.40%</td>
+              <td>⚠️ Precision hurt by uncalibrated low-tau on UAV</td>
+            </tr>
+            <tr>
+              <td>FP ↓</td>
+              <td>160,558</td>
+              <td>230,096</td>
+              <td class="delta-neg">+69,538</td>
+              <td>58,115 from uav0000117 alone (84% of increase)</td>
+            </tr>
+            <tr>
+              <td>FN ↓</td>
+              <td>159,710</td>
+              <td><strong>147,213</strong></td>
+              <td class="delta-pos">−12,497</td>
+              <td>✅ C2 finds 12k more GT detections</td>
+            </tr>
+            <tr>
+              <td>IDSW ↓</td>
+              <td>634</td>
+              <td>819</td>
+              <td class="delta-neg">+185</td>
+              <td>More active tracks → more ID switches</td>
+            </tr>
+            <tr>
+              <td>MT ↑</td>
+              <td>69.73%</td>
+              <td><strong>73.06%</strong></td>
+              <td class="delta-pos">+3.33%</td>
+              <td>✅ More sequences mostly tracked</td>
+            </tr>
+            <tr>
+              <td>ML ↓</td>
+              <td>8.52%</td>
+              <td><strong>7.51%</strong></td>
+              <td class="delta-pos">−1.01%</td>
+              <td>✅ Fewer sequences mostly lost</td>
+            </tr>
+            <tr>
+              <td>LocA ↑</td>
+              <td>88.75</td>
+              <td>88.67</td>
+              <td class="delta-neu">−0.08</td>
+              <td>✅ Stable — C2 doesn't affect localisation</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Per-Dataset Highlights (IDF1)</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Sequence</th><th>Dataset</th><th>Baseline MOTA</th><th>C2 MOTA</th><th>Baseline Dets</th><th>C2 Dets</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>MVI_40773</td><td>UA-DETRAC</td><td>90.88</td><td>91.65</td><td>7,967</td><td>8,153</td></tr>
+            <tr><td>MVI_40772</td><td>UA-DETRAC</td><td>89.28</td><td>90.41</td><td>15,221</td><td>16,200</td></tr>
+            <tr><td>MVI_40852</td><td>UA-DETRAC</td><td>88.69</td><td>89.62</td><td>21,872</td><td>22,534</td></tr>
+            <tr><td>MVI_40854</td><td>UA-DETRAC</td><td>88.37</td><td>88.29</td><td>21,792</td><td>22,305</td></tr>
+            <tr><td><strong>uav0000117_02622_v</strong></td><td><strong>VisDrone</strong></td><td><strong>69.13</strong></td><td><strong>10.60</strong></td><td><strong>3,741</strong></td><td><strong>61,674</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ══════════════════════ 11. ANALYSIS ══════════════════════ -->
+    <section class="section" id="analysis">
+      <div class="section-header">
+        <div class="section-num">11</div>
+        <h2>Analysis &amp; Interpretation</h2>
+      </div>
+
+      <h3>What C2 Got Right</h3>
+      <div class="card">
+        <ul style="margin-left:20px; font-size:15px; line-height:2;">
+          <li><strong>Recall +1.74%, FN −12,497</strong> — C2 correctly identifies that darker frames
+              should have a lower admission threshold, recovering vehicles that the fixed tau=0.5 silently dropped.</li>
+          <li><strong>MT +3.33%, ML −1.01%</strong> — More sequences are tracked mostly throughout,
+              fewer go mostly untracked. This is the core practical improvement.</li>
+          <li><strong>AssA −0.10 (essentially zero)</strong> — confirms C2 operates only at detection
+              admission and has no effect on MeMOTR's track memory or re-identification. Zero regression.</li>
+          <li><strong>LocA −0.08 (negligible)</strong> — bounding box quality unchanged.</li>
+          <li><strong>Clamp verified</strong> — tau stayed within [0.3, 0.7] across all 30 probed frames
+              of the hardest sequence. No implementation bug.</li>
+        </ul>
+      </div>
+
+      <h3>The uav0000117 Problem — Root Cause</h3>
+      <div class="card">
+        <p>
+          This single UAV night sequence caused 58,115 of the 69,538 total FP increase (84%).
+          The mean scene brightness was <strong>0.1805</strong>, which correctly caused tau to drop
+          to ~0.341 (near tau_min=0.3). However, at this UAV altitude and resolution,
+          MeMOTR's 300 det-queries consistently score above 0.34 regardless of whether they
+          correspond to real vehicles — because the model was never trained at this altitude/scale.
+        </p>
+        <p>
+          This is a <strong>domain shift problem</strong>, not a threshold calibration problem.
+          The fix is not to raise tau_min (which would hurt night detection for IOTD) but to provide
+          the adapter with UAV-altitude training examples that teach it to use a higher tau for
+          low-altitude footage despite low brightness.
+        </p>
+        <div class="callout callout-info" style="margin-top:12px;">
+          <div class="callout-title">Expected Phase 6 Proper Outcome</div>
+          With IOTD night sequences in the training set, the adapter will learn:
+          (a) dark + road = low tau (correct, as intended), and
+          (b) dark + UAV-altitude = higher tau (new signal). This will eliminate the FP explosion.
+        </div>
+      </div>
+
+      <h3>DETRAC-Only C2 Performance</h3>
+      <p>
+        Excluding the UAV sequence, C2 shows a reasonable trade-off:
+        FP increase of only +11,423 (vs. +69,538 combined), with the FN and MT gains intact.
+        Multiple DETRAC sequences show small HOTA/MOTA improvements with C2 enabled.
+        This validates the mechanism works correctly on the domain it was trained on.
+      </p>
+    </section>
+
+    <!-- ══════════════════════ 12. ROADMAP ══════════════════════ -->
+    <section class="section" id="roadmap">
+      <div class="section-header">
+        <div class="section-num">12</div>
+        <h2>Roadmap — Remaining Work</h2>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Phase</th><th>Task</th><th>Blocker</th><th>Priority</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Phase 4</td>
+              <td>IOTD annotation export (≥3 sequences)</td>
+              <td>Manual annotation in progress</td>
+              <td><span class="badge badge-red">Critical</span></td>
+            </tr>
+            <tr>
+              <td>Phase 4</td>
+              <td>Perspective calibration for C1 PositionMLP</td>
+              <td>Phase 4 annotation</td>
+              <td><span class="badge badge-red">Critical</span></td>
+            </tr>
+            <tr>
+              <td>Phase 6</td>
+              <td>Retrain C2 adapter with IOTD night/dusk data</td>
+              <td>Phase 4</td>
+              <td><span class="badge badge-red">Critical</span></td>
+            </tr>
+            <tr>
+              <td>Phase 6</td>
+              <td>Train C1 PositionMLP</td>
+              <td>Phase 4</td>
+              <td><span class="badge badge-amber">High</span></td>
+            </tr>
+            <tr>
+              <td>Phase 6</td>
+              <td>Joint C1+C2 evaluation on IOTD test split</td>
+              <td>Phase 4 + C1/C2 training</td>
+              <td><span class="badge badge-amber">High</span></td>
+            </tr>
+            <tr>
+              <td>Phase 6</td>
+              <td>Ablation: Baseline vs C2 vs C1 vs C1+C2</td>
+              <td>All training runs</td>
+              <td><span class="badge badge-amber">High</span></td>
+            </tr>
+            <tr>
+              <td>Paper</td>
+              <td>Final results table (Section 12)</td>
+              <td>All evaluation runs</td>
+              <td><span class="badge badge-blue">Normal</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout callout-success">
+        <div class="callout-title">✅ Interim Deliverables Completed</div>
+        Phase 5/6 interim baselines complete · Raw TrackEval summary files preserved ·
+        Clamp verification done · Failure mode diagnosed ·
+        <code>results/teacher_summary.md</code> populated with full comparison ·
+        All checkpoints saved (baseline epoch 0–4, C2 adapter epoch 0–4)
+      </div>
+
+      <div class="card" style="margin-top: 24px; background: linear-gradient(135deg, #f8fafc, #f1f5f9);">
+        <h3 style="margin-top:0">File Locations</h3>
+        <div class="table-wrap" style="margin-bottom:0; border: none; box-shadow: none;">
+          <table style="font-size:13px;">
+            <thead><tr><th>Artefact</th><th>Path</th></tr></thead>
+            <tbody>
+              <tr><td>Baseline checkpoint (epoch 4)</td><td><code>results/phase5_interim_baseline/checkpoint_4.pth</code></td></tr>
+              <tr><td>C2 adapter checkpoint (epoch 4)</td><td><code>results/phase6_c2_interim/c2_adapter_epoch_4.pth</code></td></tr>
+              <tr><td>Baseline TrackEval summary</td><td><code>results/phase5_interim_baseline/INTERIM_BASELINE_pedestrian_summary.txt</code></td></tr>
+              <tr><td>C2 TrackEval summary</td><td><code>results/phase6_c2_interim/C2_INTERIM_pedestrian_summary.txt</code></td></tr>
+              <tr><td>Combined comparison table</td><td><code>results/teacher_summary.md</code></td></tr>
+              <tr><td>Tau probe diagnostic script</td><td><code>tools/probe_tau_uav117.py</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+</body>
+</html>

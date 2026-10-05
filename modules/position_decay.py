@@ -60,10 +60,10 @@ TRAINING STRATEGY (Section 4)
 WIRING INTO memorizing_motr.py (Task 3.4 / Phase 3)
 ------------------------------------------------------
   Inserted behind config flag `use_c1` (default False).
-  When use_c1=True, inside TemporalInteractionModule.forward():
-      lambda_val = position_mlp(zone_encoder(box_cy, box_h, frame_h))
+  When use_c1=True, inside QueryUpdater.forward():
+      lambda_val = position_mlp(zone_encoder(cy_norm, h_norm))
       # replaces: lambda_val = 0.01   # TODO(C1)
-  
+
 NOVELTY CLAIM vs. STFN-ADM-MTHS (do NOT weaken)
 -------------------------------------------------
   STFN-ADM-MTHS conditions decay on trajectory motion state.
@@ -88,8 +88,13 @@ class PerspectiveZoneEncoder(nn.Module):
     """
     Deterministic zone encoder — no learned parameters.
 
-    Maps a bounding box's vertical center (normalized) and height (normalized)
-    to a 4-dim input vector for PositionMLP.
+    Maps each tracked object's vertical center (normalized) and height
+    (normalized) to a 4-dim input vector for PositionMLP.
+
+    The zone assignment is a hard threshold:
+        FAR  zone (top ~30%):    y_norm < boundary_far_mid
+        MID  zone (middle ~40%): boundary_far_mid <= y_norm < boundary_mid_near
+        NEAR zone (bottom ~30%): y_norm >= boundary_mid_near
 
     Args
     ----
@@ -99,73 +104,118 @@ class PerspectiveZoneEncoder(nn.Module):
 
     def __init__(
         self,
-        boundary_far_mid: float = BOUNDARY_FAR_MID,
+        boundary_far_mid: float  = BOUNDARY_FAR_MID,
         boundary_mid_near: float = BOUNDARY_MID_NEAR,
     ):
         super().__init__()
+        assert 0.0 < boundary_far_mid < boundary_mid_near < 1.0, \
+            "Zone boundaries must satisfy 0 < far_mid < mid_near < 1"
         self.boundary_far_mid  = boundary_far_mid
         self.boundary_mid_near = boundary_mid_near
 
     def forward(self, cy_norm: torch.Tensor, h_norm: torch.Tensor) -> torch.Tensor:
         """
+        Encode each object's position as a 4-dim zone vector.
+
         Parameters
         ----------
         cy_norm : torch.Tensor  shape (N,)
             Normalized vertical center of each bounding box, in [0, 1].
-            0 = top of frame, 1 = bottom of frame.
+            0 = top of frame (FAR), 1 = bottom (NEAR).
         h_norm : torch.Tensor  shape (N,)
             Normalized height of each bounding box (box_height / frame_height).
+            Also in [0, 1].
 
         Returns
         -------
         encoding : torch.Tensor  shape (N, 4)
-            [zone_far, zone_mid, zone_near, h_norm] per box.
+            Columns: [zone_far (0/1), zone_mid (0/1), zone_near (0/1), h_norm]
+            Exactly one of the three zone columns is 1 per row.
         """
-        raise NotImplementedError(
-            "PerspectiveZoneEncoder.forward() is not yet implemented. "
-            "Implement in Phase 3 (Task 3.3) of the project execution plan."
-        )
+        # One-hot zone assignment (float, for MLP input)
+        # zone_far  : 1 where cy_norm is in [0, boundary_far_mid)
+        # zone_mid  : 1 where cy_norm is in [boundary_far_mid, boundary_mid_near)
+        # zone_near : 1 where cy_norm is in [boundary_mid_near, 1]
+        zone_far  = (cy_norm <  self.boundary_far_mid).float()
+        zone_near = (cy_norm >= self.boundary_mid_near).float()
+        zone_mid  = 1.0 - zone_far - zone_near           # exactly 1 or 0
+
+        # Stack to (N, 4): [zone_far, zone_mid, zone_near, h_norm]
+        encoding = torch.stack([zone_far, zone_mid, zone_near, h_norm], dim=1)
+        return encoding
 
 
 class PositionMLP(nn.Module):
     """
     Tiny 3-layer MLP (~1000 params) mapping zone encoding to λ_adaptive.
 
-    Input  : 4-dim  [zone_far, zone_mid, zone_near, norm_box_height]
-    Output : scalar λ_adaptive in [LAMBDA_MIN, LAMBDA_MAX]
+    Architecture:
+        Linear(4 → 32) → ReLU → Linear(32 → 16) → ReLU → Linear(16 → 1)
+        → Sigmoid → scale to [lambda_min, lambda_max]
+
+    Exact parameter count:
+        (4×32 + 32) + (32×16 + 16) + (16×1 + 1) = 160 + 528 + 17 = 705 params
+
+    The sigmoid-scaling output guarantees the output is always strictly inside
+    (lambda_min, lambda_max) regardless of weight values.
 
     Args
     ----
-    lambda_min : float  Lower bound of the λ output range.
-    lambda_max : float  Upper bound of the λ output range.
+    lambda_min : float  Lower bound of the λ output range.  Default 0.002.
+    lambda_max : float  Upper bound of the λ output range.  Default 0.050.
     """
 
-    def __init__(self, lambda_min: float = LAMBDA_MIN, lambda_max: float = LAMBDA_MAX):
+    def __init__(
+        self,
+        lambda_min: float = LAMBDA_MIN,
+        lambda_max: float = LAMBDA_MAX,
+    ):
         super().__init__()
+        assert lambda_min < lambda_max, "lambda_min must be strictly less than lambda_max"
         self.lambda_min = lambda_min
         self.lambda_max = lambda_max
-        # MLP layers defined in Phase 3 (Task 3.3)
-        self._layers = None
+
+        # 4 → 32 → 16 → 1
+        self._layers = nn.Sequential(
+            nn.Linear(4, 32),
+            nn.ReLU(),
+            nn.Linear(32, 16),
+            nn.ReLU(),
+            nn.Linear(16, 1),
+        )
 
     def forward(self, zone_encoding: torch.Tensor) -> torch.Tensor:
         """
+        Map zone encoding to an adaptive memory decay rate.
+
         Parameters
         ----------
         zone_encoding : torch.Tensor  shape (N, 4) or (4,)
             Output of PerspectiveZoneEncoder.forward().
+            4 columns: [zone_far, zone_mid, zone_near, h_norm]
 
         Returns
         -------
         lambda_adaptive : torch.Tensor  shape (N,) or scalar
-            Adaptive memory decay rate, always in [lambda_min, lambda_max].
+            Adaptive memory decay rate, always in (lambda_min, lambda_max).
+            - FAR zone input → tends toward lambda_min (small decay; keep memory)
+            - NEAR zone input → tends toward lambda_max (large decay; trust obs)
+            (The direction of this tendency is learned, not hardcoded.)
         """
-        raise NotImplementedError(
-            "PositionMLP.forward() is not yet implemented. "
-            "Implement in Phase 3 (Task 3.3) of the project execution plan."
-        )
+        unbatched = zone_encoding.ndim == 1
+        if unbatched:
+            zone_encoding = zone_encoding.unsqueeze(0)  # (1, 4)
+
+        raw = self._layers(zone_encoding)               # (N, 1)
+        # Scale from (0, 1) to (lambda_min, lambda_max)
+        lam = self.lambda_min + (self.lambda_max - self.lambda_min) * torch.sigmoid(raw)
+        lam = lam.squeeze(-1)                           # (N,)
+
+        if unbatched:
+            lam = lam.squeeze(0)                        # scalar
+
+        return lam
 
     def count_parameters(self) -> int:
-        """Utility: count trainable parameters (target ~1000)."""
-        if self._layers is None:
-            return 0
+        """Return the number of trainable parameters (should be ~705)."""
         return sum(p.numel() for p in self._layers.parameters() if p.requires_grad)

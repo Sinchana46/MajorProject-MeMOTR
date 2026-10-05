@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "d:\MajorProject-MeMOTR\tools\generate_report_pdf.py", line 279, in <module>
+    # \u2500\u2500 Build story \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+  File "d:\MajorProject-MeMOTR\tools\generate_report_pdf.py", line 229, in cover_page
+    # Dark background block
+  File "d:\MajorProject-MeMOTR\tools\generate_report_pdf.py", line 118, in P
+    if isinstance(style, str):
+KeyError: <ParagraphStyle 'badge'>
