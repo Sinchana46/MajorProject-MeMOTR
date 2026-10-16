@@ -1,0 +1,7 @@
+seed,setting,HOTA,DetA,AssA,MOTA,IDF1,IDSW,FP,FN,precision,recall,summary_path,summary_sha256
+42,S_A,64.122,60.542,68.212,68.149,84.639,3,841,488,81.455,88.331,results_after_tuning/sweep/S_A/trackeval/trackeval_output/AFTER_S_A/pedestrian_summary.txt,95bf296b2dde89ecaa3c3aace2e7f8b4c89269da4ff67a863a389716c0ffb1f5
+42,S_D,63.891,60.423,67.89,68.077,84.508,2,903,430,80.602,89.718,results_after_tuning/sweep/S_D/trackeval/trackeval_output/AFTER_S_D/pedestrian_summary.txt,4fce2678ce7e877cd52067ea38a5f814fb515f31b8a0e723927b3fad0b237200
+1234,S_A,61.067,57.015,65.809,60.641,81.245,3,1297,346,74.732,91.726,results_after_tuning/seed_check/seed1234_S_A/trackeval/trackeval_output/SEED1234_S_A/pedestrian_summary.txt,d23ef9bd76861cbd9f2375597d5f98b1279a49a4971d2318737ceb587407718c
+1234,S_D,61.088,57.249,65.567,60.856,81.038,4,1315,318,74.609,92.396,results_after_tuning/seed_check/seed1234_S_D/trackeval/trackeval_output/SEED1234_S_D/pedestrian_summary.txt,c9d560b9f32e3e896f8654661e14f1be8bfdb2729b879f56162939c36742eb4e
+2024,S_A,59.743,55.673,64.386,64.873,81.588,1,582,886,84.992,78.814,results_after_tuning/seed_check/seed2024_S_A/trackeval/trackeval_output/SEED2024_S_A/pedestrian_summary.txt,430059160753259162fd6bef8c435282bade3386d29ce98f869d80f8f23479db
+2024,S_D,59.733,55.686,64.351,64.825,81.609,1,593,877,84.787,79.029,results_after_tuning/seed_check/seed2024_S_D/trackeval/trackeval_output/SEED2024_S_D/pedestrian_summary.txt,9373169a6ceb50a83221b4ae04c9e43f06aa7f6e202cfbc4aba9b137fa5724a5

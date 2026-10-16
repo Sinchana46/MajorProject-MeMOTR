@@ -1,0 +1,7 @@
+WARNING,sequence,lighting,c2,HOTA,DetA,AssA,MOTA,IDF1,IDSW,FP,FN,precision,recall,tau_mean,tau_min,tau_max,source
+HISTORICAL — unfiltered output (old protocol); not comparable with corrected results,seq_01_1min,night,off,27.442,16.865,44.763,-9.8945,33.502,1,2518,4567,42.76,29.172,0.5,0.5,0.5,results/c2_eval/c2_results.csv
+HISTORICAL — unfiltered output (old protocol); not comparable with corrected results,seq_01_1min,night,on,7.7056,1.5182,39.834,-2569.9,2.8446,104,168975,3077,1.9559,52.28,0.3106413660681643,0.3067995011806488,0.32014331221580505,results/c2_eval/c2_results.csv
+HISTORICAL — unfiltered output (old protocol); not comparable with corrected results,seq_02_30sec_a,night,off,50.51,43.875,58.494,29.101,68.84,1,2117,847,61.17,79.747,0.5,0.5,0.5,results/c2_eval/c2_results.csv
+HISTORICAL — unfiltered output (old protocol); not comparable with corrected results,seq_02_30sec_a,night,on,45.757,38.191,55.319,-2.5825,60.814,10,3876,404,49.36,90.34,0.3324070395000519,0.3271028399467468,0.3398926258087158,results/c2_eval/c2_results.csv
+HISTORICAL — unfiltered output (old protocol); not comparable with corrected results,seq_03_30sec_b,dusk,off,29.818,21.701,41.032,27.976,42.791,2,434,15083,93.708,30.0,0.5,0.5,0.5,results/c2_eval/c2_results.csv
+HISTORICAL — unfiltered output (old protocol); not comparable with corrected results,seq_03_30sec_b,dusk,on,30.717,22.837,41.409,29.494,44.794,2,494,14696,93.274,31.796,0.4044676939731766,0.355119913816452,0.45176970958709717,results/c2_eval/c2_results.csv

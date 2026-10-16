@@ -1,0 +1,249 @@
+{
+ "created": "2026-10-16T15:57:28+05:30",
+ "validation_sequence": "seq_02_30sec_a",
+ "GT_original_sha256": {
+  "seq_01_1min": "6cca8299ed24e83bea3d732d3479e3b1b8fa857a67aad5fe150c7de1e04a26c8",
+  "seq_02_30sec_a": "17ebe2782a0e9008f98e4e30e975b6a6dee5ffc72551b0e364e8ea4818cd3472",
+  "seq_03_30sec_b": "26957113eab590eb55f6623dbccb638cbeca0fa629965bd2645619bed5c36521"
+ },
+ "GT_eval_copy_seq02": "results/eval_iotd_val/gt_eval/seq_02_30sec_a/gt/gt.txt",
+ "evaluation": "tools/run_trackeval.py (TrackEval HOTA, CLEAR, Identity; DO_PREPROC=False; IoU 0.5)",
+ "settings": {
+  "det_thresh": 0.5,
+  "track_thresh": 0.5,
+  "miss_tol": 30,
+  "RESULT_SCORE_THRESH": 0.5,
+  "area_thresh_px": 100,
+  "use_c1": false
+ },
+ "scripts": {
+  "tools/run_inference_mot.py": "7fa7b11076279ede626e6be11409e8279ab56658413ba02f3b93fed056952dc4",
+  "tools/run_inference_mot_filtered.py": "5aa939ddcfdc49f4d254df03a3d6aa5360b81a6329584e186293df72e150cb61",
+  "tools/run_trackeval.py": "a1ab2695a5ecfc59ad2d0026adb38fbe99c3dad17c5de79b2448246850025615",
+  "tools/final_review_run.py": "574975937813972ebbd62073b2ee2d62ff45b843492277be2ab9fd22ef544038",
+  "tools/final_review_batch.py": "429ddeb2f34e3c4b46c7260196cd424f8573e7c86e8353d05048550b680737c5",
+  "tools/final_review_c2_tau.py": "0e3b711d829b903c5d5969dc3c2b3ec2639bc2e7f465dac504cc80331b3b700b",
+  "tools/final_review_build.py": "ae5e12b1f0fa9ae2f698acab428e5a8e283ff3dc202b7d024a0541f10691b23e",
+  "tools/final_review_verify.py": "ed8014b0e24883f291c1fe288f901ea5d92bee3f02d5308d2e4ff0f88454b73a",
+  "tools/sweep_hashcheck.py": "48b83240275f65de88e92db124a6638fbf4a89a57bf734c645c8af8bd43caed0"
+ },
+ "models": {
+  "Phase5": {
+   "checkpoint_dir": "results/phase5_interim_baseline",
+   "inference_config": "configs/train_iotd_real.yaml",
+   "description": "Phase 5 baseline (no IOTD)"
+  },
+  "Arm1": {
+   "checkpoint_dir": "results/train_iotd_real",
+   "inference_config": "configs/train_iotd_real.yaml",
+   "description": "Arm 1: real IOTD frames"
+  },
+  "Arm2": {
+   "checkpoint_dir": "results/train_iotd_real_aug",
+   "inference_config": "configs/train_iotd_real_aug.yaml",
+   "description": "Arm 2: real + augmented"
+  },
+  "assoc_lr0": {
+   "checkpoint_dir": "results/tuning_stage1/assoc_lr0",
+   "inference_config": "configs/train_iotd_real.yaml",
+   "description": "Stage 1: query-updater LR 0"
+  },
+  "lr_half": {
+   "checkpoint_dir": "results/tuning_stage1/lr_half",
+   "inference_config": "configs/train_iotd_real.yaml",
+   "description": "Stage 1: all LRs halved"
+  }
+ },
+ "c2_adapter": "results/phase6_c2_interim/c2_adapter_epoch_4.pth",
+ "rows": [
+  {
+   "row": "Phase5_ckpt_4",
+   "status": "newly evaluated (final review)",
+   "summary": "results_after_tuning/final_review/runs/Phase5_ckpt_4/trackeval/trackeval_output/PHASE5_CKPT_4/pedestrian_summary.txt",
+   "summary_sha256": "91ba7319d4dca0d9117b8f162a9e1a2d79fa4b80a3d3733df0f37e3b3d9882e6",
+   "output_dir": "results_after_tuning/final_review/runs/Phase5_ckpt_4"
+  },
+  {
+   "row": "Arm1_ckpt_0",
+   "status": "newly evaluated (final review)",
+   "summary": "results_after_tuning/final_review/runs/Arm1_ckpt_0/trackeval/trackeval_output/ARM1_CKPT_0/pedestrian_summary.txt",
+   "summary_sha256": "5b9b541881d42af0bef5d7590dd82d2094b88dddde5d1ef8a85f7aaff1818cb1",
+   "output_dir": "results_after_tuning/final_review/runs/Arm1_ckpt_0"
+  },
+  {
+   "row": "Arm1_ckpt_1",
+   "status": "newly evaluated (final review)",
+   "summary": "results_after_tuning/final_review/runs/Arm1_ckpt_1/trackeval/trackeval_output/ARM1_CKPT_1/pedestrian_summary.txt",
+   "summary_sha256": "4c7d2854f0451ae0bfe1eb79f773e81f7f384fdfd3b80a4e86ca8617f439c0cd",
+   "output_dir": "results_after_tuning/final_review/runs/Arm1_ckpt_1"
+  },
+  {
+   "row": "Arm1_ckpt_2",
+   "status": "newly evaluated (final review)",
+   "summary": "results_after_tuning/final_review/runs/Arm1_ckpt_2/trackeval/trackeval_output/ARM1_CKPT_2/pedestrian_summary.txt",
+   "summary_sha256": "3607d944b10737989cb842ac8bc374f9cffe5639eaf21dc5eede6777a0b650f5",
+   "output_dir": "results_after_tuning/final_review/runs/Arm1_ckpt_2"
+  },
+  {
+   "row": "Arm1_ckpt_3",
+   "status": "reused (corrected sweep S_A)",
+   "summary": "results_after_tuning/sweep/S_A/trackeval/trackeval_output/AFTER_S_A/pedestrian_summary.txt",
+   "summary_sha256": "95bf296b2dde89ecaa3c3aace2e7f8b4c89269da4ff67a863a389716c0ffb1f5",
+   "output_dir": "results_after_tuning/sweep/S_A"
+  },
+  {
+   "row": "Arm1_ckpt_4",
+   "status": "newly evaluated (final review)",
+   "summary": "results_after_tuning/final_review/runs/Arm1_ckpt_4/trackeval/trackeval_output/ARM1_CKPT_4/pedestrian_summary.txt",
+   "summary_sha256": "175174d07b20dbdd334165e41a5fadd270178e1b3a2c753908dbed2caf06db9c",
+   "output_dir": "results_after_tuning/final_review/runs/Arm1_ckpt_4"
+  },
+  {
+   "row": "Arm2_ckpt_0",
+   "status": "newly evaluated (final review)",
+   "summary": "results_after_tuning/final_review/runs/Arm2_ckpt_0/trackeval/trackeval_output/ARM2_CKPT_0/pedestrian_summary.txt",
+   "summary_sha256": "3032e83b6a817ae7165cc70b6d2167885211611183845045370733dcc2d2962a",
+   "output_dir": "results_after_tuning/final_review/runs/Arm2_ckpt_0"
+  },
+  {
+   "row": "Arm2_ckpt_1",
+   "status": "newly evaluated (final review)",
+   "summary": "results_after_tuning/final_review/runs/Arm2_ckpt_1/trackeval/trackeval_output/ARM2_CKPT_1/pedestrian_summary.txt",
+   "summary_sha256": "99013362ab86af625d10bedf626a469d3cf3194146cd6be7603503e3bd4e6515",
+   "output_dir": "results_after_tuning/final_review/runs/Arm2_ckpt_1"
+  },
+  {
+   "row": "Arm2_ckpt_2",
+   "status": "newly evaluated (final review)",
+   "summary": "results_after_tuning/final_review/runs/Arm2_ckpt_2/trackeval/trackeval_output/ARM2_CKPT_2/pedestrian_summary.txt",
+   "summary_sha256": "4ea1bf20cb35dc57aa35c4dd927068dc6fcfd01670dd04385030ebbbde604185",
+   "output_dir": "results_after_tuning/final_review/runs/Arm2_ckpt_2"
+  },
+  {
+   "row": "Arm2_ckpt_3",
+   "status": "newly evaluated (final review)",
+   "summary": "results_after_tuning/final_review/runs/Arm2_ckpt_3/trackeval/trackeval_output/ARM2_CKPT_3/pedestrian_summary.txt",
+   "summary_sha256": "de973176b224d08d8a188075377f5ce876d172bd7df1608f854a189010d433af",
+   "output_dir": "results_after_tuning/final_review/runs/Arm2_ckpt_3"
+  },
+  {
+   "row": "Arm2_ckpt_4",
+   "status": "newly evaluated (final review)",
+   "summary": "results_after_tuning/final_review/runs/Arm2_ckpt_4/trackeval/trackeval_output/ARM2_CKPT_4/pedestrian_summary.txt",
+   "summary_sha256": "64431b83c0df146f7b9f108a4ed4e5bf5ef2206790d58b14297360097b352de3",
+   "output_dir": "results_after_tuning/final_review/runs/Arm2_ckpt_4"
+  },
+  {
+   "row": "assoc_lr0_ckpt_0",
+   "status": "newly evaluated (final review)",
+   "summary": "results_after_tuning/final_review/runs/assoc_lr0_ckpt_0/trackeval/trackeval_output/ASSOC_LR0_CKPT_0/pedestrian_summary.txt",
+   "summary_sha256": "a9161cff77a12628b27a8ec272230d81cf7208c9f774c5135b20431cce8e4450",
+   "output_dir": "results_after_tuning/final_review/runs/assoc_lr0_ckpt_0"
+  },
+  {
+   "row": "assoc_lr0_ckpt_1",
+   "status": "newly evaluated (final review)",
+   "summary": "results_after_tuning/final_review/runs/assoc_lr0_ckpt_1/trackeval/trackeval_output/ASSOC_LR0_CKPT_1/pedestrian_summary.txt",
+   "summary_sha256": "54e2d96b9227aee78b0aa2e7961965dffd5946396cbe3cadacfd110c7bbbbf4d",
+   "output_dir": "results_after_tuning/final_review/runs/assoc_lr0_ckpt_1"
+  },
+  {
+   "row": "assoc_lr0_ckpt_2",
+   "status": "newly evaluated (final review)",
+   "summary": "results_after_tuning/final_review/runs/assoc_lr0_ckpt_2/trackeval/trackeval_output/ASSOC_LR0_CKPT_2/pedestrian_summary.txt",
+   "summary_sha256": "41335699dd9386b2c6a208d25b63f16e9efbb4d71d23bc04fd3d3e89ff4a9e81",
+   "output_dir": "results_after_tuning/final_review/runs/assoc_lr0_ckpt_2"
+  },
+  {
+   "row": "assoc_lr0_ckpt_3",
+   "status": "newly evaluated (final review)",
+   "summary": "results_after_tuning/final_review/runs/assoc_lr0_ckpt_3/trackeval/trackeval_output/ASSOC_LR0_CKPT_3/pedestrian_summary.txt",
+   "summary_sha256": "5b566f21b18859b31d814b9f087f479491e31fe27a578472a74821d5ad4229b0",
+   "output_dir": "results_after_tuning/final_review/runs/assoc_lr0_ckpt_3"
+  },
+  {
+   "row": "assoc_lr0_ckpt_4",
+   "status": "newly evaluated (final review)",
+   "summary": "results_after_tuning/final_review/runs/assoc_lr0_ckpt_4/trackeval/trackeval_output/ASSOC_LR0_CKPT_4/pedestrian_summary.txt",
+   "summary_sha256": "e349af1ea25e9fef282d076e771cc95246b05529bf14ccff073f216c58c8b75b",
+   "output_dir": "results_after_tuning/final_review/runs/assoc_lr0_ckpt_4"
+  },
+  {
+   "row": "lr_half_ckpt_0",
+   "status": "newly evaluated (final review)",
+   "summary": "results_after_tuning/final_review/runs/lr_half_ckpt_0/trackeval/trackeval_output/LR_HALF_CKPT_0/pedestrian_summary.txt",
+   "summary_sha256": "767e6ca308aea0fdd3d8052a568209d04c080f82b037518655432e9311571eb1",
+   "output_dir": "results_after_tuning/final_review/runs/lr_half_ckpt_0"
+  },
+  {
+   "row": "lr_half_ckpt_1",
+   "status": "newly evaluated (final review)",
+   "summary": "results_after_tuning/final_review/runs/lr_half_ckpt_1/trackeval/trackeval_output/LR_HALF_CKPT_1/pedestrian_summary.txt",
+   "summary_sha256": "651af5b7ed898211e1219c73cc533affd19c79fe3f2ff06c96d03aba6a429618",
+   "output_dir": "results_after_tuning/final_review/runs/lr_half_ckpt_1"
+  },
+  {
+   "row": "lr_half_ckpt_2",
+   "status": "newly evaluated (final review)",
+   "summary": "results_after_tuning/final_review/runs/lr_half_ckpt_2/trackeval/trackeval_output/LR_HALF_CKPT_2/pedestrian_summary.txt",
+   "summary_sha256": "5efe5b86e8829d279483091954a9b04498a2e967046adee52863a7850f1bc8a6",
+   "output_dir": "results_after_tuning/final_review/runs/lr_half_ckpt_2"
+  },
+  {
+   "row": "lr_half_ckpt_3",
+   "status": "newly evaluated (final review)",
+   "summary": "results_after_tuning/final_review/runs/lr_half_ckpt_3/trackeval/trackeval_output/LR_HALF_CKPT_3/pedestrian_summary.txt",
+   "summary_sha256": "1af23d1e4a6e8df32d4be6996a8cf5def7313ba2b9bd29376a7d3e269aa37034",
+   "output_dir": "results_after_tuning/final_review/runs/lr_half_ckpt_3"
+  },
+  {
+   "row": "lr_half_ckpt_4",
+   "status": "newly evaluated (final review)",
+   "summary": "results_after_tuning/final_review/runs/lr_half_ckpt_4/trackeval/trackeval_output/LR_HALF_CKPT_4/pedestrian_summary.txt",
+   "summary_sha256": "25ee92e972a9e756dd740824e84131a885f6f7a194d01998059b80b2e7883146",
+   "output_dir": "results_after_tuning/final_review/runs/lr_half_ckpt_4"
+  },
+  {
+   "row": "C2 seq_01_1min off",
+   "status": "newly evaluated",
+   "summary": "results_after_tuning/final_review/runs/C2_seq_01_1min_off/trackeval/trackeval_output/C2_SEQ_01_1MIN_OFF/pedestrian_summary.txt",
+   "output_dir": "results_after_tuning/final_review/runs/C2_seq_01_1min_off"
+  },
+  {
+   "row": "C2 seq_01_1min on",
+   "status": "newly evaluated",
+   "summary": "results_after_tuning/final_review/runs/C2_seq_01_1min_on/trackeval/trackeval_output/C2_SEQ_01_1MIN_ON/pedestrian_summary.txt",
+   "output_dir": "results_after_tuning/final_review/runs/C2_seq_01_1min_on"
+  },
+  {
+   "row": "C2 seq_02_30sec_a off",
+   "status": "reused (Phase5_ckpt_4 job)",
+   "summary": "results_after_tuning/final_review/runs/Phase5_ckpt_4/trackeval/trackeval_output/PHASE5_CKPT_4/pedestrian_summary.txt",
+   "output_dir": "results_after_tuning/final_review/runs/Phase5_ckpt_4"
+  },
+  {
+   "row": "C2 seq_02_30sec_a on",
+   "status": "newly evaluated",
+   "summary": "results_after_tuning/final_review/runs/C2_seq_02_30sec_a_on/trackeval/trackeval_output/C2_SEQ_02_30SEC_A_ON/pedestrian_summary.txt",
+   "output_dir": "results_after_tuning/final_review/runs/C2_seq_02_30sec_a_on"
+  },
+  {
+   "row": "C2 seq_03_30sec_b off",
+   "status": "newly evaluated",
+   "summary": "results_after_tuning/final_review/runs/C2_seq_03_30sec_b_off/trackeval/trackeval_output/C2_SEQ_03_30SEC_B_OFF/pedestrian_summary.txt",
+   "output_dir": "results_after_tuning/final_review/runs/C2_seq_03_30sec_b_off"
+  },
+  {
+   "row": "C2 seq_03_30sec_b on",
+   "status": "newly evaluated",
+   "summary": "results_after_tuning/final_review/runs/C2_seq_03_30sec_b_on/trackeval/trackeval_output/C2_SEQ_03_30SEC_B_ON/pedestrian_summary.txt",
+   "output_dir": "results_after_tuning/final_review/runs/C2_seq_03_30sec_b_on"
+  }
+ ],
+ "historical_sources": {
+  "registry": "archive/pre_tuning_baseline_v1/data/results_registry_v1.csv",
+  "stage1": "results/tuning_stage1/stage1_results.csv",
+  "c2": "results/c2_eval/c2_results.csv"
+ },
+ "missing": []
+}

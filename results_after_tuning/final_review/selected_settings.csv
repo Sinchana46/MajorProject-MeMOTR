@@ -1,0 +1,10 @@
+item,value,type,status,evidence
+runner,tools/run_inference_mot_filtered.py,implementation (matches upstream),selected,results_after_tuning/logs/00_equivalence_filters_off.txt; 01_S_A.txt
+checkpoint (main model),Arm 1 checkpoint_3.pth,model,see final_review_report.md section 4,final_review/corrected_model_comparison.csv
+detection threshold,0.5,tunable,selected (S_A),results_after_tuning/corrected_sweep_results.csv
+tracking threshold,0.5,tunable,selected (S_A),results_after_tuning/corrected_sweep_results.csv
+miss tolerance,30,tunable,selected (S_A); 20 rejected,results_after_tuning/seed_check_results.csv
+output score filter,RESULT_SCORE_THRESH 0.5 (keep score > 0.5),"fixed by upstream config, not tuned",applied,"MeMOTR/submit_engine.py:94,122-125; configs/train_iotd_real.yaml:38"
+box-area filter,area > 100 px,"fixed by upstream code, not tuned",applied,"MeMOTR/submit_engine.py:95,127-131"
+C1 (perspective memory decay),disabled,contribution,"implemented; not calibrated, trained or evaluated",modules/position_decay.py:29-31
+C2 (scene-conditioned threshold),disabled,contribution,pending camera-specific calibration; see corrected_c2_comparison.csv,final_review/corrected_c2_comparison.csv
