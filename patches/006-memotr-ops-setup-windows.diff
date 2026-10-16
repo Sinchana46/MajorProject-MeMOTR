@@ -1,0 +1,26 @@
+diff --git a/models/ops/setup.py b/models/ops/setup.py
+index a0131bc..4672247 100644
+--- a/models/ops/setup.py
++++ b/models/ops/setup.py
+@@ -37,7 +37,20 @@ def get_extensions():
+         extension = CUDAExtension
+         sources += source_cuda
+         define_macros += [("WITH_CUDA", None)]
+-        extra_compile_args["nvcc"] = [
++
++        # Windows: pass -ccbin explicitly so nvcc doesn't probe the registry for cl.exe.
++        # MSVC 14.42 (VS 2022) + CUDA 13.0 requires -allow-unsupported-compiler.
++        import platform
++        _nvcc_extra = []
++        if platform.system() == "Windows":
++            _cl_dir = os.environ.get(
++                "VCToolsInstallDir",
++                r"C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.34433"
++            ).rstrip("\\")
++            _cl_bin = os.path.join(_cl_dir, "bin", "Hostx64", "x64")
++            _nvcc_extra = [f"-ccbin={_cl_bin}", "-allow-unsupported-compiler"]
++
++        extra_compile_args["nvcc"] = _nvcc_extra + [
+             "-DCUDA_HAS_FP16=1",
+             "-D__CUDA_NO_HALF_OPERATORS__",
+             "-D__CUDA_NO_HALF_CONVERSIONS__",

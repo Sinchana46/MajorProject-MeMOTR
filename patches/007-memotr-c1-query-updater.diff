@@ -1,0 +1,80 @@
+diff --git a/models/query_updater.py b/models/query_updater.py
+index 3b119cc..beae711 100644
+--- a/models/query_updater.py
++++ b/models/query_updater.py
+@@ -1,4 +1,6 @@
+ # Copyright (c) Ruopeng Gao. All Rights Reserved.
++# Python 3.9 compatibility: 'X | Y' union syntax requires __future__.annotations
++from __future__ import annotations
+ import os
+ import math
+ import torch
+@@ -14,6 +16,11 @@ from structures.track_instances import TrackInstances
+ from utils.utils import inverse_sigmoid
+ from utils.box_ops import box_cxcywh_to_xyxy, box_iou_union
+ 
++# C1 modules (imported unconditionally; instantiated only when use_c1=True)
++import sys as _sys, os as _os
++_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(__file__), "..", "..")))
++from modules.position_decay import PerspectiveZoneEncoder, PositionMLP
++
+ 
+ class QueryUpdater(nn.Module):
+     def __init__(self, hidden_dim: int, ffn_dim: int,
+@@ -21,6 +28,7 @@ class QueryUpdater(nn.Module):
+                  dropout: float,
+                  use_checkpoint: bool, use_dab: bool,
+                  update_threshold: float, long_memory_lambda: float,
++                 use_c1: bool = False,
+                  visualize: bool = False):
+         super(QueryUpdater, self).__init__()
+         self.hidden_dim = hidden_dim
+@@ -36,6 +44,15 @@ class QueryUpdater(nn.Module):
+         self.update_threshold = update_threshold
+         self.long_memory_lambda = long_memory_lambda
+ 
++        # C1: perspective-aware memory decay (use_c1=False by default → zero regression)
++        self.use_c1 = use_c1
++        if self.use_c1:
++            self.zone_encoder = PerspectiveZoneEncoder()
++            self.position_mlp = PositionMLP()
++        else:
++            self.zone_encoder = None
++            self.position_mlp = None
++
+         self.confidence_weight_net = nn.Sequential(
+             MLP(input_dim=self.hidden_dim, hidden_dim=self.hidden_dim, output_dim=self.hidden_dim, num_layers=2),
+             nn.Sigmoid()
+@@ -132,8 +149,22 @@ class QueryUpdater(nn.Module):
+             query_feat = self.query_feat_ffn(query_feat)
+ 
+             # Update Long Memory
+-            long_memory = (1 - self.long_memory_lambda) * long_memory + \
+-                          self.long_memory_lambda * tracks[b].output_embed
++            # TODO(C1): Replace self.long_memory_lambda (fixed = 0.01, set via LONG_MEMORY_LAMBDA config)
++            # with lambda_adaptive from modules/position_decay.PositionMLP, conditioned on the
++            # tracked object's perspective zone (FAR/MID/NEAR) and normalised bounding-box height.
++            # Memory update equation (Section 4, Contribution 1 of memotr_project_prompt.md):
++            #   M_tilde(t+1) = (1 - lambda_adaptive) * M(t) + lambda_adaptive * O(t)
++            # Implementation wired in Phase 3 (Task 3.4) behind config flag use_c1=False by default.
++            if self.use_c1 and tracks[b].boxes is not None and len(tracks[b].boxes) > 0:
++                # boxes are in cxcywh format, normalized to [0,1] by image size
++                # cy_norm = box center-y, h_norm = box height  (both already in [0,1])
++                cy_norm = tracks[b].boxes[:, 1].detach()   # (N,)
++                h_norm  = tracks[b].boxes[:, 3].detach()   # (N,)
++                zone_enc = self.zone_encoder(cy_norm, h_norm)          # (N, 4)
++                lam = self.position_mlp(zone_enc).unsqueeze(-1)        # (N, 1)
++            else:
++                lam = self.long_memory_lambda
++            long_memory = (1 - lam) * long_memory + lam * tracks[b].output_embed
+             tracks[b].long_memory = tracks[b].long_memory * ~is_pos.reshape((is_pos.shape[0], 1)) + \
+                                     long_memory * is_pos.reshape((is_pos.shape[0], 1))
+             # Update Last Outputs Embedding
+@@ -266,6 +297,7 @@ def build(config: dict):
+             use_dab=config["USE_DAB"],
+             update_threshold=config["UPDATE_THRESH"],
+             long_memory_lambda=config["LONG_MEMORY_LAMBDA"],
++            use_c1=config.get("USE_C1", False),
+             visualize=config["VISUALIZE"]
+         )
+ 

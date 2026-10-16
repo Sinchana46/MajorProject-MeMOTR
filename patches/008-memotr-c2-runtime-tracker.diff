@@ -1,0 +1,73 @@
+diff --git a/models/runtime_tracker.py b/models/runtime_tracker.py
+index 2112c61..2c9131a 100644
+--- a/models/runtime_tracker.py
++++ b/models/runtime_tracker.py
+@@ -1,5 +1,6 @@
+ # Copyright (c) Ruopeng Gao. All Rights Reserved.
+ import os
++import sys as _sys
+ 
+ import torch
+ 
+@@ -9,11 +10,17 @@ from .motion import Motion
+ 
+ from structures.track_instances import TrackInstances
+ 
++# C2 modules (imported unconditionally; used only when use_c2=True)
++_sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
++from modules.scene_analyzer    import SceneAnalyzer
++from modules.threshold_adapter import ThresholdAdapter
++
+ 
+ class RuntimeTracker:
+     def __init__(self, det_score_thresh: float = 0.7, track_score_thresh: float = 0.6,
+                  miss_tolerance: int = 5,
+                  use_motion: bool = False, motion_min_length: int = 3, motion_max_length: int = 5,
++                 use_c2: bool = False,
+                  visualize: bool = False, use_dab: bool = True):
+         self.det_score_thresh = det_score_thresh
+         self.track_score_thresh = track_score_thresh
+@@ -26,6 +33,18 @@ class RuntimeTracker:
+         self.motions: Dict[Motion] = {}
+         self.use_dab = use_dab
+ 
++        # C2: scene-conditioned detection threshold (use_c2=False by default -> zero regression)
++        self.use_c2 = use_c2
++        if self.use_c2:
++            self.scene_analyzer    = SceneAnalyzer(max_tracks=50)
++            self.threshold_adapter = ThresholdAdapter(tau_min=0.3, tau_max=0.7)
++        else:
++            self.scene_analyzer    = None
++            self.threshold_adapter = None
++        # tau_adaptive is updated each call to update() when use_c2=True;
++        # exposed as an attribute so callers can log/inspect it.
++        self.tau_adaptive = det_score_thresh
++
+     def update(self, model_outputs: dict, tracks: List[TrackInstances]):
+         assert len(tracks) == 1
+         model_outputs["scores"] = logits_to_scores(model_outputs["pred_logits"])
+@@ -55,7 +74,23 @@ class RuntimeTracker:
+ 
+         # Add newborn targets.
+         new_tracks = TrackInstances(hidden_dim=tracks[0].hidden_dim, num_classes=tracks[0].num_classes)
+-        new_tracks_idxes = torch.max(model_outputs["scores"][0][:n_dets], dim=-1).values >= self.det_score_thresh
++        # TODO(C2): Replace self.det_score_thresh (fixed = 0.5, loaded from DET_SCORE_THRESH config)
++        # with tau_adaptive from modules/threshold_adapter.ThresholdAdapter, conditioned on the
++        # scene vector [brightness, contrast, density] produced by modules/scene_analyzer.SceneAnalyzer.
++        # In dark/dusk IOTD scenes, genuine vehicles score 0.35-0.45 and are lost with fixed tau=0.5.
++        # tau_adaptive range is [0.3, 0.7] (Section 4, Contribution 2 of memotr_project_prompt.md).
++        # Implementation wired in Phase 3 (Task 3.4) behind config flag use_c2=False by default.
++        if self.use_c2 and "frame" in model_outputs:
++            # model_outputs["frame"] must be set by the caller (shape (3,H,W), float [0,1])
++            n_active = int((tracks[0].ids >= 0).sum().item())
++            # SceneAnalyzer is analytic/CPU-only; ThresholdAdapter lives on CPU too
++            frame_cpu = model_outputs["frame"].cpu() if model_outputs["frame"].is_cuda else model_outputs["frame"]
++            scene_vec = self.scene_analyzer(frame_cpu, active_track_count=n_active)
++            adapter_device = next(self.threshold_adapter.parameters()).device
++            self.tau_adaptive = self.threshold_adapter(scene_vec.to(adapter_device)).item()
++        else:
++            self.tau_adaptive = self.det_score_thresh   # fallback: fixed threshold
++        new_tracks_idxes = torch.max(model_outputs["scores"][0][:n_dets], dim=-1).values >= self.tau_adaptive
+         new_tracks.logits = model_outputs["pred_logits"][0][:n_dets][new_tracks_idxes]
+         new_tracks.boxes = model_outputs["pred_bboxes"][0][:n_dets][new_tracks_idxes]
+         new_tracks.ref_pts = model_outputs["last_ref_pts"][0][:n_dets][new_tracks_idxes]

@@ -1,0 +1,459 @@
+diff --git a/data/__init__.py b/data/__init__.py
+index 94fa3b1..0a89736 100644
+--- a/data/__init__.py
++++ b/data/__init__.py
+@@ -19,6 +19,7 @@ from torch.utils.data import RandomSampler, SequentialSampler, DataLoader
+ from .dancetrack import build as build_dancetrack
+ from .mot17 import build as build_mot17
+ from .bdd100k import build as build_bbd100k
++from .vehiclemot import build as build_vehiclemot
+ from .mot import MOTDataset
+ from .utils import collate_fn
+ from utils.utils import is_distributed
+@@ -35,6 +36,9 @@ def build_dataset(config: dict, split: str) -> MOTDataset:
+         return build_mot17(config=config, split=split)
+     elif config["DATASET"] == "BDD100K":
+         return build_bbd100k(config=config, split=split)
++    elif config["DATASET"] == "VehicleMOT":
++        # Phase 5/6 interim: UA-DETRAC + VisDrone combined vehicle dataset
++        return build_vehiclemot(config=config, split=split)
+     else:
+         raise ValueError(f"Dataset {config['DATASET']} is not supported!")
+ 
+diff --git a/data/transforms.py b/data/transforms.py
+index 49781b7..4d1cb6f 100644
+--- a/data/transforms.py
++++ b/data/transforms.py
+@@ -3,6 +3,8 @@
+ # Modified from MOTR (https://github.com/megvii-research/MOTR)
+ # Copyright (c) 2021 megvii-model. All Rights Reserved.
+ # ------------------------------------------------------------------------
++# Python 3.9 compatibility: 'list | tuple' union syntax requires __future__.annotations
++from __future__ import annotations
+ # Modified from Deformable DETR (https://github.com/fundamentalvision/Deformable-DETR)
+ # Copyright (c) 2020 SenseTime. All Rights Reserved.
+ # ------------------------------------------------------------------------
+diff --git a/log/log.py b/log/log.py
+index 14795d7..312a6c4 100644
+--- a/log/log.py
++++ b/log/log.py
+@@ -1,6 +1,8 @@
+ # @Author       : Ruopeng Gao
+ # @Date         : 2022/7/13
+ # @Description  :
++# Python 3.9 compatibility: X | Y union type syntax requires __future__.annotations
++from __future__ import annotations
+ import torch.distributed
+ 
+ from typing import List, Any
+diff --git a/log/logger.py b/log/logger.py
+index 30f7a59..7e730e3 100644
+--- a/log/logger.py
++++ b/log/logger.py
+@@ -1,6 +1,8 @@
+ # @Author       : Ruopeng Gao
+ # @Date         : 2022/7/5
+ # @Description  : Logger will log information.
++# Python 3.9 compatibility: X | Y union type syntax requires __future__.annotations
++from __future__ import annotations
+ import os
+ import json
+ import argparse
+diff --git a/models/criterion.py b/models/criterion.py
+index c00e48d..9bef4ac 100644
+--- a/models/criterion.py
++++ b/models/criterion.py
+@@ -9,6 +9,8 @@
+ # Modified from DETR (https://github.com/facebookresearch/detr)
+ # Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
+ # ------------------------------------------------------------------------
++# Python 3.9 compatibility: X | Y union type syntax requires __future__.annotations
++from __future__ import annotations
+ import torch
+ import copy
+ 
+@@ -474,6 +476,7 @@ def build(config: dict):
+         "MOT17": 1,
+         "MOT17_SPLIT": 1,
+         "BDD100K": 8,
++        "VehicleMOT": 1,   # Phase 5/6 interim: single vehicle class (UA-DETRAC + VisDrone)
+     }
+     return ClipCriterion(
+         num_classes=dataset_num_classes[config["DATASET"]],
+diff --git a/models/memotr.py b/models/memotr.py
+index 621d3d2..36789f8 100644
+--- a/models/memotr.py
++++ b/models/memotr.py
+@@ -1,5 +1,7 @@
+ # @Author       : Ruopeng Gao
+ # @Date         : 2022/9/4
++# Python 3.9 compatibility: 'X | Y' union syntax requires __future__.annotations
++from __future__ import annotations
+ import os
+ import math
+ import torch
+@@ -294,6 +296,7 @@ def build(config: dict):
+         "MOT17": 1,
+         "MOT17_SPLIT": 1,
+         "BDD100K": 8,
++        "VehicleMOT": 1,   # Phase 5/6 interim: single vehicle class (UA-DETRAC + VisDrone)
+     }
+     assert config["DATASET"] in dataset_num_classes, f"Do not know the class num of {config['DATASET']} dataset."
+     num_classes = dataset_num_classes[config["DATASET"]]
+diff --git a/structures/track_instances.py b/structures/track_instances.py
+index cace11f..ed88227 100644
+--- a/structures/track_instances.py
++++ b/structures/track_instances.py
+@@ -1,4 +1,6 @@
+ # Copyright (c) Ruopeng Gao. All Rights Reserved.
++# Python 3.9 compatibility: 'X | Y' union syntax requires __future__.annotations
++from __future__ import annotations
+ import torch
+ 
+ from typing import List
+diff --git a/data/vehiclemot.py b/data/vehiclemot.py
+new file mode 100644
+index 0000000..2d1122a
+--- /dev/null
++++ b/data/vehiclemot.py
+@@ -0,0 +1,328 @@
++# @Author       : Antigravity (Phase 5 interim — UA-DETRAC + VisDrone fine-tuning)
++# @Description  : VehicleMOT dataset — generic MOT-format vehicle tracking dataset.
++#
++# Differences from DanceTrack loader:
++#   1. Image filename format is auto-detected from the first file in img1/ (no rename needed).
++#      UA-DETRAC uses "img00001.jpg", VisDrone uses "0000001.jpg", DanceTrack uses "00000001.jpg".
++#   2. Supports combining multiple dataset roots (e.g. UA_DETRAC/train + VisDrone_Vehicles/train).
++#   3. Empty gt.txt sequences (0 vehicle boxes) are skipped automatically.
++#   4. Label: always 0 (vehicle, single-class).
++#
++# Config keys used (same as DanceTrack where possible):
++#   DATA_ROOT       : project root, e.g. D:/MajorProject-MeMOTR/data
++#   DATASET_DIRS    : list of dataset subdirs relative to DATA_ROOT,
++#                     e.g. ["UA_DETRAC/train", "VisDrone_Vehicles/train"]
++#                     If not set, falls back to DATA_ROOT/UA_DETRAC/train + VisDrone_Vehicles/train
++#   SAMPLE_STEPS, SAMPLE_INTERVALS, SAMPLE_MODES, SAMPLE_LENGTHS: same as DanceTrack
++#   SEED            : RNG seed
++#   COCO_SIZE, OVERFLOW_BBOX, REVERSE_CLIP: augmentation flags
++
++import os
++import glob
++from math import floor
++from random import randint
++from collections import defaultdict
++
++import torch
++from PIL import Image
++
++import data.transforms as T
++from .mot import MOTDataset
++
++
++# Module-level factory — needed so DataLoader workers can pickle the dataset
++# (Windows spawn-based multiprocessing cannot pickle lambdas defined inside __init__)
++def _nested_list_factory():
++    """Returns defaultdict(list) — used as the nested factory for gts dict."""
++    return defaultdict(list)
++
++
++def _detect_img_format(img1_dir: str) -> str:
++    """
++    Return the filename template for the first image found in img1_dir.
++    Examples:
++      img00001.jpg  ->  "img{:05d}.jpg"
++      0000001.jpg   ->  "{:07d}.jpg"
++      00000001.jpg  ->  "{:08d}.jpg"
++      000001.jpg    ->  "{:06d}.jpg"
++    """
++    files = sorted(glob.glob(os.path.join(img1_dir, "*.jpg")))
++    if not files:
++        files = sorted(glob.glob(os.path.join(img1_dir, "*.png")))
++    if not files:
++        raise FileNotFoundError(f"No image files found in {img1_dir}")
++    basename = os.path.basename(files[0])                  # e.g. "img00001.jpg"
++    ext = os.path.splitext(basename)[1]                    # ".jpg"
++    stem = os.path.splitext(basename)[0]                   # "img00001" or "0000001"
++
++    # Check for alphabetic prefix (e.g. "img00001")
++    prefix = ""
++    digits = stem
++    for k, ch in enumerate(stem):
++        if ch.isdigit():
++            prefix = stem[:k]
++            digits = stem[k:]
++            break
++
++    n_digits = len(digits)
++    if prefix:
++        fmt = f"{prefix}{{:0{n_digits}d}}{ext}"
++    else:
++        fmt = f"{{:0{n_digits}d}}{ext}"
++    return fmt
++
++
++class VehicleMOT(MOTDataset):
++    """
++    Generic single-class vehicle MOT dataset.
++
++    Reads from one or more directories, each containing MOT-format sequences:
++        <seq_dir>/gt/gt.txt
++        <seq_dir>/img1/<frames>
++
++    Empty sequences (gt.txt has 0 rows after filtering) are skipped.
++    """
++
++    def __init__(self, config: dict, split: str, transform, seq_dirs: list[str]):
++        """
++        Args
++        ----
++        config    : full training config dict
++        split     : "train" or "val" (only used for logging here; caller controls seq_dirs)
++        transform : data transforms
++        seq_dirs  : list of absolute paths to directories containing MOT sequences
++        """
++        super(VehicleMOT, self).__init__(config=config, split=split, transform=transform)
++
++        self.config = config
++        self.transform = transform
++
++        # Sampling settings (same as DanceTrack)
++        self.sample_steps: list     = config["SAMPLE_STEPS"]
++        self.sample_intervals: list = config["SAMPLE_INTERVALS"]
++        self.sample_modes: list     = config["SAMPLE_MODES"]
++        self.sample_lengths: list   = config["SAMPLE_LENGTHS"]
++        self.sample_stage           = None
++        self.sample_begin_frames    = None
++        self.sample_length          = None
++        self.sample_mode            = None
++        self.sample_interval        = None
++        self.sample_vid_tmax        = None
++
++        # Ground truth storage
++        self.gts       = defaultdict(_nested_list_factory)  # gts[vid][frame] = [[id, x, y, w, h], ...]
++        self.vid_idx   = dict()   # vid_name -> index
++        self.idx_vid   = dict()   # index -> vid_name
++        self.img1_dirs = dict()   # vid_name -> abs path to img1/
++        self.img_fmts  = dict()   # vid_name -> filename format string
++
++        skipped = 0
++        loaded  = 0
++        for seq_dir_root in seq_dirs:
++            if not os.path.isdir(seq_dir_root):
++                print(f"  [VehicleMOT] WARNING: seq dir not found: {seq_dir_root}")
++                continue
++            for vid in sorted(os.listdir(seq_dir_root)):
++                vid_path  = os.path.join(seq_dir_root, vid)
++                gt_path   = os.path.join(vid_path, "gt", "gt.txt")
++                img1_path = os.path.join(vid_path, "img1")
++                if not os.path.isfile(gt_path) or not os.path.isdir(img1_path):
++                    continue
++
++                # Parse gt.txt — same 9-column MOT format as DanceTrack
++                n_rows = 0
++                for line in open(gt_path, encoding="utf-8"):
++                    line = line.strip()
++                    if not line:
++                        continue
++                    parts = line.split(",")[:9]
++                    if len(parts) < 9:
++                        continue
++                    t, i = int(parts[0]), int(parts[1])
++                    x, y, w, h = float(parts[2]), float(parts[3]), float(parts[4]), float(parts[5])
++                    # Skip rows with zero-size boxes
++                    if w <= 0 or h <= 0:
++                        continue
++                    # Use vid as unique key (prefix with seq_dir_root to avoid collisions
++                    # across datasets that might share sequence names)
++                    vid_key = f"{os.path.basename(seq_dir_root)}__{vid}"
++                    self.gts[vid_key][t].append([i, x, y, w, h])
++                    n_rows += 1
++
++                if n_rows == 0:
++                    skipped += 1
++                    continue   # skip empty sequences (e.g. pedestrian-only VisDrone seqs)
++
++                vid_key = f"{os.path.basename(seq_dir_root)}__{vid}"
++                self.img1_dirs[vid_key] = img1_path
++                self.img_fmts[vid_key]  = _detect_img_format(img1_path)
++                loaded += 1
++
++        # Build vid↔idx maps
++        for vid_key in sorted(self.gts.keys()):
++            self.vid_idx[vid_key] = len(self.vid_idx)
++            self.idx_vid[self.vid_idx[vid_key]] = vid_key
++
++        print(f"  [VehicleMOT split={split}] Loaded {loaded} sequences, skipped {skipped} empty.")
++        self.set_epoch(0)
++
++    # ── Dataset interface ──────────────────────────────────────────────────────
++
++    def __getitem__(self, item):
++        vid, begin_frame = self.sample_begin_frames[item]
++        frame_idxs = self.sample_frames_idx(vid=vid, begin_frame=begin_frame)
++        imgs, infos = self.get_multi_frames(vid=vid, idxs=frame_idxs)
++        if self.transform is not None:
++            imgs, infos = self.transform(imgs, infos)
++        return {"imgs": imgs, "infos": infos}
++
++    def __len__(self):
++        assert self.sample_begin_frames is not None, "Call set_epoch() first."
++        return len(self.sample_begin_frames)
++
++    # ── Sampling ───────────────────────────────────────────────────────────────
++
++    def sample_frames_idx(self, vid: str, begin_frame: int) -> list[int]:
++        if self.sample_mode == "random_interval":
++            assert self.sample_length > 1
++            remain_frames = self.sample_vid_tmax[vid] - begin_frame
++            max_interval  = floor(remain_frames / (self.sample_length - 1))
++            interval      = min(randint(1, self.sample_interval), max_interval)
++            return [begin_frame + interval * i for i in range(self.sample_length)]
++        else:
++            raise ValueError(f"Sample mode '{self.sample_mode}' is not supported.")
++
++    def set_epoch(self, epoch: int):
++        self.sample_begin_frames = []
++        self.sample_vid_tmax     = {}
++        self.sample_stage        = 0
++        for step in self.sample_steps:
++            if epoch >= step:
++                self.sample_stage += 1
++        assert self.sample_stage < len(self.sample_steps) + 1
++        self.sample_length   = self.sample_lengths[min(len(self.sample_lengths) - 1, self.sample_stage)]
++        self.sample_mode     = self.sample_modes[min(len(self.sample_modes) - 1, self.sample_stage)]
++        self.sample_interval = self.sample_intervals[min(len(self.sample_intervals) - 1, self.sample_stage)]
++
++        for vid in self.vid_idx.keys():
++            t_min = min(self.gts[vid].keys())
++            t_max = max(self.gts[vid].keys())
++            self.sample_vid_tmax[vid] = t_max
++            # Only add begin frames where a full clip of sample_length can be sampled
++            for t in range(t_min, t_max - (self.sample_length - 1) + 1):
++                self.sample_begin_frames.append((vid, t))
++
++    # ── Frame loading ──────────────────────────────────────────────────────────
++
++    def get_single_frame(self, vid: str, idx: int):
++        img1_dir  = self.img1_dirs[vid]
++        img_fmt   = self.img_fmts[vid]
++        img_path  = os.path.join(img1_dir, img_fmt.format(idx))
++        img       = Image.open(img_path).convert("RGB")
++
++        ids_offset = self.vid_idx[vid] * 100000
++        info = {
++            "boxes"    : [],
++            "ids"      : [],
++            "labels"   : [],
++            "areas"    : [],
++            "frame_idx": torch.as_tensor(idx),
++        }
++        for i, *xywh in self.gts[vid][idx]:
++            x, y, w, h = map(float, xywh)
++            info["boxes"].append([x, y, w, h])
++            info["areas"].append(w * h)
++            info["ids"].append(i + ids_offset)
++            info["labels"].append(0)   # single vehicle class
++
++        info["boxes"]  = torch.as_tensor(info["boxes"],  dtype=torch.float32)
++        info["areas"]  = torch.as_tensor(info["areas"],  dtype=torch.float32)
++        info["ids"]    = torch.as_tensor(info["ids"],    dtype=torch.long)
++        info["labels"] = torch.as_tensor(info["labels"], dtype=torch.long)
++
++        # xywh → xyxy
++        if len(info["boxes"]) > 0:
++            info["boxes"][:, 2:] += info["boxes"][:, :2]
++        else:
++            info["boxes"]  = torch.zeros((0, 4),  dtype=torch.float32)
++            info["ids"]    = torch.zeros((0,),     dtype=torch.long)
++            info["labels"] = torch.zeros((0,),     dtype=torch.long)
++
++        return img, info
++
++    def get_multi_frames(self, vid: str, idxs: list[int]):
++        return zip(*[self.get_single_frame(vid=vid, idx=i) for i in idxs])
++
++
++# ── Transforms (reuse DanceTrack's) ───────────────────────────────────────────
++
++def transforms_for_train(coco_size: bool = False, overflow_bbox: bool = False,
++                          reverse_clip: float = 0.0):
++    scales = [608, 640, 672, 704, 736, 768, 800, 832, 864, 896, 928, 960, 992]
++    return T.MultiCompose([
++        T.MultiRandomHorizontalFlip(),
++        T.MultiRandomSelect(
++            T.MultiRandomResize(sizes=scales, max_size=1536),
++            T.MultiCompose([
++                T.MultiRandomResize([800, 1000, 1200]),
++                T.MultiRandomCrop(min_size=800, max_size=1200, overflow_bbox=overflow_bbox),
++                T.MultiRandomResize(sizes=scales, max_size=1536),
++            ])
++        ),
++        T.MultiHSV(),
++        T.MultiCompose([
++            T.MultiToTensor(),
++            T.MultiNormalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
++        ]),
++        T.MultiReverseClip(reverse=reverse_clip)
++    ])
++
++
++def transforms_for_eval():
++    return T.MultiCompose([
++        T.MultiRandomResize(sizes=[800], max_size=1333),
++        T.MultiCompose([
++            T.MultiToTensor(),
++            T.MultiNormalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
++        ])
++    ])
++
++
++# ── Builder ────────────────────────────────────────────────────────────────────
++
++def build(config: dict, split: str) -> VehicleMOT:
++    """
++    Build a VehicleMOT dataset combining UA-DETRAC + VisDrone sequences.
++
++    Config keys:
++      DATA_ROOT    : root of the data/ directory
++      DATASET_DIRS : optional list of relative paths under DATA_ROOT.
++                     Defaults to ["UA_DETRAC/train", "VisDrone_Vehicles/train"] for split=train
++                     and ["UA_DETRAC/test", "VisDrone_Vehicles/val"] for split=val/test.
++    """
++    data_root = config["DATA_ROOT"]
++
++    if "DATASET_DIRS" in config and config["DATASET_DIRS"]:
++        seq_dirs = [os.path.join(data_root, d) for d in config["DATASET_DIRS"]]
++    else:
++        # Default split mapping
++        if split == "train":
++            seq_dirs = [
++                os.path.join(data_root, "UA_DETRAC",           "train"),
++                os.path.join(data_root, "VisDrone_Vehicles",   "train"),
++            ]
++        elif split in ("val", "test"):
++            seq_dirs = [
++                os.path.join(data_root, "UA_DETRAC",           "test"),
++                os.path.join(data_root, "VisDrone_Vehicles",   "val"),
++            ]
++        else:
++            raise ValueError(f"Unknown split '{split}'")
++
++    transform = transforms_for_train(
++        coco_size    = config.get("COCO_SIZE",    False),
++        overflow_bbox= config.get("OVERFLOW_BBOX", False),
++        reverse_clip = config.get("REVERSE_CLIP", 0.0),
++    ) if split == "train" else transforms_for_eval()
++
++    return VehicleMOT(config=config, split=split, transform=transform, seq_dirs=seq_dirs)
+diff --git a/train_engine.py b/train_engine.py
+index 1f94d9f..7b8eaac 100644
+--- a/train_engine.py
++++ b/train_engine.py
+@@ -1,5 +1,7 @@
+ # @Author       : Ruopeng Gao
+ # @Date         : 2022/7/5
++# Python 3.9 compatibility: X | Y union type syntax requires __future__.annotations
++from __future__ import annotations
+ import os
+ import time
+ import torch
