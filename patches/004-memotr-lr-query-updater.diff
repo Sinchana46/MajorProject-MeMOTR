@@ -1,0 +1,13 @@
+diff --git a/train_engine.py b/train_engine.py
+index 1f94d9f..671b29c 100644
+--- a/train_engine.py
++++ b/train_engine.py
+@@ -323,7 +323,7 @@ def get_param_groups(config: dict, model: nn.Module) -> Tuple[List[Dict], List[s
+         {
+             "params": [p for n, p in model.named_parameters() if match_keywords(n, query_updater_keywords)
+                        and p.requires_grad],
+-            "lr": config["LR"]
++            "lr": config.get("LR_QUERY_UPDATER", config["LR"])  # optional key; falls back to LR if absent
+         },
+         {
+             "params": [p for n, p in model.named_parameters() if not match_keywords(n, backbone_keywords)

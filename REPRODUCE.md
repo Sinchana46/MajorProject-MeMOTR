@@ -58,6 +58,19 @@ Without this patch, every TrackEval evaluation call fails immediately with
 > `patches/002-memotr-c1-perspective.diff` and
 > `patches/003-memotr-c2-multiclass.diff`.
 
+### Patch 004 — MeMOTR optional `LR_QUERY_UPDATER` key (required for tuning variant `assoc_lr0`)
+
+```bash
+cd MeMOTR
+git apply ../patches/004-memotr-lr-query-updater.diff
+cd ..
+```
+
+In `train_engine.py:get_param_groups`, the query-updater parameter group reads
+`config.get("LR_QUERY_UPDATER", config["LR"])` instead of `config["LR"]`.
+When the key is absent (every config except `configs/train_iotd_real_assoc_lr0.yaml`)
+behaviour is unchanged. `assoc_lr0` sets it to `0.0` to freeze the query updater.
+
 ---
 
 ## 3. Create and activate the Conda environment
