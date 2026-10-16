@@ -81,7 +81,7 @@ Adds the `VehicleMOT` dataset (new file `data/vehiclemot.py`, registered in `dat
 that use `X | Y` type syntax, which Python 3.9 rejects otherwise (`data/transforms.py`, `log/log.py`, `log/logger.py`,
 `models/criterion.py`, `models/memotr.py`, `structures/track_instances.py`, `train_engine.py`; `models/query_updater.py`
 gets it in patch 007). Required by every config with `DATASET: VehicleMOT` (Phase 5, Arm 1, Arm 2, Tuning Stage 1).
-Touches `train_engine.py` at a different place than patch 004; the two apply in either order.
+Touches `train_engine.py` at a different place than patch 004; apply it after patch 004.
 
 ### Patch 006 — MeMOTR Deformable Attention build on Windows (required to build the CUDA op on Windows)
 
@@ -131,6 +131,7 @@ so it is needed even with C2 off. Required by `tools/run_inference_mot.py` and t
 - Nothing is ever committed inside the submodules; all changes live in `patches/`.
 - Verified 2026-10-16: applying 004–008 to a pristine `git archive` of `eb7a177` reproduces the working copy
   file-for-file (`check/logs/submodule_audit_3_4_verify.txt`).
+- Patches 004 and 005 both touch `train_engine.py` and must be applied in this order: 004 first, then 005.
 
 Restore the working state from scratch:
 
@@ -152,7 +153,7 @@ cd ..
 ## 3. Create and activate the Conda environment
 
 ```bash
-conda create -n memotr_project python=3.10
+conda create -n memotr_project python=3.9.25
 conda activate memotr_project
 conda install pytorch==1.13.1 torchvision==0.14.1 torchaudio==0.13.1 pytorch-cuda=11.7 -c pytorch -c nvidia
 conda install matplotlib pyyaml scipy tqdm tensorboard
