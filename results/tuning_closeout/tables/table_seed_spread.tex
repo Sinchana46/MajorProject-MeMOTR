@@ -1,0 +1,18 @@
+% requires \usepackage{booktabs}
+\begin{table}[t]
+\centering
+\small
+\caption{Corrected protocol: Arm 1 configuration, three training seeds at checkpoint\_3 (n = 3; rough estimate). Corrected seed values exist only for checkpoint\_3.}
+\begin{tabular}{llrrrrrrrr}
+\toprule
+Seed & Checkpoint & HOTA & DetA & AssA & MOTA & IDF1 & IDSW & FP & FN \\
+\midrule
+seed 42 (Arm 1) & ckpt\_3 & \textbf{64.12} & \textbf{60.54} & \textbf{68.21} & \textbf{68.15} & \textbf{84.64} & 3 & 841 & 488 \\
+seed 1234 & ckpt\_3 & 61.07 & 57.02 & 65.81 & 60.64 & 81.25 & 3 & 1,297 & \textbf{346} \\
+seed 2024 & ckpt\_3 & 59.74 & 55.67 & 64.39 & 64.87 & 81.59 & \textbf{1} & \textbf{582} & 886 \\
+mean $\pm$ SD & ckpt\_3 & 61.64 $\pm$ 2.25 & 57.74 $\pm$ 2.51 & 66.14 $\pm$ 1.93 & 64.55 $\pm$ 3.76 & 82.49 $\pm$ 1.87 & 2.33 $\pm$ 1.15 & 906.67 $\pm$ 361.99 & 573.33 $\pm$ 279.93 \\
+noise bar (mean + 2$\times$SD) & ckpt\_3 & 66.14 & -- & -- & -- & -- & -- & -- & -- \\
+\bottomrule
+\end{tabular}
+\par\smallskip\footnotesize\emph{Val: seq\_02\_30sec\_a (744 frames, 50 tracks, night). Single run per setting, seed 42 unless stated. Corrected protocol: upstream output filter score $>$ 0.5, area $>$ 100 px.}
+\end{table}
