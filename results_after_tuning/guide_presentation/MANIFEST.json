@@ -1,0 +1,169 @@
+{
+ "created": "2026-10-17T10:05:00+05:30",
+ "files": {
+  "README.md": {
+   "bytes": 2767,
+   "sha256": "38d08a41de84905391e8f254fd7d732f693f583144fc37c2e282b50ddb8d4726"
+  },
+  "figures/dashboard_for_guide.png": {
+   "bytes": 1322278,
+   "sha256": "247e1b6a42ce4f5ed5548d7cd7a7d45212d7e5d5f7e3960e573d9e4893da6921"
+  },
+  "figures/fig01_hota_journey.pdf": {
+   "bytes": 26959,
+   "sha256": "a8c0cb975fbc2ede56dbc7a57f9b7505c2217f64fe50528791b9dc9bb33f5a86"
+  },
+  "figures/fig01_hota_journey.png": {
+   "bytes": 299183,
+   "sha256": "ed4459c74a9e03869a92c2736b931e80bd2367617410b7285df1ae165a6aee47"
+  },
+  "figures/fig02_before_after_corrected.pdf": {
+   "bytes": 21623,
+   "sha256": "a4e68d875fffff75412b52604d05301bf493a3acc0fedacea0633e87bddc1441"
+  },
+  "figures/fig02_before_after_corrected.png": {
+   "bytes": 155050,
+   "sha256": "6ece349b2c2fea88dd7e738b5e0e6f65f2720a2abc70b87c9633923005a160ce"
+  },
+  "figures/fig03_fp_fn_comparison.pdf": {
+   "bytes": 15487,
+   "sha256": "a2f73fca15399f177b8b7a5ee1e68451d6eb9cca8a87891d2f5d8e7b5d02e06d"
+  },
+  "figures/fig03_fp_fn_comparison.png": {
+   "bytes": 163075,
+   "sha256": "d00b7aed2140134d086178eedc8c2d32e1bdd63611883cbd24b2c5679ef6210e"
+  },
+  "figures/fig04_identity_metrics.pdf": {
+   "bytes": 15366,
+   "sha256": "ce6f96c48b18d15a5a60dec515d5ccc4cc7918af37fb4d7eeaae954ab32bd5d6"
+  },
+  "figures/fig04_identity_metrics.png": {
+   "bytes": 125817,
+   "sha256": "7bdbdf504f7a69164723fc2e7141102e77a0ae5b4f9b5c732ed3ae2b1cee4ba5"
+  },
+  "figures/fig05_what_was_tried.pdf": {
+   "bytes": 29799,
+   "sha256": "147e51fa9d52d6b0bedccfadde34e49c34dc1be52c66ade59954e06049f987b7"
+  },
+  "figures/fig05_what_was_tried.png": {
+   "bytes": 225287,
+   "sha256": "b1694280e749737dc84b5fc73cf46549922cd571fe41a301139aeb44ec1ea35d"
+  },
+  "figures/fig06_c2_result.pdf": {
+   "bytes": 15634,
+   "sha256": "e8884c5b991f6b9547342b47ded6d23a172d1714efd1029df3cc4abf0cf58f05"
+  },
+  "figures/fig06_c2_result.png": {
+   "bytes": 134672,
+   "sha256": "52585489cf990cf7d183b29a5969c7edef216816e9266a2cb816b3be6a147e92"
+  },
+  "scripts/build_guide.py": {
+   "bytes": 24580,
+   "sha256": "9710c25af583d42536fee4b8807db85d182551ea2c9a96f8097d2b9c6b8c37e7"
+  },
+  "scripts/make_manifest.py": {
+   "bytes": 2283,
+   "sha256": "cfd999a05de99d5a99eb9c279459c7d19d8e906d59316864cd9f9e5af0c53034"
+  },
+  "tables/table01_main_results.csv": {
+   "bytes": 479,
+   "sha256": "33d297029f5f3de1322928bd10b7bc9867d0b684cc35b340f7e2393f423da95d"
+  },
+  "tables/table01_main_results.md": {
+   "bytes": 898,
+   "sha256": "c257a60ffa6cd90706b5a9e6a008b3eb560398233fa5557f7d53345720bb5093"
+  },
+  "tables/table01_main_results.png": {
+   "bytes": 256083,
+   "sha256": "b5eff8eda894db6f985965705970d053a7839ca03afb36ab6a57a39113b843a1"
+  },
+  "tables/table01_main_results.tex": {
+   "bytes": 1109,
+   "sha256": "f7101005c390d3563af81cb7d7c80f54b2aa9d01ac361875a96df711e6487cd3"
+  },
+  "tables/table02_before_after.csv": {
+   "bytes": 265,
+   "sha256": "e386d4b2e6eddb86285d7bc9d1351b1de8c8c74273f6162691a0d375001f8d09"
+  },
+  "tables/table02_before_after.md": {
+   "bytes": 533,
+   "sha256": "74a3797fbb68cedb8d833c36e0ee7bd568770cad90c7abe9163807b0938d1b8f"
+  },
+  "tables/table02_before_after.png": {
+   "bytes": 170273,
+   "sha256": "3423d204c29465103a287ce3e519ffa5b3b2a2e8686ab0a7cbf16a10f4e2659b"
+  },
+  "tables/table02_before_after.tex": {
+   "bytes": 690,
+   "sha256": "7a0727003b21e2b122c3131c517c804d2e655d914ced529ffef6fe4a014f97dd"
+  },
+  "tables/table03_what_was_tried.csv": {
+   "bytes": 593,
+   "sha256": "89bd45e87641324cf7427591a5f82b4f97c124fac0ec51333d82dc3133df5c88"
+  },
+  "tables/table03_what_was_tried.md": {
+   "bytes": 953,
+   "sha256": "327b419cd7d09950bc018a7692987598fdf26a6422a4dbb5cc6a45d92105dea7"
+  },
+  "tables/table03_what_was_tried.png": {
+   "bytes": 351082,
+   "sha256": "3dc5bf98738b2b9b1315efd09552c693c7721e73aaf125633ce18939b1d9f859"
+  },
+  "tables/table03_what_was_tried.tex": {
+   "bytes": 1124,
+   "sha256": "f9f48541afdbbe8187ce48d75c06cc59bfbcdb67afae59cdc2da1978a5cbc8e8"
+  }
+ },
+ "folder": "results_after_tuning/guide_presentation",
+ "source_csvs": {
+  "archive/pre_tuning_baseline_v1/data/results_registry_v1.csv": "c612b20a7c95af792a424a529e6ca07bcfdae16fafd27621c173150b06118a07",
+  "results/tuning_closeout/tables/table_seed_spread.csv": "b14a243f0c7429c832ecd8ac19c53737435fd0434390acc41c491fa86f48aaf2",
+  "results_after_tuning/final_review/corrected_c2_comparison.csv": "d1a26c41a501c4590e72012b001bb5e4880b4989d9a73563f47eaa1f9120c7e7",
+  "results_after_tuning/final_review/corrected_model_comparison.csv": "dea250071850e856bc5e07beb3df06d02a47668cba7bc64943b6da3fbf579d1c",
+  "results_after_tuning/seed_check_results.csv": "a0b17d90cbf941dba2409adabfe90befccc016eda94bd9b7f659ea531cd86c5b"
+ },
+ "trackeval_summaries": {
+  "results/eval_iotd_val/trackeval_arm1/trackeval_output/ARM1/pedestrian_summary.txt": "46e6c09528bd05abbd0c668b590d9d0a96a386a6f0e7e87b06a03b0c5c5ef1d2",
+  "results/eval_iotd_val/trackeval_arm1_ckpt0/trackeval_output/ARM1_CKPT0/pedestrian_summary.txt": "a4369c17f85eb8e80a9ad1ec59c62f63e04443fa3a5c5f7b21a13d33f2d0a954",
+  "results/eval_iotd_val/trackeval_arm1_ckpt1/trackeval_output/ARM1_CKPT1/pedestrian_summary.txt": "a34e90c9aa3024cab95697e409663f3fdb910323c309a00d60927d9e20df32a9",
+  "results/eval_iotd_val/trackeval_arm1_ckpt2/trackeval_output/ARM1_CKPT2/pedestrian_summary.txt": "afaa46f5fd7faae4010012f817a6550aed36b5d89644a87ef694d1092112b2d6",
+  "results/eval_iotd_val/trackeval_arm1_ckpt3/trackeval_output/ARM1_CKPT3/pedestrian_summary.txt": "8aff64bf06460ee02d1e2d3d038a7b54b6659e6ed8a56f0a0e3f5434b48125fb",
+  "results/eval_iotd_val/trackeval_arm2/trackeval_output/ARM2/pedestrian_summary.txt": "a1e5f478888eddbf70546127a7152b5f3f218dfbac790cd91a753a6cd7130d07",
+  "results/eval_iotd_val/trackeval_arm2_ckpt0/trackeval_output/ARM2_CKPT0/pedestrian_summary.txt": "a3a4e93617c938c867cd8a23645c84b8a74e62d2acaed3ed5d0a5d4f93433189",
+  "results/eval_iotd_val/trackeval_arm2_ckpt1/trackeval_output/ARM2_CKPT1/pedestrian_summary.txt": "324d23d720fc511e84879ef9c045dd79c19ec4074cf28c5409fe793a7d109a70",
+  "results/eval_iotd_val/trackeval_arm2_ckpt2/trackeval_output/ARM2_CKPT2/pedestrian_summary.txt": "8c107f70ed1eff8da82750f26113415a0055e387a764c4ae4767819253772e09",
+  "results/eval_iotd_val/trackeval_arm2_ckpt3/trackeval_output/ARM2_CKPT3/pedestrian_summary.txt": "000194ed6452314dfd42cccf262535afd5774e19141b1d0d78c6c6b84353dc69",
+  "results/eval_iotd_val/trackeval_phase5/trackeval_output/PHASE5/pedestrian_summary.txt": "2b216a089e25112f4bc9d9845f8cdcd457729fdefaa00513d6a03709fa6aed15",
+  "results_after_tuning/final_review/runs/Arm1_ckpt_0/trackeval/trackeval_output/ARM1_CKPT_0/pedestrian_summary.txt": "5b9b541881d42af0bef5d7590dd82d2094b88dddde5d1ef8a85f7aaff1818cb1",
+  "results_after_tuning/final_review/runs/Arm1_ckpt_1/trackeval/trackeval_output/ARM1_CKPT_1/pedestrian_summary.txt": "4c7d2854f0451ae0bfe1eb79f773e81f7f384fdfd3b80a4e86ca8617f439c0cd",
+  "results_after_tuning/final_review/runs/Arm1_ckpt_2/trackeval/trackeval_output/ARM1_CKPT_2/pedestrian_summary.txt": "3607d944b10737989cb842ac8bc374f9cffe5639eaf21dc5eede6777a0b650f5",
+  "results_after_tuning/final_review/runs/Arm1_ckpt_4/trackeval/trackeval_output/ARM1_CKPT_4/pedestrian_summary.txt": "175174d07b20dbdd334165e41a5fadd270178e1b3a2c753908dbed2caf06db9c",
+  "results_after_tuning/final_review/runs/Arm2_ckpt_0/trackeval/trackeval_output/ARM2_CKPT_0/pedestrian_summary.txt": "3032e83b6a817ae7165cc70b6d2167885211611183845045370733dcc2d2962a",
+  "results_after_tuning/final_review/runs/Arm2_ckpt_1/trackeval/trackeval_output/ARM2_CKPT_1/pedestrian_summary.txt": "99013362ab86af625d10bedf626a469d3cf3194146cd6be7603503e3bd4e6515",
+  "results_after_tuning/final_review/runs/Arm2_ckpt_2/trackeval/trackeval_output/ARM2_CKPT_2/pedestrian_summary.txt": "4ea1bf20cb35dc57aa35c4dd927068dc6fcfd01670dd04385030ebbbde604185",
+  "results_after_tuning/final_review/runs/Arm2_ckpt_3/trackeval/trackeval_output/ARM2_CKPT_3/pedestrian_summary.txt": "de973176b224d08d8a188075377f5ce876d172bd7df1608f854a189010d433af",
+  "results_after_tuning/final_review/runs/Arm2_ckpt_4/trackeval/trackeval_output/ARM2_CKPT_4/pedestrian_summary.txt": "64431b83c0df146f7b9f108a4ed4e5bf5ef2206790d58b14297360097b352de3",
+  "results_after_tuning/final_review/runs/C2_seq_01_1min_off/trackeval/trackeval_output/C2_SEQ_01_1MIN_OFF/pedestrian_summary.txt": "120ca2e5b4ec0da89b027416307cf6f97b67b5e6416d930d49c63bc77d79187a",
+  "results_after_tuning/final_review/runs/C2_seq_01_1min_on/trackeval/trackeval_output/C2_SEQ_01_1MIN_ON/pedestrian_summary.txt": "e82ef4700eca65b960b899d2b576e803f74afea1646685275d3f56c39655b9df",
+  "results_after_tuning/final_review/runs/C2_seq_02_30sec_a_on/trackeval/trackeval_output/C2_SEQ_02_30SEC_A_ON/pedestrian_summary.txt": "2dad10375b41a0badde3539a9a6e78c5ffdb6b7e5633e524827877e46b3e34a5",
+  "results_after_tuning/final_review/runs/C2_seq_03_30sec_b_off/trackeval/trackeval_output/C2_SEQ_03_30SEC_B_OFF/pedestrian_summary.txt": "6680bdbdfc5265ca2cf2e98f6c1129cc158c7515f7b4d1c12138e0fc49d55b1b",
+  "results_after_tuning/final_review/runs/C2_seq_03_30sec_b_on/trackeval/trackeval_output/C2_SEQ_03_30SEC_B_ON/pedestrian_summary.txt": "e52f940a58c993576839108d09f96ed02e84de320494313a3d3234f7b95f544b",
+  "results_after_tuning/final_review/runs/Phase5_ckpt_4/trackeval/trackeval_output/PHASE5_CKPT_4/pedestrian_summary.txt": "91ba7319d4dca0d9117b8f162a9e1a2d79fa4b80a3d3733df0f37e3b3d9882e6",
+  "results_after_tuning/final_review/runs/assoc_lr0_ckpt_0/trackeval/trackeval_output/ASSOC_LR0_CKPT_0/pedestrian_summary.txt": "a9161cff77a12628b27a8ec272230d81cf7208c9f774c5135b20431cce8e4450",
+  "results_after_tuning/final_review/runs/assoc_lr0_ckpt_1/trackeval/trackeval_output/ASSOC_LR0_CKPT_1/pedestrian_summary.txt": "54e2d96b9227aee78b0aa2e7961965dffd5946396cbe3cadacfd110c7bbbbf4d",
+  "results_after_tuning/final_review/runs/assoc_lr0_ckpt_2/trackeval/trackeval_output/ASSOC_LR0_CKPT_2/pedestrian_summary.txt": "41335699dd9386b2c6a208d25b63f16e9efbb4d71d23bc04fd3d3e89ff4a9e81",
+  "results_after_tuning/final_review/runs/assoc_lr0_ckpt_3/trackeval/trackeval_output/ASSOC_LR0_CKPT_3/pedestrian_summary.txt": "5b566f21b18859b31d814b9f087f479491e31fe27a578472a74821d5ad4229b0",
+  "results_after_tuning/final_review/runs/assoc_lr0_ckpt_4/trackeval/trackeval_output/ASSOC_LR0_CKPT_4/pedestrian_summary.txt": "e349af1ea25e9fef282d076e771cc95246b05529bf14ccff073f216c58c8b75b",
+  "results_after_tuning/final_review/runs/lr_half_ckpt_0/trackeval/trackeval_output/LR_HALF_CKPT_0/pedestrian_summary.txt": "767e6ca308aea0fdd3d8052a568209d04c080f82b037518655432e9311571eb1",
+  "results_after_tuning/final_review/runs/lr_half_ckpt_1/trackeval/trackeval_output/LR_HALF_CKPT_1/pedestrian_summary.txt": "651af5b7ed898211e1219c73cc533affd19c79fe3f2ff06c96d03aba6a429618",
+  "results_after_tuning/final_review/runs/lr_half_ckpt_2/trackeval/trackeval_output/LR_HALF_CKPT_2/pedestrian_summary.txt": "5efe5b86e8829d279483091954a9b04498a2e967046adee52863a7850f1bc8a6",
+  "results_after_tuning/final_review/runs/lr_half_ckpt_3/trackeval/trackeval_output/LR_HALF_CKPT_3/pedestrian_summary.txt": "1af23d1e4a6e8df32d4be6996a8cf5def7313ba2b9bd29376a7d3e269aa37034",
+  "results_after_tuning/final_review/runs/lr_half_ckpt_4/trackeval/trackeval_output/LR_HALF_CKPT_4/pedestrian_summary.txt": "25ee92e972a9e756dd740824e84131a885f6f7a194d01998059b80b2e7883146",
+  "results_after_tuning/seed_check/seed1234_S_A/trackeval/trackeval_output/SEED1234_S_A/pedestrian_summary.txt": "d23ef9bd76861cbd9f2375597d5f98b1279a49a4971d2318737ceb587407718c",
+  "results_after_tuning/seed_check/seed1234_S_D/trackeval/trackeval_output/SEED1234_S_D/pedestrian_summary.txt": "c9d560b9f32e3e896f8654661e14f1be8bfdb2729b879f56162939c36742eb4e",
+  "results_after_tuning/seed_check/seed2024_S_A/trackeval/trackeval_output/SEED2024_S_A/pedestrian_summary.txt": "430059160753259162fd6bef8c435282bade3386d29ce98f869d80f8f23479db",
+  "results_after_tuning/seed_check/seed2024_S_D/trackeval/trackeval_output/SEED2024_S_D/pedestrian_summary.txt": "9373169a6ceb50a83221b4ae04c9e43f06aa7f6e202cfbc4aba9b137fa5724a5",
+  "results_after_tuning/sweep/S_A/trackeval/trackeval_output/AFTER_S_A/pedestrian_summary.txt": "95bf296b2dde89ecaa3c3aace2e7f8b4c89269da4ff67a863a389716c0ffb1f5",
+  "results_after_tuning/sweep/S_D/trackeval/trackeval_output/AFTER_S_D/pedestrian_summary.txt": "4fce2678ce7e877cd52067ea38a5f814fb515f31b8a0e723927b3fad0b237200"
+ }
+}

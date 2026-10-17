@@ -1,0 +1,7 @@
+Configuration,Change from Arm 1,Best corrected HOTA,Passed decision rule,Outcome
+Phase 5 (baseline),no IOTD data (start point),57.742,reference,baseline
+Arm 1 (real only),—,64.122,reference (default),CHOSEN (ckpt_3)
+Arm 2 (augmented),"+7,590 augmented frames",61.607,NO,discarded: lower at every checkpoint
+assoc_lr0,query-updater LR = 0,62.763,NO,discarded: below noise bar
+lr_half,all LRs × 0.5,64.258,NO,"discarded: single run below noise bar, unstable"
+C2 adapter,scene-conditioned detection threshold (Phase 5 base),56.419,NO,"no gain: -1.05, -1.32, +0.79 HOTA on seq_01/02/03"

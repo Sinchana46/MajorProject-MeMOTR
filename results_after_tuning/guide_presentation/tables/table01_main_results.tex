@@ -1,0 +1,17 @@
+% requires \usepackage{booktabs}
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{llrrrrrrrrrrr}
+\toprule
+Run & Checkpoint & Steps & HOTA & DetA & AssA & MOTA & IDF1 & IDSW & FP & FN & Recall \% & Precision \% \\
+\midrule
+Phase 5 & ckpt\_4 & 0 & 57.74 & 49.87 & 67.30 & 51.29 & 75.18 & \textbf{0} & 940 & 1,097 & 73.77 & 76.65 \\
+Arm 1 & ckpt\_3 $\star$ & 10,112 & 64.12 & \textbf{60.54} & 68.21 & 68.15 & \textbf{84.64} & 3 & 841 & 488 & 88.33 & 81.45 \\
+Arm 2 & ckpt\_1 & 20,224 & 61.61 & 58.10 & 65.51 & 67.43 & 82.83 & 3 & \textbf{601} & 758 & 81.88 & 85.07 \\
+assoc\_lr0 & ckpt\_0 & 2,528 & 62.76 & 59.37 & 66.62 & 64.28 & 82.47 & 5 & 1,134 & \textbf{355} & \textbf{91.51} & 77.14 \\
+lr\_half & ckpt\_0 & 2,528 & \textbf{64.26} & 59.95 & \textbf{69.23} & \textbf{69.20} & 83.67 & 4 & 607 & 677 & 83.81 & \textbf{85.24} \\
+\bottomrule
+\end{tabular}
+\par\smallskip\footnotesize\emph{Corrected protocol. Val: seq\_02\_30sec\_a. Best HOTA marked $\star$. $\star$ = chosen model (Arm 1 ckpt\_3); lr\_half ckpt\_0 is 0.14 higher in a single, unstable run inside the seed noise.}
+\end{table}
