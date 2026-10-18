@@ -1,0 +1,86 @@
+[2026-10-06 18:27:13] ===== START extraction: seq_01_1min =====
+[2026-10-06 18:27:13] Video file : D:\MajorProject-MeMOTR\data\IOTD\videos\seq_01_1min.mov
+[2026-10-06 18:27:13] Video size : 187,241,675 bytes
+[2026-10-06 18:27:13] gt.txt SHA256 (before) : 6CCA8299ED24E83BEA3D732D3479E3B1B8FA857A67AAD5FE150C7DE1E04A26C8
+[2026-10-06 18:27:13] Opening video with cv2.VideoCapture ...
+[2026-10-06 18:27:13] cap.isOpened() : True
+[2026-10-06 18:27:13] CAP_PROP_FPS         : 23.976023976023978  (advisory)
+[2026-10-06 18:27:13] CAP_PROP_FRAME_WIDTH : 1920
+[2026-10-06 18:27:13] CAP_PROP_FRAME_HEIGHT: 1080
+[2026-10-06 18:27:13] CAP_PROP_FRAME_COUNT : 1599  (advisory, NOT used for actual count)
+[2026-10-06 18:27:13] Starting sequential cap.read() loop ...
+[2026-10-06 18:27:13] First frame actual dimensions: 1920x1080
+[2026-10-06 18:27:17]   ... 200 frames read so far
+[2026-10-06 18:27:21]   ... 400 frames read so far
+[2026-10-06 18:27:25]   ... 600 frames read so far
+[2026-10-06 18:27:29]   ... 800 frames read so far
+[2026-10-06 18:27:33]   ... 1000 frames read so far
+[2026-10-06 18:27:37]   ... 1200 frames read so far
+[2026-10-06 18:27:41]   ... 1400 frames read so far
+[2026-10-06 18:27:45] cap.release() called.
+[2026-10-06 18:27:45] --- EXTRACTION RESULT: seq_01_1min ---
+[2026-10-06 18:27:45] Frames read         : 1599
+[2026-10-06 18:27:45] imwrite OK          : 1599
+[2026-10-06 18:27:45] imwrite FAILURES    : 0
+[2026-10-06 18:27:45] JPEG files on disk  : 1599
+[2026-10-06 18:27:45] Actual resolution   : 1920x1080
+[2026-10-06 18:27:45] seqinfo.ini absent — creating ...
+[2026-10-06 18:27:45] seqinfo.ini written: frameRate=24, seqLength=1599, 1920x1080
+[2026-10-06 18:27:45] gt.txt SHA256 (after) : 6CCA8299ED24E83BEA3D732D3479E3B1B8FA857A67AAD5FE150C7DE1E04A26C8
+[2026-10-06 18:27:45] gt.txt SHA256 MATCH: unchanged
+[2026-10-06 18:27:45] ===== END extraction: seq_01_1min  frames=1599 =====
+[2026-10-06 18:28:01] ===== START extraction: seq_02_30sec_a =====
+[2026-10-06 18:28:01] Video file : D:\MajorProject-MeMOTR\data\IOTD\videos\seq_02_30sec_a.mov
+[2026-10-06 18:28:01] Video size : 87,124,957 bytes
+[2026-10-06 18:28:01] gt.txt SHA256 (before) : 17EBE2782A0E9008F98E4E30E975B6A6DEE5FFC72551B0E364E8EA4818CD3472
+[2026-10-06 18:28:01] Opening video with cv2.VideoCapture ...
+[2026-10-06 18:28:01] cap.isOpened() : True
+[2026-10-06 18:28:01] CAP_PROP_FPS         : 23.976023976023978  (advisory)
+[2026-10-06 18:28:01] CAP_PROP_FRAME_WIDTH : 1920
+[2026-10-06 18:28:01] CAP_PROP_FRAME_HEIGHT: 1080
+[2026-10-06 18:28:01] CAP_PROP_FRAME_COUNT : 744  (advisory, NOT used for actual count)
+[2026-10-06 18:28:01] Starting sequential cap.read() loop ...
+[2026-10-06 18:28:01] First frame actual dimensions: 1920x1080
+[2026-10-06 18:28:05]   ... 200 frames read so far
+[2026-10-06 18:28:09]   ... 400 frames read so far
+[2026-10-06 18:28:13]   ... 600 frames read so far
+[2026-10-06 18:28:16] cap.release() called.
+[2026-10-06 18:28:16] --- EXTRACTION RESULT: seq_02_30sec_a ---
+[2026-10-06 18:28:16] Frames read         : 744
+[2026-10-06 18:28:16] imwrite OK          : 744
+[2026-10-06 18:28:16] imwrite FAILURES    : 0
+[2026-10-06 18:28:16] JPEG files on disk  : 744
+[2026-10-06 18:28:16] Actual resolution   : 1920x1080
+[2026-10-06 18:28:16] seqinfo.ini absent — creating ...
+[2026-10-06 18:28:16] seqinfo.ini written: frameRate=24, seqLength=744, 1920x1080
+[2026-10-06 18:28:16] gt.txt SHA256 (after) : 17EBE2782A0E9008F98E4E30E975B6A6DEE5FFC72551B0E364E8EA4818CD3472
+[2026-10-06 18:28:16] gt.txt SHA256 MATCH: unchanged
+[2026-10-06 18:28:16] ===== END extraction: seq_02_30sec_a  frames=744 =====
+[2026-10-06 18:28:27] ===== START extraction: seq_03_30sec_b =====
+[2026-10-06 18:28:27] Video file : D:\MajorProject-MeMOTR\data\IOTD\videos\seq_03_30sec_b.mp4
+[2026-10-06 18:28:27] Video size : 67,523,408 bytes
+[2026-10-06 18:28:27] gt.txt SHA256 (before) : 26957113EAB590EB55F6623DBCCB638CBECA0FA629965BD2645619BED5C36521
+[2026-10-06 18:28:27] Opening video with cv2.VideoCapture ...
+[2026-10-06 18:28:27] cap.isOpened() : True
+[2026-10-06 18:28:27] CAP_PROP_FPS         : 29.99826003647479  (advisory)
+[2026-10-06 18:28:27] CAP_PROP_FRAME_WIDTH : 1080
+[2026-10-06 18:28:27] CAP_PROP_FRAME_HEIGHT: 2336
+[2026-10-06 18:28:27] CAP_PROP_FRAME_COUNT : 931  (advisory, NOT used for actual count)
+[2026-10-06 18:28:27] Starting sequential cap.read() loop ...
+[2026-10-06 18:28:27] First frame actual dimensions: 1080x2336
+[2026-10-06 18:28:34]   ... 200 frames read so far
+[2026-10-06 18:28:41]   ... 400 frames read so far
+[2026-10-06 18:28:49]   ... 600 frames read so far
+[2026-10-06 18:28:56]   ... 800 frames read so far
+[2026-10-06 18:29:00] cap.release() called.
+[2026-10-06 18:29:00] --- EXTRACTION RESULT: seq_03_30sec_b ---
+[2026-10-06 18:29:00] Frames read         : 931
+[2026-10-06 18:29:00] imwrite OK          : 931
+[2026-10-06 18:29:00] imwrite FAILURES    : 0
+[2026-10-06 18:29:00] JPEG files on disk  : 931
+[2026-10-06 18:29:00] Actual resolution   : 1080x2336
+[2026-10-06 18:29:00] seqinfo.ini absent — creating ...
+[2026-10-06 18:29:00] seqinfo.ini written: frameRate=30, seqLength=931, 1080x2336
+[2026-10-06 18:29:00] gt.txt SHA256 (after) : 26957113EAB590EB55F6623DBCCB638CBECA0FA629965BD2645619BED5C36521
+[2026-10-06 18:29:00] gt.txt SHA256 MATCH: unchanged
+[2026-10-06 18:29:00] ===== END extraction: seq_03_30sec_b  frames=931 =====

@@ -1,0 +1,5 @@
+Sequence,Role,Frames,GT rows,Tracks,car,two-wheeler,auto,bus,truck,Mean luma,Lighting,Resolution,fps
+seq_01_1min,train,1599,6448,37,1680,3661,1107,0,0,17.15,night,1920×1080,24
+seq_02_30sec_a,val,744,4182,50,2285,1038,337,0,522,35.82,night,1920×1080,24
+seq_03_30sec_b,train,931,21547,55,9382,7176,1842,1556,1591,79.39,dusk,1080×2336,30
+"Total (real, annotated)",,3274,32177,,13347,11875,3286,1556,2113,,,,

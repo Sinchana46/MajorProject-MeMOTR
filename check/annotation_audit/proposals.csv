@@ -1,0 +1,16 @@
+sequence,candidate_id,primary_run,primary_tid,frame_start,frame_end,frames,mean_x,mean_y,mean_w,mean_h,direction,lateral_in_gt_span,runs_agreeing,runs,suggested_class,proposed_action,low_iou_frac,evidence_image
+seq_01_1min,seq_01_1min_001,phase5,1,1,254,254,539.2,784.2,71.8,58.6,UP,False,1,phase5,LIKELY_OPPOSITE,REVIEW_EXCLUDE_BY_POLICY,1.000,check/annotation_audit\seq_01_1min\cand_seq_01_1min_001_LIKELY_OPPOSITE.jpg
+seq_01_1min,seq_01_1min_000,phase5,0,1,154,154,630.7,760.4,66.3,45.7,UP,False,1,phase5,LIKELY_OPPOSITE,REVIEW_EXCLUDE_BY_POLICY,1.000,check/annotation_audit\seq_01_1min\cand_seq_01_1min_000_LIKELY_OPPOSITE.jpg
+seq_01_1min,seq_01_1min_002,phase5,9,257,311,55,430.4,827.1,69.3,75.3,UP,False,1,phase5,LIKELY_OPPOSITE,REVIEW_EXCLUDE_BY_POLICY,1.000,check/annotation_audit\seq_01_1min\cand_seq_01_1min_002_LIKELY_OPPOSITE.jpg
+seq_01_1min,seq_01_1min_004,phase5,30,1395,1439,45,215.5,871.2,110.5,90.2,UP,False,1,phase5,LIKELY_OPPOSITE,REVIEW_EXCLUDE_BY_POLICY,1.000,check/annotation_audit\seq_01_1min\cand_seq_01_1min_004_LIKELY_OPPOSITE.jpg
+seq_01_1min,seq_01_1min_003,phase5,21,852,881,30,704.2,660.1,61.9,66.2,UP,False,1,phase5,LIKELY_OPPOSITE,REVIEW_EXCLUDE_BY_POLICY,1.000,check/annotation_audit\seq_01_1min\cand_seq_01_1min_003_LIKELY_OPPOSITE.jpg
+seq_02_30sec_a,seq_02_30sec_a_004,phase5,34,523,615,93,328.6,101.5,124.6,96.5,UP,True,1,phase5,UNCERTAIN,REVIEW_UNCERTAIN,1.000,check/annotation_audit\seq_02_30sec_a\cand_seq_02_30sec_a_004_UNCERTAIN.jpg
+seq_02_30sec_a,seq_02_30sec_a_007,arm1,18,149,224,76,955.2,163.3,85.9,87.4,DOWN,True,2,arm1+arm2,LIKELY_MISSING,REVIEW_ADD,1.000,check/annotation_audit\seq_02_30sec_a\cand_seq_02_30sec_a_007_LIKELY_MISSING.jpg
+seq_02_30sec_a,seq_02_30sec_a_002,phase5,21,289,355,67,1203.5,276.5,72.6,43.6,UP,True,3,arm1+arm2+phase5,UNCERTAIN,REVIEW_UNCERTAIN,1.000,check/annotation_audit\seq_02_30sec_a\cand_seq_02_30sec_a_002_UNCERTAIN.jpg
+seq_02_30sec_a,seq_02_30sec_a_008,arm1,31,313,378,66,1068.7,174.6,43.3,66.5,UP,True,2,arm1+arm2,UNCERTAIN,REVIEW_UNCERTAIN,1.000,check/annotation_audit\seq_02_30sec_a\cand_seq_02_30sec_a_008_UNCERTAIN.jpg
+seq_02_30sec_a,seq_02_30sec_a_000,phase5,6,1,56,56,313.1,198.2,104.9,76.2,UP,True,1,phase5,UNCERTAIN,REVIEW_UNCERTAIN,1.000,check/annotation_audit\seq_02_30sec_a\cand_seq_02_30sec_a_000_UNCERTAIN.jpg
+seq_02_30sec_a,seq_02_30sec_a_001,phase5,16,197,243,47,7.1,165.3,229.7,152.7,DOWN,False,1,phase5,UNCERTAIN,REVIEW_UNCERTAIN,1.000,check/annotation_audit\seq_02_30sec_a\cand_seq_02_30sec_a_001_UNCERTAIN.jpg
+seq_02_30sec_a,seq_02_30sec_a_005,phase5,42,625,663,39,838.9,104.6,96.2,187.9,DOWN,True,3,arm1+arm2+phase5,LIKELY_MISSING,REVIEW_ADD,1.000,check/annotation_audit\seq_02_30sec_a\cand_seq_02_30sec_a_005_LIKELY_MISSING.jpg
+seq_02_30sec_a,seq_02_30sec_a_003,phase5,27,379,410,32,197.9,195.7,147.8,106.1,UP,True,1,phase5,UNCERTAIN,REVIEW_UNCERTAIN,1.000,check/annotation_audit\seq_02_30sec_a\cand_seq_02_30sec_a_003_UNCERTAIN.jpg
+seq_02_30sec_a,seq_02_30sec_a_006,arm1,2,1,31,31,753.0,1040.3,173.7,41.1,DOWN,True,1,arm1,LIKELY_MISSING,REVIEW_ADD,1.000,check/annotation_audit\seq_02_30sec_a\cand_seq_02_30sec_a_006_LIKELY_MISSING.jpg
+seq_02_30sec_a,seq_02_30sec_a_009,arm2,2,1,30,30,662.5,1026.8,159.4,53.0,DOWN,True,1,arm2,LIKELY_MISSING,REVIEW_ADD,1.000,check/annotation_audit\seq_02_30sec_a\cand_seq_02_30sec_a_009_LIKELY_MISSING.jpg

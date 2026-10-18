@@ -1,0 +1,294 @@
+{
+ "archive": "archive/pre_tuning_baseline_v1",
+ "archive_files": {
+  "README.md": {
+   "bytes": 5938,
+   "sha256": "79ff4ad0aade25b91863d4f0e149a6cb0be7d8d9812839d8bdd8248e3f6f8abe"
+  },
+  "data/detection_outcomes.csv": {
+   "bytes": 1082,
+   "sha256": "4ea883c94fbd29ad9e5db15ee02a0badd2b5389d9b7d6cfe6d262e0a457d00b8"
+  },
+  "data/results_registry_v1.csv": {
+   "bytes": 22651,
+   "sha256": "c612b20a7c95af792a424a529e6ca07bcfdae16fafd27621c173150b06118a07"
+  },
+  "figure_captions.md": {
+   "bytes": 2321,
+   "sha256": "d606b18e9aaf46e78af61459482f7619d20c3b46f2355e3470ea0b5b506725b9"
+  },
+  "figures/dashboard.png": {
+   "bytes": 1240464,
+   "sha256": "c54ceec9f88518c1d10b2aed7c8d41d337a1bb63b0888eed5ee50aa8e0510b61"
+  },
+  "figures/fig01_hota_vs_steps.pdf": {
+   "bytes": 16467,
+   "sha256": "31b8fc64798618f17f0f0806dfd7b05780bb6bdecc41206e9aa69275a13b66e5"
+  },
+  "figures/fig01_hota_vs_steps.png": {
+   "bytes": 186849,
+   "sha256": "9f5cf1d7967038b2a3f3e40662dce5b8cdd99eaa60966208e76275914ed4f99c"
+  },
+  "figures/fig02_deta_assa_vs_steps.pdf": {
+   "bytes": 15766,
+   "sha256": "5a32552d7a87e240879ca26c766f59843ac1d434ec5101af11596d9e360ab860"
+  },
+  "figures/fig02_deta_assa_vs_steps.png": {
+   "bytes": 112915,
+   "sha256": "6a1584e71f3b8c98bd218993e613baad6e15c258e74cae81ca046fcc28a05d50"
+  },
+  "figures/fig03_fp_fn_vs_steps.pdf": {
+   "bytes": 15591,
+   "sha256": "f41f7e64107ea642b732a681197adf9cce2d25750d958c81fe916d9ace7c8973"
+  },
+  "figures/fig03_fp_fn_vs_steps.png": {
+   "bytes": 125029,
+   "sha256": "4fe90cbfa7765a3cc9c99f64ecfba23a48680c98dbfaebab3bf48af65e9aa192"
+  },
+  "figures/fig04_detection_outcomes.pdf": {
+   "bytes": 23405,
+   "sha256": "d39c8e5fd469a4f2eaa376978209735303c5a93f38a4255eb9694d266251aab1"
+  },
+  "figures/fig04_detection_outcomes.png": {
+   "bytes": 151470,
+   "sha256": "ea8adcde6b946176f4bf81f7bf0b4722c128f513eb00f43a2265d92da4453408"
+  },
+  "figures/fig05_candidate_comparison.pdf": {
+   "bytes": 15186,
+   "sha256": "6365ac79b6e69dde9f7f4e6d96613b314ec044ec0cccdbb7e491871d89086dc0"
+  },
+  "figures/fig05_candidate_comparison.png": {
+   "bytes": 100466,
+   "sha256": "9f805808e544d5d6685825e0dd45ba61891d3e52b0c8db8e9387fccc24fcd0a0"
+  },
+  "figures/fig06_identity_metrics.pdf": {
+   "bytes": 14926,
+   "sha256": "b462096cdcf6b104c458383f2e702be75cd488fac9a294010d912497b6eb84b1"
+  },
+  "figures/fig06_identity_metrics.png": {
+   "bytes": 105092,
+   "sha256": "d70aef00a0a5e1425850333c8e767f005898796fa25789114574d9dced599a70"
+  },
+  "figures/fig07_seed_spread.pdf": {
+   "bytes": 16251,
+   "sha256": "769d633bbd472d353cf30baa18be8656de14e9e346adfe06b3ffab3008d6bfb5"
+  },
+  "figures/fig07_seed_spread.png": {
+   "bytes": 176662,
+   "sha256": "64a119ae2df3031c3cb16d0bc95db9254ce9cdb04396d47f37b6bfddcfa5ec9c"
+  },
+  "figures/fig08_sweep_results.pdf": {
+   "bytes": 21513,
+   "sha256": "7f59cdbf69719cac95e2ffc5bc870673930b226a8e6cf29278ed0073c2f37785"
+  },
+  "figures/fig08_sweep_results.png": {
+   "bytes": 142090,
+   "sha256": "4baf3708a05ca210be8348a0f61059f7bb4462d6e5741f7972e74ee9ba23d886"
+  },
+  "figures/fig09_c2_comparison.pdf": {
+   "bytes": 17264,
+   "sha256": "0a3b80d3fd3ce7b6796749d0757966774dc5c7da694d3d148f8c37825118317b"
+  },
+  "figures/fig09_c2_comparison.png": {
+   "bytes": 142440,
+   "sha256": "be423d865247eadf3472f1ad205fa19309a918efcc7cc96bd1317f8a244b5b2a"
+  },
+  "scripts/compare_results.py": {
+   "bytes": 5398,
+   "sha256": "cd641f4d4372efdba9261010cf7cb182f6c7ddee5b8bdb39343ee2786ad9aa10"
+  },
+  "scripts/generate_all.py": {
+   "bytes": 44870,
+   "sha256": "e7754ef9933d6717d0a5498b4f14fcf87a1a70565251afffa31c7544ae07fab6"
+  },
+  "scripts/make_manifest.py": {
+   "bytes": 1938,
+   "sha256": "6f602ca9baa4ab3c3f643b7ee3e34a3807d89ab76a281b30c4629d63509bb084"
+  },
+  "scripts/verify_archive.py": {
+   "bytes": 1956,
+   "sha256": "8d5a43abbb24fdd92d63f5f810a6bc4dd08a35eb83498b718d0add7d62309a7e"
+  },
+  "tables/table01_all_checkpoints.csv": {
+   "bytes": 1024,
+   "sha256": "b6246f79a66db48f45ee7dc69c627a66e455cfe133e9b403a415596ff3c20828"
+  },
+  "tables/table01_all_checkpoints.md": {
+   "bytes": 1615,
+   "sha256": "d5238ce64e0be662a910d703afaa74a00a5d8221f26fe0bcedc08f88a862e03a"
+  },
+  "tables/table01_all_checkpoints.png": {
+   "bytes": 277221,
+   "sha256": "3af86085b8b865549ef3da84ef13a432732086bb105f6b840ff0f778d1614b3c"
+  },
+  "tables/table01_all_checkpoints.tex": {
+   "bytes": 1707,
+   "sha256": "23ffe272837df6f9f684029ff26e988e31cb1d7fa678f14a42ef182394bb1b10"
+  },
+  "tables/table02_selected_candidates.csv": {
+   "bytes": 422,
+   "sha256": "401768bfed3726dfa78b8823619d95a71a82645bf53a69e453888e264fd3df82"
+  },
+  "tables/table02_selected_candidates.md": {
+   "bytes": 737,
+   "sha256": "a81dfd1d3e524f3c7ede398178c65b889364221e81e129a7f6164d07779f18a2"
+  },
+  "tables/table02_selected_candidates.png": {
+   "bytes": 125081,
+   "sha256": "91d6799b7e416c730f27b8cfc3e5ace326d7bf1e73a23b4733fad21cf3c20cc2"
+  },
+  "tables/table02_selected_candidates.tex": {
+   "bytes": 851,
+   "sha256": "953f8c88892f61389baf3d674b7166d38ae81364b9c4b6f1470c09414028b66c"
+  },
+  "tables/table03_seed_spread.csv": {
+   "bytes": 1954,
+   "sha256": "eb5dbc85cfe3faf4f36b0cfd3316f4037593d90ca2e89fa8a371f72e9100bcc9"
+  },
+  "tables/table03_seed_spread.md": {
+   "bytes": 2559,
+   "sha256": "27cc63ef37482772f0af3692ea0e9b172c9c4521d869a908c5d820d6f63e6032"
+  },
+  "tables/table03_seed_spread.png": {
+   "bytes": 480548,
+   "sha256": "63fd1d8981596eaf80a95dbe76c440fa622f190f19976c365fcc638e8ed8ff0a"
+  },
+  "tables/table03_seed_spread.tex": {
+   "bytes": 2636,
+   "sha256": "6708baf8c5d4198738969ad924386411aa99e6ce9c18b2a419a80b83244216e0"
+  },
+  "tables/table04_sweep_results.csv": {
+   "bytes": 597,
+   "sha256": "17d6e2be3f3cf2e8330510ec1d7c38992775eed78419edae42d9705d279b68f2"
+  },
+  "tables/table04_sweep_results.md": {
+   "bytes": 985,
+   "sha256": "f405eba629fd5db989243db6a3a67bf44919f8287afc870c2adb5364234f5948"
+  },
+  "tables/table04_sweep_results.png": {
+   "bytes": 179690,
+   "sha256": "3efa22ef4dcc49e6c6fd1a78abd06dc6ce4a51ecdfb627088657963bc864fab4"
+  },
+  "tables/table04_sweep_results.tex": {
+   "bytes": 1088,
+   "sha256": "f84ca6199656dbd7b9e4581220d3f4882bf712269484e7904d55ee57364d9601"
+  },
+  "tables/table05_c2_results.csv": {
+   "bytes": 611,
+   "sha256": "ebecd5935ed306eb82c08ad6311c927cb3d259ed3d5d8d3a75893fd42b709063"
+  },
+  "tables/table05_c2_results.md": {
+   "bytes": 1077,
+   "sha256": "ecc54d064ddba44279b08a688899a94153472450d2d5fc4e9646273bb553c8c5"
+  },
+  "tables/table05_c2_results.png": {
+   "bytes": 188826,
+   "sha256": "8bdd3db0bd6382fc0204895bd8bebd0564016384c4e8d16ed106d9e789c8740c"
+  },
+  "tables/table05_c2_results.tex": {
+   "bytes": 1199,
+   "sha256": "aa34f3cbcb59f45c4a0b377582dcbfaaa845758b1d27bdd5c2b87f60cb25ad56"
+  },
+  "tables/table06_dataset_summary.csv": {
+   "bytes": 413,
+   "sha256": "a28391bce35aa8f2e8b60d5e00a5aef4e13ea2e602f84f7f4d42286a506a8457"
+  },
+  "tables/table06_dataset_summary.md": {
+   "bytes": 859,
+   "sha256": "77b5614963b36c87ffbf7b9df1d1f165329512c2ee79883e339cc2f5f35a7512"
+  },
+  "tables/table06_dataset_summary.png": {
+   "bytes": 141751,
+   "sha256": "4b9242df3e80d86693d788d21a095eac3c885f6cfb8ba9b2abcea441acd6a2a5"
+  },
+  "tables/table06_dataset_summary.tex": {
+   "bytes": 912,
+   "sha256": "15c3bfc112a4885ff6fcddee0f9a4508020586f03449651688982c90a7e49e87"
+  },
+  "tables/table07_tuning_variants.csv": {
+   "bytes": 373,
+   "sha256": "3dc21d155d6b9f434b68a02d99c6e1677fe036549795eabbcf769c75433649d7"
+  },
+  "tables/table07_tuning_variants.md": {
+   "bytes": 647,
+   "sha256": "41ed1286766595040ff9cdefa71e7f3522e17568d8b7f9024278564e81bb4468"
+  },
+  "tables/table07_tuning_variants.png": {
+   "bytes": 122401,
+   "sha256": "f57c37496f0e6248223f788489a25a4d571a08d106eeb283dea5fa2af0916318"
+  },
+  "tables/table07_tuning_variants.tex": {
+   "bytes": 746,
+   "sha256": "ad50ba1ef74b92e01dfb68a65b4077415ae47a7b5bbcf4a9ae5bc3fae6a9ea2f"
+  }
+ },
+ "created_utc": "2026-10-16T07:50:46Z",
+ "source_files": {
+  "D:/MajorProject-MeMOTR/results/tuning_stage1/eval/assoc_lr0/ckpt_0/trackeval/trackeval_output/ASSOC_LR0_CKPT0/pedestrian_summary.txt": "b269e9b440d0f4a7f22c04785a3d1a94197f30cb0191309b967d8c896239b366",
+  "D:/MajorProject-MeMOTR/results/tuning_stage1/eval/assoc_lr0/ckpt_1/trackeval/trackeval_output/ASSOC_LR0_CKPT1/pedestrian_summary.txt": "6384498a42350a59a4c35ee477f428c8fcd234e0294b01df6f6d66d47065a5cf",
+  "D:/MajorProject-MeMOTR/results/tuning_stage1/eval/assoc_lr0/ckpt_2/trackeval/trackeval_output/ASSOC_LR0_CKPT2/pedestrian_summary.txt": "04e5da7d094589457c288fdd51a0eb5d3efd9e627880c79f000a0cb5f88fd54a",
+  "D:/MajorProject-MeMOTR/results/tuning_stage1/eval/assoc_lr0/ckpt_3/trackeval/trackeval_output/ASSOC_LR0_CKPT3/pedestrian_summary.txt": "83395c068a4f273c13ccf32dd911c0c403d0fa2cb2810a9cc79ff2848cb80eb4",
+  "D:/MajorProject-MeMOTR/results/tuning_stage1/eval/assoc_lr0/ckpt_4/trackeval/trackeval_output/ASSOC_LR0_CKPT4/pedestrian_summary.txt": "9bde100d7ea2a50202818bf038d6820d36d72c1b3260d00546775a726d04d176",
+  "D:/MajorProject-MeMOTR/results/tuning_stage1/eval/lr_half/ckpt_0/trackeval/trackeval_output/LR_HALF_CKPT0/pedestrian_summary.txt": "0634aaf9da0637f47276202919c2999f931a660b53460f4811666244b7cc1790",
+  "D:/MajorProject-MeMOTR/results/tuning_stage1/eval/lr_half/ckpt_1/trackeval/trackeval_output/LR_HALF_CKPT1/pedestrian_summary.txt": "9853dd88bbd976dee4c7cfaf875db4339c7a4a48b492b347e03d560cf7fd2864",
+  "D:/MajorProject-MeMOTR/results/tuning_stage1/eval/lr_half/ckpt_2/trackeval/trackeval_output/LR_HALF_CKPT2/pedestrian_summary.txt": "9bd174685e46880fd833ed122586318e8c0c614287d71b5ae5b8632dc65fa930",
+  "D:/MajorProject-MeMOTR/results/tuning_stage1/eval/lr_half/ckpt_3/trackeval/trackeval_output/LR_HALF_CKPT3/pedestrian_summary.txt": "d3ff43c97cf01bf9f4a750ed5dc01a900ad86b005856c318a16bad4649c8e453",
+  "D:/MajorProject-MeMOTR/results/tuning_stage1/eval/lr_half/ckpt_4/trackeval/trackeval_output/LR_HALF_CKPT4/pedestrian_summary.txt": "0843de8536f864805d73bc6d5b8eae1c99e2a1a5ae3d35b7a0aec42b722c9fee",
+  "D:/MajorProject-MeMOTR/results/tuning_stage1/eval/seed1/ckpt_0/trackeval/trackeval_output/SEED1_CKPT0/pedestrian_summary.txt": "3394debb3adcd736a9dda35c63d71453a9bb6f402b86101f8e8d3671b1f5fd56",
+  "D:/MajorProject-MeMOTR/results/tuning_stage1/eval/seed1/ckpt_1/trackeval/trackeval_output/SEED1_CKPT1/pedestrian_summary.txt": "c4f89d9d72c69792e20367d8217d41f01efae36670e40366578ee28213709c4a",
+  "D:/MajorProject-MeMOTR/results/tuning_stage1/eval/seed1/ckpt_2/trackeval/trackeval_output/SEED1_CKPT2/pedestrian_summary.txt": "1d9c3d8cf940a4e69d144c2492905100d98e49c803d46abcea3de4755ba499b1",
+  "D:/MajorProject-MeMOTR/results/tuning_stage1/eval/seed1/ckpt_3/trackeval/trackeval_output/SEED1_CKPT3/pedestrian_summary.txt": "d7ef0e46b68817894f82b39d152467d461cad12389ad4c111c3e814b86faab19",
+  "D:/MajorProject-MeMOTR/results/tuning_stage1/eval/seed1/ckpt_4/trackeval/trackeval_output/SEED1_CKPT4/pedestrian_summary.txt": "bd1c7463acfeaf5f8556ff157bb5774bffb4f64c705ffcffcd60890993fd70e5",
+  "D:/MajorProject-MeMOTR/results/tuning_stage1/eval/seed2/ckpt_0/trackeval/trackeval_output/SEED2_CKPT0/pedestrian_summary.txt": "c913a6d56d0b4d47c85f4428629ef777101b01c562b0635758c71ed57bf0ee9d",
+  "D:/MajorProject-MeMOTR/results/tuning_stage1/eval/seed2/ckpt_1/trackeval/trackeval_output/SEED2_CKPT1/pedestrian_summary.txt": "159891ad5f11c96814045fa19cffd18d844c156ad180a66fd0da8dc6fb5c2db5",
+  "D:/MajorProject-MeMOTR/results/tuning_stage1/eval/seed2/ckpt_2/trackeval/trackeval_output/SEED2_CKPT2/pedestrian_summary.txt": "8c67dcf655a9c32e65314f05fcbb804bb9e4403c9af5a419b2abacac58df2ea4",
+  "D:/MajorProject-MeMOTR/results/tuning_stage1/eval/seed2/ckpt_3/trackeval/trackeval_output/SEED2_CKPT3/pedestrian_summary.txt": "20410ef3f88e695b75644d8a3bd94fb1de1909cde73ad13ec4e3088df2beebad",
+  "D:/MajorProject-MeMOTR/results/tuning_stage1/eval/seed2/ckpt_4/trackeval/trackeval_output/SEED2_CKPT4/pedestrian_summary.txt": "bea091908635275c9b32906a69b73c3debac47c9058d396360d916a1d1d35390",
+  "data/IOTD/seq_profile.csv": "28acc5a7dda51edf01eb840a586024782af6f419998894e6d218070e68c6de09",
+  "data/IOTD_train_real/seq_01_1min/gt/gt.txt": "6cca8299ed24e83bea3d732d3479e3b1b8fa857a67aad5fe150c7de1e04a26c8",
+  "data/IOTD_train_real/seq_01_1min/seqinfo.ini": "eb2d73d89cf221f91f77bf2cec618d030198f5828f1e0d21a490616a447daf91",
+  "data/IOTD_train_real/seq_03_30sec_b/gt/gt.txt": "26957113eab590eb55f6623dbccb638cbeca0fa629965bd2645619bed5c36521",
+  "data/IOTD_train_real/seq_03_30sec_b/seqinfo.ini": "7acdadc55af6d3d243b3a0159d7ff994659253d77c4fc539b36b3d91063e9ce6",
+  "data/IOTD_val/seq_02_30sec_a/gt/gt.txt": "17ebe2782a0e9008f98e4e30e975b6a6dee5ffc72551b0e364e8ea4818cd3472",
+  "data/IOTD_val/seq_02_30sec_a/seqinfo.ini": "2bd943e3e0e81c4002a1d077f11cc1774933d5c4cc02c94a15f82d9b66e5932d",
+  "results/c2_eval/c2_results.csv": "d25251de2104bd75593eee9be3fb74031f8cd8e295a12e890b66c77617df929f",
+  "results/c2_eval/seq_01_1min_c2off/trackeval/trackeval_output/C2EVAL_seq_01_1min_C2OFF/pedestrian_summary.txt": "eeaadf4f8c1ce7669bbae7d98ff4834706b7afd7b0debd80a20ec4f4217d5da3",
+  "results/c2_eval/seq_01_1min_c2on/trackeval/trackeval_output/C2EVAL_seq_01_1min_C2ON/pedestrian_summary.txt": "bef534c2eff6a3d093e8168db4b67543ffe7085e66e59e8bb9cd12c86dbcf6d3",
+  "results/c2_eval/seq_02_30sec_a_c2off/trackeval/trackeval_output/C2EVAL_seq_02_30sec_a_C2OFF/pedestrian_summary.txt": "2b216a089e25112f4bc9d9845f8cdcd457729fdefaa00513d6a03709fa6aed15",
+  "results/c2_eval/seq_02_30sec_a_c2on/trackeval/trackeval_output/C2EVAL_seq_02_30sec_a_C2ON/pedestrian_summary.txt": "8c5e103217a358616ce9cb3b919dd40af1ff8495fc14d1cce45fb5ae25275a55",
+  "results/c2_eval/seq_03_30sec_b_c2off/trackeval/trackeval_output/C2EVAL_seq_03_30sec_b_C2OFF/pedestrian_summary.txt": "56434b58df24d559d6a6492dcc28d74d3727197d8f72151863f27972d866137d",
+  "results/c2_eval/seq_03_30sec_b_c2on/trackeval/trackeval_output/C2EVAL_seq_03_30sec_b_C2ON/pedestrian_summary.txt": "ce6241d8983c1fcc8be3d59ca6eda48b56e30ce6148232a67698a2ef1dc8eabd",
+  "results/eval_iotd_val/arm1_ckpt3/seq_02_30sec_a.txt": "46c4061dd9ff7c2156271f8f09920ff61bd627b2e099cc5e6830f33abd9c34b9",
+  "results/eval_iotd_val/arm2_ckpt1/seq_02_30sec_a.txt": "00ee5ae0210a2d2ed90f970b54296543a581adff4dea69fc97cfd4c5b4f739ab",
+  "results/eval_iotd_val/diag/thresh_0p7/trackeval_arm1/trackeval_output/ARM1_T0P7/pedestrian_summary.txt": "57fb82064809e787cf51406a3b3486c28ade0b58d2051ed91f0ecc991fbf0c70",
+  "results/eval_iotd_val/diag/thresh_0p7/trackeval_arm2/trackeval_output/ARM2_T0P7/pedestrian_summary.txt": "e33e19c53e17eef8bced9c7c91e3a9b8433223c81d8ce17c12baa33eb44ef336",
+  "results/eval_iotd_val/diag/thresh_0p7/trackeval_phase5/trackeval_output/PHASE5_T0P7/pedestrian_summary.txt": "f009b24ddb566b3f652c13f6ef657c79ec01cc951bcb297da466a6e1c8d662fc",
+  "results/eval_iotd_val/diag/thresh_0p8/trackeval_arm1/trackeval_output/ARM1_T0P8/pedestrian_summary.txt": "95d394acc54b6f2bf00711ef88e618abd73fb4edb8fd760c86dac6eb2cbc2ef4",
+  "results/eval_iotd_val/diag/thresh_0p8/trackeval_arm2/trackeval_output/ARM2_T0P8/pedestrian_summary.txt": "dc38e029541bca8d493fb13fbffcd73aab31a922a369d2615d959c517533bbd6",
+  "results/eval_iotd_val/diag/thresh_0p8/trackeval_phase5/trackeval_output/PHASE5_T0P8/pedestrian_summary.txt": "31dfad2668d7da6ada7d4dbdf65b957b515796d273bc55ad6ec7869afe7ad3bd",
+  "results/eval_iotd_val/gt_eval/seq_02_30sec_a/gt/gt.txt": "986d8657c1f60ccb681fab13ab7926b25650fde09364d6c2bd1a91662ac7ac18",
+  "results/eval_iotd_val/phase5/seq_02_30sec_a.txt": "61162a593f28b7bd3f96ea2a2da936c1551f38af469e16315ee9c75047bf1b22",
+  "results/eval_iotd_val/trackeval_arm1/trackeval_output/ARM1/pedestrian_summary.txt": "46e6c09528bd05abbd0c668b590d9d0a96a386a6f0e7e87b06a03b0c5c5ef1d2",
+  "results/eval_iotd_val/trackeval_arm1_ckpt0/trackeval_output/ARM1_CKPT0/pedestrian_summary.txt": "a4369c17f85eb8e80a9ad1ec59c62f63e04443fa3a5c5f7b21a13d33f2d0a954",
+  "results/eval_iotd_val/trackeval_arm1_ckpt1/trackeval_output/ARM1_CKPT1/pedestrian_summary.txt": "a34e90c9aa3024cab95697e409663f3fdb910323c309a00d60927d9e20df32a9",
+  "results/eval_iotd_val/trackeval_arm1_ckpt2/trackeval_output/ARM1_CKPT2/pedestrian_summary.txt": "afaa46f5fd7faae4010012f817a6550aed36b5d89644a87ef694d1092112b2d6",
+  "results/eval_iotd_val/trackeval_arm1_ckpt3/trackeval_output/ARM1_CKPT3/pedestrian_summary.txt": "8aff64bf06460ee02d1e2d3d038a7b54b6659e6ed8a56f0a0e3f5434b48125fb",
+  "results/eval_iotd_val/trackeval_arm2/trackeval_output/ARM2/pedestrian_summary.txt": "a1e5f478888eddbf70546127a7152b5f3f218dfbac790cd91a753a6cd7130d07",
+  "results/eval_iotd_val/trackeval_arm2_ckpt0/trackeval_output/ARM2_CKPT0/pedestrian_summary.txt": "a3a4e93617c938c867cd8a23645c84b8a74e62d2acaed3ed5d0a5d4f93433189",
+  "results/eval_iotd_val/trackeval_arm2_ckpt1/trackeval_output/ARM2_CKPT1/pedestrian_summary.txt": "324d23d720fc511e84879ef9c045dd79c19ec4074cf28c5409fe793a7d109a70",
+  "results/eval_iotd_val/trackeval_arm2_ckpt2/trackeval_output/ARM2_CKPT2/pedestrian_summary.txt": "8c107f70ed1eff8da82750f26113415a0055e387a764c4ae4767819253772e09",
+  "results/eval_iotd_val/trackeval_arm2_ckpt3/trackeval_output/ARM2_CKPT3/pedestrian_summary.txt": "000194ed6452314dfd42cccf262535afd5774e19141b1d0d78c6c6b84353dc69",
+  "results/eval_iotd_val/trackeval_phase5/trackeval_output/PHASE5/pedestrian_summary.txt": "2b216a089e25112f4bc9d9845f8cdcd457729fdefaa00513d6a03709fa6aed15",
+  "results/inference_sweep/S_A/trackeval/trackeval_output/SWEEP_S_A/pedestrian_summary.txt": "8aff64bf06460ee02d1e2d3d038a7b54b6659e6ed8a56f0a0e3f5434b48125fb",
+  "results/inference_sweep/S_B/trackeval/trackeval_output/SWEEP_S_B/pedestrian_summary.txt": "eb7fe8ea2bc08b2b20e244e607d71c08f845b731841c484b70ebdacfe5e8490e",
+  "results/inference_sweep/S_C/trackeval/trackeval_output/SWEEP_S_C/pedestrian_summary.txt": "6459f1666bd14ae1ec9901f093e2511244b496f316e6c7837a73efe51bf89211",
+  "results/inference_sweep/S_D/trackeval/trackeval_output/SWEEP_S_D/pedestrian_summary.txt": "a40cf9980c5a25df1139cf7d4ef74fb3fb8442cf90b8fcd642a6b602b085465f",
+  "results/inference_sweep/S_E/trackeval/trackeval_output/SWEEP_S_E/pedestrian_summary.txt": "2a413b97d00fd960f33473681c21cb8d090f9041b645de58cedb9da375c79551",
+  "results/inference_sweep/S_F/trackeval/trackeval_output/SWEEP_S_F/pedestrian_summary.txt": "57a525f28137e6735ec019aca1382f94cf7373e5c31447e9b129098ff5dde6eb",
+  "results/inference_sweep/S_G/trackeval/trackeval_output/SWEEP_S_G/pedestrian_summary.txt": "31ff235deb42a40a033832ddca18fe938898fd6f6b1cc68a1c41267b37445074",
+  "results/inference_sweep/sweep_results.csv": "278c47f585c465754b0b2b11c76e3c93a3c216bee2a4b78617098db1edba58d1",
+  "results/pre_tuning_baseline_v1/data/results_registry.csv": "f314ab2c3ba14d6e72533cf8738f45d97e0d82744146db68f96243f53c719b9e",
+  "results/tuning_stage1/stage1_results.csv": "1322a8c8cc7f554ea3a66169ff32dfc51a4cda1e7b332f25110c93cd5afe113c",
+  "results/tuning_stage1/status.json": "71fb625f92d5c777aa6719613013c18591f40f669514d08e12e905d22077603d"
+ }
+}

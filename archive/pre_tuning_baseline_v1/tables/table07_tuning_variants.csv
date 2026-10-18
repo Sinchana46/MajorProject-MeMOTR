@@ -1,0 +1,5 @@
+Run,Best ckpt,HOTA,DetA,AssA,MOTA,IDF1,Rule passed
+Phase 5,ckpt_4,50.51,43.875,58.494,29.101,68.84,reference
+"Arm 1 (seed mean, n=3)","7,584 steps",49.399,46.409,52.839,32.648,70.484,reference
+assoc_lr0,ckpt_0,50.45,47.492,53.806,28.886,70.412,No (above bar at 1 of 5 checkpoints)
+lr_half,ckpt_0,51.194,48.678,54.164,36.561,70.529,No (above bar at 1 of 5 checkpoints)

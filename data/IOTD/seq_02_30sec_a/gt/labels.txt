@@ -1,0 +1,5 @@
+car
+two_wheeler
+auto
+bus
+truck

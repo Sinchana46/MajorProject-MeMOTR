@@ -1,0 +1,12 @@
+{
+  "copy": "seq_01_1min_aug_02",
+  "source": "seq_01_1min",
+  "seed": 1002,
+  "gain": 1.176164,
+  "gamma": 0.941431,
+  "hue_shift": 4,
+  "sat_shift": 8,
+  "jpeg_quality": 77,
+  "noise_sigma": 4.011394,
+  "note": "All params sampled once per copy from np.random.default_rng(seed). Noise: np.random.default_rng(seed*1_000_003 + frame_idx) per frame."
+}

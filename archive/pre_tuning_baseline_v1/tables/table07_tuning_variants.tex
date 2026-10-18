@@ -1,0 +1,12 @@
+% requires \usepackage{booktabs}
+\begin{tabular}{lrrrrrrr}
+\toprule
+Run & Best ckpt & HOTA & DetA & AssA & MOTA & IDF1 & Rule passed \\
+\midrule
+Phase 5 & ckpt\_4 & 50.51 & 43.88 & \textbf{58.49} & 29.10 & 68.84 & reference \\
+Arm 1 (seed mean, n=3) & 7,584 steps & 49.40 & 46.41 & 52.84 & 32.65 & 70.48 & reference \\
+assoc\_lr0 & ckpt\_0 & 50.45 & 47.49 & 53.81 & 28.89 & 70.41 & No (above bar at 1 of 5 checkpoints) \\
+lr\_half & ckpt\_0 & \textbf{51.19} & \textbf{48.68} & 54.16 & \textbf{36.56} & \textbf{70.53} & No (above bar at 1 of 5 checkpoints) \\
+\bottomrule
+\end{tabular}
+% Rule (Stage 1): HOTA > Arm 1 seed mean + 2 SD at > 1 checkpoint without worse AssA or IDSW. Arm 1 row: checkpoint with the highest seed-mean HOTA.

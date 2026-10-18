@@ -1,0 +1,4 @@
+Run,Config,Start weights,Seed,Data,Steps/ep,Epochs,LR schedule,Backbone,s/step,Wall time
+Phase 5,(UA-DETRAC+VisDrone),DanceTrack,42,UA-DETRAC+VisDrone,0,0,1e-4 MultiStep,unfrozen,~0.66,~14h (est.)
+Arm 1,train_iotd_real.yaml,Phase5 ckpt4 (wt only),42,IOTD_train_real,2528,5,2e-5 ep0-3; 2e-6 ep4,frozen,0.664,~140 min
+Arm 2,train_iotd_real_aug.yaml,Phase5 ckpt4 (wt only),42,IOTD_train_real+aug,10112,5,2e-5 ep0-3; 2e-6 ep4,frozen,0.664,~565 min

@@ -1,0 +1,4 @@
+run,checkpoint,TP_own,FP_own,FN_own,recall_own,precision_own,TP_te,FP_te,FN_te,dTP,dFP,dFN
+Phase5,ckpt_4,3335,2117,847,79.747,61.17,3335,2117,847,0,0,0
+Arm1,ckpt_3,3877,2629,305,92.707,59.591,3877,2629,305,0,0,0
+Arm2,ckpt_1,3692,2432,490,88.283,60.287,3692,2432,490,0,0,0

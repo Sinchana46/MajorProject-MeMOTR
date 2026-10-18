@@ -575,3 +575,12 @@ frames: 3,274; real training frames: 2,530. **Verified** — `archive/pre_tuning
     `source_path`); evidence `final_review/logs/E002_verify_failed_attempt1.txt`; superseded by the valid run in E002.
   - E060b — `Arm2_ckpt_4` inference, attempt 1 (2026-10-16 15:17): **Failed** — native crash exit `0xC0000409` at the start of
     inference; partial output `final_review/runs/Arm2_ckpt_4_failed_attempt1/` (not used); superseded by E026.
+
+### E061 — Commit and push the final-review files (user-approved) — Completed (2026-10-16 16:35:25 +0530 IST)
+- **What was done:** with the user's approval, staged exactly 41 new files by explicit path (final-review deliverables, the
+  corrected-procedure CSVs/reports/dashboards, this walkthrough and log as of entry E060, and 24 tool scripts), checked them
+  (no checkpoints, data, archive, `results/`, temporary files or credentials; 1.05 MB), committed `6a9e500` and pushed
+  `7079b4d..6a9e500` to `origin/main`. Local HEAD equals `origin/main`.
+- **Left out on purpose:** raw run outputs (`final_review/runs/`, `sweep/`, `seed_check/`, `verify_filters_off/`, logs), the frozen
+  archive (verified unchanged afterwards: 0/0/0, zip read-only), and the unrelated modified `reports/project_report.html`.
+- **Note:** this entry and any later ones are not in commit `6a9e500`.

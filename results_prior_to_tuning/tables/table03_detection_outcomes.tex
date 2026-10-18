@@ -1,0 +1,14 @@
+\begin{table}[ht]
+\centering
+\caption{Per-frame greedy IoU$\geq$0.5 matching vs TrackEval CLEAR. Differences quantify the two methods.}
+\label{tab:detection_outcomes}
+\begin{tabular}{lrrrrrrrrrrrr}
+\toprule
+Run & Ckpt & TP_own & FP_own & FN_own & Rec_own% & Prec_own% & TP_TrackEval & FP_TrackEval & FN_TrackEval & dTP & dFP & dFN \\
+\midrule
+Phase5 & ckpt_4 & 3335 & 2117 & 847 & 79.75 & 61.17 & 3335 & 2117 & 847 & 0 & 0 & 0 \\
+Arm1 & ckpt_3 & 3877 & 2629 & 305 & 92.71 & 59.59 & 3877 & 2629 & 305 & 0 & 0 & 0 \\
+Arm2 & ckpt_1 & 3692 & 2432 & 490 & 88.28 & 60.29 & 3692 & 2432 & 490 & 0 & 0 & 0 \\
+\bottomrule
+\end{tabular}
+\end{table}

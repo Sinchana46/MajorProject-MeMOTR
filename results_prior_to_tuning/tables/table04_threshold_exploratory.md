@@ -1,0 +1,14 @@
+| Run | Ckpt | Threshold | HOTA | DetA | MOTA | FP | FN | Recall% | Note |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Arm1 | ckpt_4 | 0.5 | 49.58 | 45.70 | 24.94 | 2855 | 277 | 93.38 | primary |
+| Arm1 | ckpt_4 | 0.6 | — | — | — | — | — | — | NOT RUN |
+| Arm1 | ckpt_4 | 0.7 | 48.06 | 44.02 | 32.16 | 1859 | 972 | 76.76 | exploratory |
+| Arm1 | ckpt_4 | 0.8 | 40.62 | 34.96 | 23.36 | 1273 | 1922 | 54.04 | exploratory |
+| Arm2 | ckpt_4 | 0.5 | 42.84 | 38.32 | -6.58 | 4266 | 185 | 95.58 | primary |
+| Arm2 | ckpt_4 | 0.6 | — | — | — | — | — | — | NOT RUN |
+| Arm2 | ckpt_4 | 0.7 | 47.46 | 43.92 | 23.20 | 2813 | 396 | 90.53 | exploratory |
+| Arm2 | ckpt_4 | 0.8 | 48.13 | 44.75 | 29.48 | 2267 | 678 | 83.79 | exploratory |
+| Phase5 | ckpt_4 | 0.5 | 50.51 | 43.88 | 29.10 | 2117 | 847 | 79.75 | primary |
+| Phase5 | ckpt_4 | 0.6 | — | — | — | — | — | — | NOT RUN |
+| Phase5 | ckpt_4 | 0.7 | 41.63 | 30.74 | 23.17 | 776 | 2436 | 41.75 | exploratory |
+| Phase5 | ckpt_4 | 0.8 | 37.15 | 25.59 | 19.06 | 605 | 2775 | 33.64 | exploratory |

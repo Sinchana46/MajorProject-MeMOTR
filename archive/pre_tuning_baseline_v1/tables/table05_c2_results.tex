@@ -1,0 +1,14 @@
+% requires \usepackage{booktabs}
+\begin{tabular}{lrrrrrrrrrrrrr}
+\toprule
+Sequence & Light & C2 & HOTA & DetA & AssA & MOTA & IDF1 & IDSW & FP & FN & Recall \% & Prec \% & mean τ \\
+\midrule
+seq\_01\_1min & night & off & 27.44 & 16.86 & 44.76 & -9.89 & 33.50 & \textbf{1} & 2,518 & 4,567 & 29.17 & 42.76 & 0.50 \\
+seq\_01\_1min & night & on & 7.71 & 1.52 & 39.83 & -2569.90 & 2.84 & 104 & 168,975 & 3,077 & 52.28 & 1.96 & 0.31 \\
+seq\_02\_30sec\_a & night & off & \textbf{50.51} & \textbf{43.88} & \textbf{58.49} & 29.10 & \textbf{68.84} & \textbf{1} & 2,117 & 847 & 79.75 & 61.17 & 0.50 \\
+seq\_02\_30sec\_a & night & on & 45.76 & 38.19 & 55.32 & -2.58 & 60.81 & 10 & 3,876 & \textbf{404} & \textbf{90.34} & 49.36 & 0.33 \\
+seq\_03\_30sec\_b & dusk & off & 29.82 & 21.70 & 41.03 & 27.98 & 42.79 & 2 & \textbf{434} & 15,083 & 30.00 & \textbf{93.71} & 0.50 \\
+seq\_03\_30sec\_b & dusk & on & 30.72 & 22.84 & 41.41 & \textbf{29.49} & 44.79 & 2 & 494 & 14,696 & 31.80 & 93.27 & 0.40 \\
+\bottomrule
+\end{tabular}
+% Phase 5 ckpt_4, det/track 0.5, miss 30. C2 off: τ fixed 0.5. seq_01 and seq_03 are IOTD training sequences (Phase 5 never trained on them). Bold: best across all six rows.

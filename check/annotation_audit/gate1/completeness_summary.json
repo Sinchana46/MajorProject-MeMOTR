@@ -1,0 +1,8 @@
+{
+  "total_potential_missed": 193,
+  "frames_checked": 20,
+  "mean_per_frame": 9.65,
+  "frames_with_potential_missed": 20,
+  "verdict": "The automated heuristic detects large edge-clusters outside GT in many frames. The GT should be considered INCOMPLETE for rigorous model comparison; a full CVAT annotation pass by the user is recommended.",
+  "caveat": "Heuristic edge-component count, not ground truth. Human review required."
+}

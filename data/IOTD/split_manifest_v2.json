@@ -1,0 +1,59 @@
+{
+  "status": "provisional",
+  "note": "3 sequences only. Final split will be 12/4/4 by sequence once more IOTD data is annotated.",
+  "train": ["seq_01_1min", "seq_03_30sec_b"],
+  "val":   ["seq_02_30sec_a"],
+  "test":  [],
+  "augmented_dir": "augmented_train_v2",
+  "rejected": ["augmented_train (v1)"],
+  "augmented": {
+    "seq_01_1min_aug_01": {
+      "source":     "seq_01_1min",
+      "seed":       1001,
+      "use_for_c2": false,
+      "use_for_c1_calibration": false,
+      "use_for_baseline_finetune": true
+    },
+    "seq_01_1min_aug_02": {
+      "source":     "seq_01_1min",
+      "seed":       1002,
+      "use_for_c2": false,
+      "use_for_c1_calibration": false,
+      "use_for_baseline_finetune": true
+    },
+    "seq_01_1min_aug_03": {
+      "source":     "seq_01_1min",
+      "seed":       1003,
+      "use_for_c2": false,
+      "use_for_c1_calibration": false,
+      "use_for_baseline_finetune": true
+    },
+    "seq_03_30sec_b_aug_01": {
+      "source":     "seq_03_30sec_b",
+      "seed":       1001,
+      "use_for_c2": false,
+      "use_for_c1_calibration": false,
+      "use_for_baseline_finetune": true
+    },
+    "seq_03_30sec_b_aug_02": {
+      "source":     "seq_03_30sec_b",
+      "seed":       1002,
+      "use_for_c2": false,
+      "use_for_c1_calibration": false,
+      "use_for_baseline_finetune": true
+    },
+    "seq_03_30sec_b_aug_03": {
+      "source":     "seq_03_30sec_b",
+      "seed":       1003,
+      "use_for_c2": false,
+      "use_for_c1_calibration": false,
+      "use_for_baseline_finetune": true
+    }
+  },
+  "frame_counts": {
+    "real_train":      2530,
+    "real_val":         744,
+    "augmented_train": 7590,
+    "total_train_samples": 10120
+  }
+}
