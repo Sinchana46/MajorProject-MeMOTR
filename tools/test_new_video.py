@@ -412,6 +412,13 @@ def parse_args():
 
 
 def main():
+    # Force UTF-8 stdout so Unicode characters don't crash on Windows cp1252 terminals
+    import sys, io
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    elif sys.stdout.encoding and sys.stdout.encoding.lower() not in ("utf-8", "utf8"):
+        sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+
     args = parse_args()
 
     # ── Pre-flight checks ────────────────────────────────────────────────────
@@ -453,11 +460,11 @@ def main():
         tracker_dir = os.path.join(out_dir, "tracker")
         os.makedirs(out_dir, exist_ok=True)
 
-        print(f"\n{'─'*60}")
+        print(f"\n{'-'*60}")
         print(f"  Processing: {os.path.basename(video_path)}")
         print(f"  Seq name  : {seq_name}")
         print(f"  Output dir: {out_dir}")
-        print(f"{'─'*60}")
+        print(f"{'-'*60}")
 
         # Step 2 — Probe
         print("\n[Step 1/4] Probing video metadata...")

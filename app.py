@@ -339,12 +339,19 @@ elif st.session_state.stage == "running":
     t0   = time.time()
     log  = ""
     try:
+        import os as _os
+        _env = _os.environ.copy()
+        _env["PYTHONIOENCODING"] = "utf-8"
+        _env["PYTHONUTF8"] = "1"
         proc = subprocess.Popen(
             cmd_infer,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             text=True,
+            encoding="utf-8",
+            errors="replace",
             cwd=str(ROOT),
+            env=_env,
         )
         for line in proc.stdout:
             log += line
