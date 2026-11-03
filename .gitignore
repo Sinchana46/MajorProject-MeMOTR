@@ -101,3 +101,11 @@ htmlcov/
 .mypy_cache/
 .dmypy.json
 dmypy.json
+
+# Image frames — never commit these
+*/img1/
+*/img1/*
+val/
+data/IOTD_train_aug/
+data/IOTD_train_real/
+data/IOTD_val/
