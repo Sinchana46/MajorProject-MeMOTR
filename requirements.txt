@@ -1,0 +1,36 @@
+# Python 3.9 (the project was developed on Python 3.9.25).
+#
+# PyTorch is NOT listed here on purpose: install the torch / torchvision build
+# that matches your GPU's CUDA version FIRST, from
+#   https://pytorch.org/get-started/previous-versions/
+# then run:  pip install -r requirements.txt
+# See README.md -> "Setup" for the full order (submodules, patches, CUDA ops).
+
+# --- Core: MeMOTR training / inference and TrackEval scoring ---------------
+numpy
+scipy
+opencv-python
+Pillow
+matplotlib
+PyYAML
+tqdm
+tensorboard
+
+# --- Web app (app.py, run_app.py, run_dashboard.py) ------------------------
+streamlit
+pandas
+certifi
+
+# --- PDF report generation (tools/generate_report_pdf.py) ------------------
+reportlab
+
+# --- Tests (optional; tests also run with plain `python`) -----------------
+pytest
+
+# --- Optional: dataset / checkpoint download helpers in tools/ ------------
+gdown
+huggingface_hub
+requests
+
+# --- Optional: v1 photometric augmentation (tools/augment_photometric.py) -
+albumentations
