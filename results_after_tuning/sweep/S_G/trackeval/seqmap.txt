@@ -1,2 +1,0 @@
-name
-seq_02_30sec_a
